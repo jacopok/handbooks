@@ -1,0 +1,120 @@
+\section{Bases}
+
+Maxwell + Lorentz:
+\[
+\partial _\mu F^{\mu \nu} = j^\nu \qquad
+\partial _{[\mu} F_{\nu \rho ]} = 0 \qquad 
+\dv{p^\mu}{s} = e F^{\mu \nu} u_\mu
+\]
+
+Birkoff: a spherically symmetric 4-current distribution (only dependent on $(t, r)$ and with radial 3-current) with finite support ($r>r_0 \implies j^\mu = 0$) generates Coulomb-like fields for $r>r_0$. $B$ can be immediately seen to always be 0, while $E^i$ is $x^i Q / (4\pi r^3)$. 
+
+\[
+\nabla^2 \frac{1}{r} = -4\pi \delta^3 (r)
+\]
+
+
+\paragraph{Energy-momentum tensor}
+
+It is the tensor $T^{\mu \nu}$ which satisfies:
+
+\begin{equation}
+p^{\mu} = \int T^{0\mu} d^3 x;
+\qquad
+\partial_\mu T^{\mu \nu} = 0;
+\qquad
+\lim_{|x| \rightarrow \infty} T^{\mu \nu} (x) |x|^3 = 0
+\end{equation}
+
+The EM one is:
+
+\[
+T^{\mu \nu} = F^{\mu \rho} F_\rho\, ^\nu + \frac{1}{4} \eta ^{\mu \nu} F^{\alpha \beta} F_{\alpha \beta} 
+\]
+Its $0i$ components are the Poynting vector, its $00$ component is $(E^2 + B^2)/2$.
+
+\paragraph{Lagrange}
+
+\begin{equation}
+\pdv{\mathcal{L}}{\varphi_\mu}  
+-\partial_\nu \pdv{\mathcal{L}}{\partial_\nu \varphi_\mu}
+= 0
+\end{equation}
+
+For a particle in an EM field:
+
+\begin{equation}
+    I_{tot} [A_\mu (x), x^\mu (\lambda)] =
+    I_{EM} [A_\mu] + I_{PART} [x^\mu] + I_{INT} [A_\mu , x^\mu]
+\end{equation}
+
+with:
+
+\begin{align}
+    I_{EM} [A_\mu] &= \int \mathcal{L} \mathrm{d}^4x; \qquad \mathcal{L} = \frac{1}{4} F^{\mu \nu} F_{\mu \nu} \\
+    I_{PART} [x^\mu] &= -m \int \mathrm{d}s \\
+    I_{INT} [A_\mu , x^\mu] &= \int \mathcal{L} \mathrm{d}^4x; \qquad \mathcal{L} =
+    - A_\mu j^\mu
+\end{align}
+
+Where
+
+\[
+j^\mu = e \int \dd{\lambda} \dv{x^\mu}{\lambda} \delta^4 (x - x(\lambda)) 
+\]
+
+therefore 
+
+\[
+I_{INT} = \int _\gamma A_\mu \dd{x^\mu}
+\]
+
+Varying wrt the potential gives Maxwell's equations, varying wrt the position gives the Lorentz equation.
+
+\section{Nöther}
+
+We consider transformation for both the fields $\phi_r$ and the position $x^\mu$.
+The Lagrangian might be a function of these, plus the fields' 4-derivatives.
+The field index $r$ is a multi-index, and it is summed over if it is repeated!
+
+Our transformation, which will be a symmetry, is in the form:
+
+\begin{equation}
+    \begin{cases}
+    x'^\mu = x^\mu + \delta x^\mu \\
+    \phi_r ' (x')  = \phi_r (x) + \Bar{\delta} \phi_r (x) \\
+    \phi_r ' (x) = \phi_r (x) + \delta \phi_r (x)
+    \end{cases}
+\end{equation}
+
+The two $\delta$s differ, and $\delta \partial_\mu = \partial_\mu \delta$, while $\Bar{\delta} \partial_\mu \neq \partial_\mu \Bar{\delta}$. Delta bar is the formal variation, delta is the total variation.
+
+To the first order, the following holds:
+
+\[
+\Bar{\delta} \phi_r = \delta \phi_r + \partial_\mu \phi_r \delta x^\mu
+\]
+
+where everything is evaluated in the same untransformed point $x$.
+
+It can be proven that the following holds:
+
+\begin{equation}
+    \partial_\mu \left(
+    \delta x^\mu \mathcal{L} (\phi_r, \partial_\mu \phi_r, x) + \pdv{\mathcal{L}}{\partial_\mu \phi_r} \delta \phi_r 
+    \right) = 0
+\end{equation}
+
+where the conserved expression is the Noetherian conserved current.
+
+This $J^\mu$ can be rewritten as:
+
+\[
+J^\mu = -\delta x^\nu \Tilde{T}_\nu ^\mu + \pdv{\mathcal{L}}{\partial_\mu \phi_r} \Bar{\delta} \phi_r 
+\]
+
+with
+
+\[
+\Tilde{T} ^{\mu \nu} = \pdv{\mathcal{L}}{\partial_\mu \phi_r} \partial^\nu \phi_r - \eta^{\mu \nu} \mathcal{L} 
+\]

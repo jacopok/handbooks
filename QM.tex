@@ -1,0 +1,931 @@
+% Arrivato a: inizio lezione 8 circa.
+
+\section{Definitions}
+
+\paragraph{Spectrum} (of an observable $\hat{A}$): it is the set of values we can obtain by measuring it, denoted as $\sigma(\hat{A}) \subseteq \mathbb{R}$.
+
+\begin{equation}
+    \sigma(A) = \qty{
+    a \in \mathbb{R}: \inf_{\psi \in D(A)} \Delta A_{a, \psi} = 0
+    }
+\end{equation}
+
+where $0 \in D(A)$ is not considered when computing the infimum.
+
+\subparagraph{Continuous and discrete} The \emph{discrete spectrum} $\sigma_d(A)$ is the subset of $\sigma (A)$ of all the $a$ such that $\exists \psi : \Delta A _{a, \psi} = 0$. It is always countable because of the separability of the space. The \emph{continuous spectrum} $\sigma_c(A)$ consists of its complementary in $\sigma(A)$.
+
+\subparagraph{Mathematical definition} The spectrum of an operator $A$ can be alternatively defined as:
+
+\begin{equation}
+\sigma(A) = \qty{
+a \in \mathbb{C}: \qty(A - a\mathbb{1})^{-1} \notin \mathcal{B}(\mathbb{R}^n)
+}    
+\end{equation}
+
+And we have:
+
+\begin{enumerate}
+    \item The discrete spectrum, where there exists an eigenvector for $A$ corresponding to $a$;
+    \item The continuous spectrum, where $A-a\mathbb{1}$ can be inverted in a dense domain, but its inverse is unbounded;
+    \item The residual spectrum, where neither condition holds ($A-a\mathbb{1}$ is not invertible in a dense domain).
+\end{enumerate}
+
+\paragraph{Pure State} Maximal information about a system. 
+
+\paragraph{Expectation value} It is the (arithmetic) average we would get by repeatedly performing the same measurement of the observable $\hat{A}$ on the same system in the state $\Sigma$, in the limit of $N\rightarrow \infty $ measurements, denoted as $\langle \hat{A} \rangle_\Sigma$.
+
+\paragraph{Lebesgue-Stieltjes Measure} It is a function $\mu: \mathcal{B}(\mathbb{R}) \rightarrow \mathbb{R}$ such that $\mu(\emptyset) = 0$, and which is countably additive. We use the measure denoted by $\mu = \dd{g}$, with $g$ a real positive function, defined by:
+
+\begin{equation}
+    \mu\qty(]a, b[) = \lim_{\varepsilon \rightarrow 0} g(b-\varepsilon) - g(a + \varepsilon)
+\end{equation}
+
+With this we define the Lebesgue integral as usual, getting
+
+\begin{equation}
+    \int f \dd{g} = \int f \dv{g}{\lambda} \dd{\lambda}
+\end{equation}
+
+where the derivative of $g$ is to be interpreted in a distributional sense.
+
+\paragraph{Probability measure} If we have an observable $\hat{A}$ and a state $\Sigma$, the function $\dd{P}_\Sigma ^A (\lambda )$ is the one given by applying the Riesz-Markov theorem to the linear functional $g \rightarrow \langle g(A) \rangle _\Sigma$, such that:
+
+\begin{equation}
+    \langle A \rangle _\Sigma = \int g(\lambda) \dd{P}_\Sigma ^A (\lambda )
+\end{equation}
+
+With the help of equation $\eqref{eq:prob_measure}$ we then define
+
+\begin{equation} \label{eq:prob_measure_def}
+    P^A _\Sigma (\lambda) = \langle \Theta (\lambda - A) \rangle _\Sigma
+\end{equation}
+
+\paragraph{Abstract probability measure} $P^A (\lambda) = \Theta ( \lambda - A)$. It allows us to abstract from equation \eqref{eq:prob_measure_def}, having
+
+\begin{equation}
+    f(A) = \int f(\lambda) \dd{P}^A (\lambda)
+\end{equation}
+
+\paragraph{Fluctuations} of an observable $\hat{A}$ around a value $a$:
+
+\begin{equation} \label{eq-fluctuations}
+    (\Delta A)^2 _{\Sigma, a} = \langle (\lambda - a) ^2 \rangle _\Sigma = \int (\lambda-a)^2 \dd{P}^A_\Sigma (\lambda)
+\end{equation}
+
+We usually take the fluctuations around the expected value, and define $\Delta A _{\Sigma, \langle A\rangle_\Sigma} = \Delta A_\Sigma$. 
+
+\paragraph{Eigenstate} A state $\psi$ such that the fluctuations around the expected value satisfy: 
+
+\begin{equation}
+    \inf _{\psi \in D(A)}\Delta A_\psi = 0
+\end{equation}
+
+. $\langle A \rangle _\Sigma = a$ is the corresponding eigenvalue.
+We use $\lambda$ to represent the eigenvalue, $\ket{\lambda}$ to represent the eigenstate.
+
+\paragraph{Vector ray} A subset of the Hilbert space containing vectors in the form $e^{i\alpha} \psi$, for a fixed $\psi \in \mathcal{H}$ and a varying $\alpha \in \mathbb{R}$.
+
+\paragraph{$L^2$} it is the space of square-integrable complex-valued functions, modulo equality almost everywhere. It is a Hilbert space.
+
+\paragraph{Abstract Hilbert space} Since every Hilbert space is isometrically isomorphic to $\ell_2$, we say that $\ket{\psi}$ is in an abstract space, and $\psi (x) = \braket{x}{\psi}$, $\tilde{\psi} (p) = \braket{p}{\psi}$ are \emph{representations}.
+
+\paragraph{Linear functionals} They take a vector $\psi$ in $\mathcal{H}$ and return a complex number. The norm of a functional $F$ is:
+
+\begin{equation}
+    \norm{F} = \sup _{\norm{\psi}=1} F(\psi) < \infty
+\end{equation}
+
+They belong to the dual of the Hilbert space, $\mathcal{H}^*$, as the application of $F$ to $\psi$ can always, by Riesz-Fischer, be written as $\braket{\phi}{\psi}$, with $\norm{\phi}_\mathcal{H} = \norm{F}_\mathcal{H^*}$. Note: the functionals act on $\mathcal{H}$, not directly on $\mathcal{H} / \mathbb{C}_0$.
+
+\paragraph{Distance in $\mathcal{H} / \mathbb{C}_0$} It is defined by:
+
+\begin{equation}
+    d\qty(\ket{\psi}, \ket{\phi}) =
+    \qty(
+    1 - \frac{\abs{\braket{\psi}{\phi}}^2}{\norm{\phi}^2 \norm{\psi}^2}
+    )^{1/2}
+\end{equation}
+
+\paragraph{Adjoint of an operator} The adjoint $A^\dag$ of an operator $A$ is defined by $\braket{\phi}{A \psi} = \braket{A^\dag \phi}{\psi}$, with domain $D(A^\dag)$ containing all $\phi \in \mathcal{H}$ such that:
+
+\begin{equation}
+    \sup_{\substack{\psi \in D(A) \\ \norm{\psi} = 1}}
+    \abs{\braket{\phi}{A \psi}} < \infty
+\end{equation}
+
+\paragraph{Symmetric operators} An operator $A$ is symmetric if $D(A^\dag) \supseteq D(A)$ and, in $D(A)$, $A=A^\dag$.
+
+\paragraph{Self-adjoint operators} A symmetric operator $A$ is self-adjoint if $D(A) = D(A^\dag)$.
+
+\paragraph{Projectors} Operators $P$ such that $P^2 = P$ and $P = P^\dag$. For every vector there is a projector $\ketbra{\psi}{\psi}$.
+
+\paragraph{Unitary operators} Operators $U$ such that $UU^\dag = U^\dag U = \mathbb{1}$.
+
+\paragraph{Spectral Family} It is a one-parameter family of operators $P(\lambda)$, $\lambda \in \mathbb{R}$, such that:
+
+\begin{enumerate}
+    \item $\forall \lambda$: $P(\lambda)$ is a projector;
+    \item $\lim_{\lambda \rightarrow +\infty} P(\lambda) = \mathbb{1}$ and $\lim_{\lambda \rightarrow -\infty} P(\lambda) = \mathbb{0}$;
+    \item $P(\lambda) P(\mu) = P(\min\qty{\lambda, \mu})$;
+    \item $\lim _{\lambda \rightarrow \mu ^+} P(\lambda) = P(\mu)$.
+\end{enumerate}
+
+\paragraph{Probability density function} Given a concrete probability measure $\dd{P^A_\psi (\lambda)}$ we define its pdf as:
+
+\begin{equation}
+    W^A_\psi (\lambda) = \dv{P^A_\psi (\lambda)}{\lambda}
+\end{equation}
+
+this derivative is generally to be understood in a distributional sense: the probability measure can be discotinuous.
+
+\paragraph{Gelfand Triple} Given an operator $A$, we want to represent the eigenvectors corresponding to its continuous spectrum, which do not belong to $\mathcal{H}$. So we take a subset of $\mathcal{H}$, such that:
+
+\begin{enumerate}
+    \item $\Phi_A \subseteq D(A)$;
+    \item $\overline{\Phi_A} = \mathcal{H}$;
+    \item $A$ is continuous (ie bounded) on $\Phi_A$ wrt $\Phi_A$'s topology;
+    \item $\Phi_A$ is nuclear: if we have two continuous linear operators in the cartesian product of $\Phi_A$ with itself, then we can combine them into a continuous operator in the tensor product of $\Phi_A$ with itself.
+\end{enumerate}
+
+\subparagraph{On generalized eigenvectors} If $a$ is in the continuous spectrum of $A$, we can still write an eigenvalue equation as $A F_a = a F_a$; but $F_a$ will belong to $\Phi_A^*$. Of course this is just formal, and it is understood to mean that $A F_a (\phi) = F_a (A\phi)$ holds $\forall \phi \in \Phi_A$.
+
+\subparagraph{On generalized autobras} In Dirac notation, we define a generalized autobra $\bra{\lambda} \in \Phi_A^*$ of $A$ by $\braket{\lambda}{\phi} = \braket{\phi}{\lambda}^*$, which is well-defined because it is the scalar product of elements of $\mathcal{H} \supseteq \Phi_A \ni \ket{\lambda}$.
+
+\paragraph{Mixed State} Partial information about a system: represented by an operator $\rho$ (the density matrix) which is: self-adjoint, non-negative, with $\tr \rho = 1$. In a basis it can be written as a convex combination of projectors:
+
+\begin{equation}
+\rho = \sum_i c_i \ket{\phi_i} \bra{\phi_i}; \qquad \sum_i c_i = 1 
+\end{equation}
+
+where the $\ket{\phi_i}$ are the possible states in which the sistem might be found, each with probability $c_i$. This definition comes from taking the expected value of a generic operator $A$ given partial information on the system.
+
+If we have a mixed state $\rho$, the expected value of an operator $A$ is $\Tr(\rho A)$.
+
+\paragraph{Representations} A linear representation of a group is a map from it to the set of linear operators on a vector space, which preserves the group structure. The representation is \emph{unitary} if the vector space is Hilbert, it is \emph{projective} if it maps group elements to operator rays, and if the group has a topological structure it can be defined to be continuous wrt that topology.
+
+We can also have representations of Lie algebras, defined analogously, and the following diagram commutes:
+
+\[
+\begin{tikzcd}
+G \arrow{r}{T_e} \arrow[swap]{d}{\mathcal{D}} & \text{Lie}G \arrow{d}{\mathcal{D}} \\%
+\mathcal{L}(V) \arrow{r}{T_e}& \mathcal{L}(V)
+\end{tikzcd}
+\]
+
+Note that $\mathcal{L}(V)$ is just a fancy way of saying ``operators on the Hilbert space'', in our case.
+
+\paragraph{Lie group} It is a differentiable $C^\omega$ manifold with a group structure. We will treat \emph{matrix} Lie groups.
+
+We denote the coordinates on the group $G$ as $x$, and the homeomorphisms of the atlas are denoted as $U(x): \Omega \rightarrow G$, $\Omega \mathring{\subseteq} \mathbb{R}$.
+
+\paragraph{Lie Algebra} It is the tangent space to the identity of the Lie group $G$: $T_e G$. It is denoted as $\text{Lie}G$. From now on we speak of matrix Lie algebras.
+
+It is endowed with a product, $[\cdot, \cdot]$, which corresponds to the commutator $[A, B] = AB-BA$, and so has its algebraic properties (bilinearity, antisymmetry, Jacobi, Leibniz). All the elements in a neighbourhood of $\mathbb{1}$ in the Lie group can be written as 
+
+\begin{equation}
+    U(x) = \exp(\sum_\alpha x_\alpha e_\alpha)
+\end{equation}
+
+Its \emph{structure constants} are defined by $[e_i, e_j] = f^k_{ij} e_k$.
+
+\paragraph{Universal covering group} Given a Lie group $G$, its universal covering $\Tilde{G}$ is the (unique up to homeomorphisms) group which:
+
+\begin{enumerate}
+    \item is homomorphic to $G$;
+    \item is simply connected;
+    \item has an isomorphic Lie algebra ($\text{Lie}G \simeq \text{Lie}\Tilde{G}$).
+\end{enumerate}
+
+\paragraph{Experimental measurement} A measurement is said to be of the first kind if by measuring again an sufficiently short time later the probability to find the same result gets arbitrarily close to 1. Otherwise, it is said to be of the second kind.
+First kind measurements obey the Von Neumann projection postulate.
+
+\paragraph{Parity} $\wp \psi(x) = \psi(-x)$.
+Its basic properties are $\wp^2 = \mathbb{1}$, $(1 \pm \wp)/2$ are projectors onto the subspaces of even/odd functions, if $\wp V = V$ then $[\wp,  H]=0$.
+
+\paragraph{Compatibility}
+Two observables $A_{1, 2}$ are said to be compatible if, when the system is in an eigenstate for $A_i$, taking a type 1 measurement of $A_{i+1}$ does not change the eigenvalue for $A_i$ (but it can change the specific eigenvector in the eigenspace).
+
+\paragraph{Families of observables}
+
+For a set of observables $\mathcal{C} \ni A_i$, we say:
+
+\begin{itemize}
+    \item the $A_i$ are \emph{independent} if $\nexists f$ such that $A_i = f(A_j)$, $i \neq j$;
+    \item $\mathcal{C}$ is \emph{complete} if it is a set of independent   observables, maximal wrt inclusion;
+    \item $\mathcal{C}$ is \emph{irreducible} if any observable which commutes with all the observables in $\mathcal{C}$ is (a multiple of) the identity.
+\end{itemize}
+
+\paragraph{Tensor product} If we have two Hilbert spaces $\mathcal{H}_{1, 2}$, then their tensor product $\mathcal{H}_1 \otimes \mathcal{H}_2$ is the set of bilinear maps (improperly denoted as) $\phi \in \qty(\mathcal{H}_1 \times \mathcal{H}_2)^{**}$, completed wrt the induced norm:
+
+\begin{equation}
+    \qty( \bra{\phi_1} \otimes \bra{\phi_2} ) 
+    \qty( \ket{\psi_1} \otimes \ket{\psi_2} ) = 
+    \braket{\phi_1}{\psi_1} \braket{\phi_2}{\psi_2} 
+\end{equation}
+
+Also, we must take a quotient wrt having the same results when applied to couples of vectors.
+
+So: not all tensors in  $\mathcal{H}_1 \otimes \mathcal{H}_2$ are in the form $\phi_1 \otimes \phi_2$, but they all can be obtained by adding (finitely or infintely many) tensors expressed in this manner. 
+
+\begin{equation}
+    \forall \phi \in \mathcal{H}_1 \otimes \mathcal{H}_2: \phi = \sum_{m, n = 0}^\infty c_{mn} (\phi^1_m \otimes \phi^2_n )
+\end{equation}
+
+with $\phi^i_n$ belonging to $\mathcal{H}_i$ $\forall n$.
+
+%Also, if a tensor $\phi$ can be written as $\phi_1 \otimes \phi_2$, then it can also be written as $(\alpha \phi_1) \otimes (\phi_2 / \alpha)$,  so that representation is not unique. FALSE in our case: we consider everything modulo rescaling
+
+\subparagraph{Product of operators} It acts on the product of spaces, component by component, and we extend this definition by linearity and completeness. 
+Again, not every operator on the tensor product can be written as the product of two operators in the spaces.
+
+\paragraph{Symmetries} A symmetry is a function from the algebra of observables into itself which preserves every expected value. 
+Wavefunctions correspond to operators (dyads), which means a symmetry must preserve every transition probability, so Wigner's theorem applies.
+Symmetries which are continuous (ie have a group structure isomorphic to $\mathbb{R}$) cannot be represented by antiunitary operators.
+
+Symmetries which preserve the Hamiltonian are said to be \emph{dynamical}: they can be shown to be the ones which commute with the Hamiltonian.
+
+\paragraph{Angular momentum} A general angular momentum in $\mathbb{R}^3$ is a set of three functions with the algebra $[J_i, J_j] = i \hbar \varepsilon_{ijk}J_k$.
+
+A particular case of this is the \emph{orbital} angular momentum, $L_i = \varepsilon_{ijk} x_j p_k$.
+
+\paragraph{Philosophical principles}
+
+\begin{itemize}
+    \item \emph{Reality}: the world exists, and looks like our mathematical representation of it, whether or not we are measuring it;
+    \item \emph{Locality}: the evolution of a subsystem cannot be influenced by another subsystem if the spacetime interval separating them is spacelike;
+    \item \emph{Completeness}: the wavefunction contains all the information about a quantum system.
+\end{itemize}
+
+\section{Axioms}
+
+\paragraph{States} Pure states are represented by a ket $\ket{\psi}$ belonging to an abstract separable complex Hilbert  space $\mathcal{H}$, modulo multiplication by a complex number. On $\mathcal{H}$ we have a scalar product $\braket{\cdot}{\cdot}$, which is Hermitian. We furthermore assume the Fourier transform exists on $\mathcal{H}$.
+
+\paragraph{Observables} They are self-adjoint linear operators on $\mathcal{H}$, denoted as $\hat{A}$. Their norm is $\norm{A} = \sup_{\norm{\psi}=1} \norm{A\psi}$. Their domain is denoted as $D(A)$.
+
+The probability for a measure of $A$ to be $\leq \lambda$ in a state $\psi$, with $\norm{\psi}=1$, is given by
+
+\begin{equation}
+    P^A_\psi (\lambda) = \abs{\ev{P^A(\lambda)}{\psi}}^2
+\end{equation}
+
+\paragraph{Expectation value} Denoted as $\langle \hat{A} \rangle _\psi$, it is calculated with: $\ev{\hat{A}}{\psi}$. This is invariant wrt $\psi \rightarrow \alpha \psi$, $\alpha \in \mathbb{C}_0$; and assumes $\norm{\psi} =1$, otherwhise we should normalize dividing by its square norm.
+
+\paragraph{Time evolution} The postulate is that the transition probabilities between states are constant in time, and that time translation operators form a group isomorphic to $(\mathbb{R}, +)$. These two hypotheses imply that the time translation operator must be unitary.
+
+Also, as in classical mechanics, the Hamiltonian generates time translations. So the time evolution operator is 
+
+\begin{equation}\label{axiom:time-evolution}
+    U(t) = \exp(\frac{t\hat{H}}{i\hbar})
+\end{equation}
+
+To evolve a state which is not an eigenstate of the Hamiltonian we have to expand it in $H$'s eigenbasis, where the $H$ in the exponential in \eqref{axiom:time-evolution} becomes the single eigenstate's energy. Then $\ket{\varepsilon}$ evolves like
+
+\begin{equation}
+    \exp(\frac{t \varepsilon}{i\hbar}) \ket{\varepsilon}
+\end{equation}
+
+\paragraph{Von Neumann projection} A first-kind measurement projects the state onto the eigenspace corresponding to the measured eigenvalue(s): if the result of the measuremnt is $\in \Delta$, the state of the system \emph{instantaneously} changes to:
+
+\begin{equation}
+    P^A_\Delta \ket{\psi} = \int \chi_\Delta (\lambda) \dd{P^A(\lambda)} \ket{\psi}
+\end{equation}
+
+where
+
+\begin{equation}
+    \int_\Delta \dd{P^A(\lambda)} = \frac{\mathbb{1}_\Delta}{\ev{P^A(\Delta)}{\psi}} 
+\end{equation}
+
+(by $\mathbb{1}_\Delta$ we mean the projector onto the span of the eigenvectors corresponding to the eigenvalues $\lambda \in \Delta$: concretely, the formula is the same as \eqref{eq-completeness} but the integral and summation are to be performed only over the $\lambda \in \Delta \cap \sigma(A)$.
+
+\section{Theorems}
+
+\paragraph{Riesz-Markov} \label{th:rieszmarkov}
+
+Let $f$ be a positive linear functional defined from positive functions in the set $C_0$ ($C^0$ functions which go to 0 at $\pm \infty$) to $\mathbb{R}$. Then there exist a monotonically increasing function $g$ such that, $\forall \psi \in C_0$:
+
+\begin{equation}
+    f(\psi) = \int \psi (x) \dd{g (x)}
+\end{equation}
+
+\paragraph{Spectral families} Spectral families are in bijection with self-adjoint operators. Finding the spectral family of an operator just means diagonalizing it; the operator $A$ corresponding to the spectral familiy  $P(\lambda)$ is given by its average over any state:
+
+\begin{equation}
+    \ev{A}{\psi} = \int \lambda \dd{\ev{P(\lambda)}{\psi}}
+\end{equation}
+
+and the corresponding domain is
+
+\begin{equation}
+    D(A) = \qty{
+    \psi \in \mathcal{H}: \int \lambda^2 \dd{\ev{P(\lambda)}{\psi}} < \infty
+    }
+\end{equation}
+
+
+\paragraph{Completeness} Given a self-adjoint operator $A$, we can always write the corresponding completeness with projectors corresponding to its eigenvectors. We have to account for the degeneracy: we can have a  $d(\lambda)$-dimensional eigenspace corresponding to a single eigenvalue.
+
+\begin{equation} \label{eq-completeness}
+\mathbb{1} = \sum_{\lambda_n \in \sigma_d(A)} \sum_{r=1}^{d(\lambda_n)} \dyad{\lambda_n, r} + \int_{\lambda\in \sigma_c(A)} \sum_{r=1}^{d(\lambda_n)} \dyad{\lambda, r}
+\end{equation}
+
+\paragraph{Wigner} A map $\mathcal{H} \rightarrow \mathcal{H}$ which preserves the transition probabilities between states is represented by either a linear unitary operator ray $\hat{U} = \qty{e^{i\alpha} U, \alpha \in \mathbb{R}}$ or an antilinear operator ray $\hat{W} = \qty{e^{i\alpha} W, \alpha \in \mathbb{R}}$. 
+
+For linear operators we have $\braket{U\phi}{U\psi}=\braket{\phi}{\psi}$; for antilinear operators instead $\braket{W\phi}{W\psi}=\braket{\phi}{\psi}^*$.
+
+\paragraph{Bargman} There is a bijection between unitary continuous projective representations on $G$ and unitary representations on its covering $\Tilde{G}$.
+
+\paragraph{Stone} There is a bijection between one-parameter unitary transformation groups and self-adjoint operators: if we are given the transformation group $U(t)$ then we define
+
+\begin{equation}
+    A = \frac{1}{i\hbar} \eval{\dv{U}{t}}_{t=0} \in T_\mathbb{1}(G)
+\end{equation}
+
+where the derivative is to be taken in a matrix sense, component by component. The constant $i$ is necessary, the constant $\hbar$ is included for dimensional consistency.
+Then this $A$ is self-adjoint in a dense domain $D(A)$.
+
+On the other hand, if we are given a self-adjoint operator $A$ we can exponentiate it into a one-parameter group of transformations:
+
+\begin{equation}
+    U(t) = \exp(\frac{At}{i\hbar})
+\end{equation}
+
+\paragraph{Uncertainty principle}
+
+We take two observables $A$ and $B$, with domains such that, if we take the sets $D \subseteq D(A) \cap D(B)$ which are closed under application of both $A$ and $B$, we can find a $D$ which is dense in $\mathcal{H}$.
+
+Then, recalling the definition of fluctuations in \eqref{eq-fluctuations}, we can state the theorem:
+
+\begin{equation}
+    \Delta A_\psi \Delta B_\psi \geq \abs{
+    \frac{\ev{[A, B]}{\psi}}{2i}
+    }
+\end{equation}
+
+This can be shown to also hold if instead of a pure state $\psi$ we take our expectation values wrt a mixed state $\rho$.
+
+The proof starts by considering the fact that the norm of 
+\[
+\qty( \frac{\bar{A}}{\Delta A} \pm i \frac{\bar{B}}{\Delta B}
+) \ket{\psi}
+\]
+
+(where $\bar{A} = A - \ev{A}{\psi}$ and analogously for $B$)
+must be real and positive.
+
+\paragraph{Compatibility} For any two observables $A$, $B$: $[A, B] = 0 \iff $ they are compatible. (We proved it only in the case of bounded operators).
+
+Also, $[A, B]=0 \iff$ their spectral families commute.
+
+Also, if $A = f(B)$ then $[A, B] = 0$ (and $\sigma \circ f = f \circ \sigma$ when applied to $B$).
+
+\subparagraph{Common eigenbasis} A set of independent observables, having only discrete spectrum, is complete iff it has a set of common nondegenerate eigenvectors spanning the entire space $\mathcal{H}$.
+
+If we denote $\vec{a}$ (with components $a_i$ as the vector of the eigenvalues, that is, $A_i \ket{\vec{a}} = a_i \ket{\vec{a}}$, then we can write a completeness relation for the CSCO:
+
+\begin{equation}
+    \mathbb{1} = \prod_{i=1}^n \qty(
+    \sum_{a_i \in \sigma_d} + \int _{a_i \in \sigma_c} \dd{a_i}
+    ) \dyad{\vec{a}}
+\end{equation}
+
+\paragraph{Kato-Rellich} Take a two-particle sysyem with a potential depending on their distance $r$, if: $U(r) \sim r^{-\alpha}$ near $r=0$ with $a<3/2$; $U(r) \sim 0$ near $r = \infty$, and $U(r) \in L^2 ([0,1], r^2 \dd{r})$.
+
+Then the domain of the Hamiltonian for each of the particles is the same as in the free particle case ($\psi \in L^2$ for the position, $p^2\tilde{\psi} \in L^2$ for the momentum).
+
+\paragraph{Bloch} If we have $H = p^2/(2m) + V(x)$ and $V$ is periodic, such that $\exists a : \forall x: V(x+a)=V(x)$. Then the solution of the Schrödinger equation looks like
+
+\begin{equation}
+    \psi(x) = U_k(x) e^{ik\cdot x}
+\end{equation}
+
+With $U_k$ being a periodic function (still with period $a$), and $\abs{k} \leq \pi/a$ being the Bloch vector.
+
+\paragraph{Perturbation theory} If our Hamiltonian looks like $H=H_0 + V$, where $V$ is a small\footnote{Note that we do not look at the absolute value of $V$ but at the size of its effect.} perturbation, we can write it as $H = H_0 + \lambda V$. We can also add more perturbation orders.
+
+Then: we call the unperturbed eigenvalues $\varepsilon_n^0$, the perturbed eigenvalues up to order $k$ $\varepsilon^k_n$. We normalize the eigenkets by choosing $\braket{\varepsilon_n}{\varepsilon^0_n}=1$, which means $\braket{\varepsilon^k_n}{\varepsilon^0_n}=0$ for $k\geq 1$.
+
+We find the following closed formula for the eigenvalues: $\varepsilon_n^k = \bra{\varepsilon_n^0} V \ket{\varepsilon_n^{k-1}}$.
+For their eigenvectors, we find the components wrt the unperturbed eigenbasis by using an unperturbed completeness: $\ket{\varepsilon_n^k} = \sum_{n\neq m} \ket{\varepsilon_m^0} \braket{\varepsilon_m^0}{\varepsilon_n^k}$, (the term with $n=m$ would be zero!) These components are:
+
+\begin{equation}
+    \braket{\varepsilon^0_m}{\varepsilon^k_n} = \frac{1}{\varepsilon^0_n-\varepsilon^0_m} \qty(
+    \bra{\varepsilon_m^0} V \ket{\varepsilon_n^{k-1}} - \sum_{l=1}^k \varepsilon_m^l \braket{\varepsilon_m^0}{\varepsilon_n^{k-l}}
+    )
+\end{equation}
+
+If we have degeneracy, that is, for a single eigenenergy there are many eigenvectors indexed as $\ket{\varepsilon_{m, \alpha}}$, we might be dividing by zero! but we can diagonalize the potential in the eigenspaces, so that $\bra{\varepsilon_{m, \alpha}^0} V \ket{\varepsilon_{m, \beta}^0}=0$ for $\alpha \neq \beta$. Then we can sum over the degeneracy as well, and we will not have any division by zero on a non-vanishing term.
+
+\section{Lemmas and observations}
+
+\paragraph{Probability function}
+
+For any set $\Delta \in \mathcal{B} (\mathbb{R})$:
+
+\begin{equation}
+    P^A_\Sigma (\Delta) = \langle \chi_\Delta \rangle _\Sigma
+\end{equation}
+
+then:
+
+\begin{equation} \label{eq:prob_measure}
+    P^A_\Sigma ( ]-\infty, \lambda]) 
+    =\langle \Theta (\lambda - A) \rangle_\Sigma
+\end{equation}
+
+\paragraph{Symmetric operators} Their expectation values $\ev{A}{\psi}$ are real $\forall \psi \in D(A)$.
+
+For a symmetric operator $A$, $\Delta A_\psi = 0 \implies A\psi = a \psi $, with $a = \langle A \rangle_\psi$.
+
+The eigenstates of a symmetric are orthogonal: $\lambda_n \neq \lambda_m$ implies $\braket{\lambda_n}{\lambda_m} = 0$.
+
+Spectral theorem: we can find an orthonormal basis for $\mathcal{H}$ made of eigenstates of $A$. In this basis,
+
+\begin{equation}
+    \langle A \rangle_\psi = \sum _n \lambda_n \frac{\abs{\braket{\lambda_n}{\psi}}^2}{\norm{\psi}^2}
+\end{equation}
+
+where $\abs{\braket{\lambda_n}{\psi}}^2/\norm{\psi}^2$ is then the probability of getting the measurement $\lambda_n$ from an observation of $A$. From $\qty{\ket{\lambda_n}}$ being a basis, then, we get $\Delta A_\psi = 0 \iff A\psi = a \psi $.
+
+\subparagraph{Projector representation of operators} If $A$ is self-adjoint, we can write it as
+
+\begin{equation}
+    A = \sum_n \lambda_n \ketbra{\lambda_n}{\lambda_n}
+\end{equation}
+
+which allows us to take functions of it, which then only act on the eigenvalues.
+So, we can calculate 
+
+\begin{equation}
+    \langle A \rangle_\psi = \int \lambda \dd \braket{\psi}{P^A (\lambda) \psi}
+    = \int \lambda \dd P^A_\psi (\lambda)
+\end{equation}
+
+with 
+
+\begin{equation}
+    P^A (\lambda) = \sum _n \Theta (\lambda - \lambda_n) \ketbra{\lambda_n}{\lambda_n}
+\end{equation}
+
+\paragraph{On self-adjointness} If $A$, $B$ are self-adjoint: $A+B$ also is, $AB$ generally is not; but
+
+\begin{equation}
+    \frac{[A, B]}{i\hbar}
+\end{equation}
+
+is.
+
+\paragraph{Domain of $H$} If $H = p^2 / 2m + V(x)$, its domain is not dense in $\mathcal{H}$ in general. However if either $V$ is limited, or it has spherical symmmetry in 3D, then the domain of $H$ coincides with that of $p^2$:
+
+\begin{equation}
+    D(p^2) = \qty{
+    \psi \in L^2: p^2 \tilde{\psi}(p) \in L^2
+    }
+\end{equation}
+
+\paragraph{Invariance of spectrum} The spectrum of an observable $A$ does not depend on the concrete Hilbert space: $\sigma(A) = \sigma(U^\dag A U)$, $U$ being the unitary operator which gives the isometry between Hilbert spaces.
+
+\paragraph{Norm of operators} In general we have that
+
+\begin{equation}
+    \norm{A} = \sup_{\lambda_n \in \sigma(A)} \abs{\lambda_n} 
+\end{equation}
+
+Note that this extremum may be infinite.
+
+\paragraph{On residual spectrum} Self-adjoint operators and unitary operators do not have residual spectrum.
+
+\paragraph{Probability measure in diagonal form}
+
+Its discrete-spectrum part and continuous-spectrum part are derived by differentiating the definition of an abstract probability measure:
+
+\begin{equation}
+    \eval{\dd{P^A(\lambda)}}_{\sigma_p(A)} = 
+    \sum _{\lambda_n \in \sigma_p(A)} \delta(\lambda - \lambda_n) \sum _{r=1}^{d(\lambda_n)} \dyad{\lambda_n, r} \dd{\lambda}
+\end{equation}
+
+\begin{equation}
+    \eval{\dd{P^A(\lambda)}}_{\sigma_c(A)} = 
+    \sum _{r=1}^{d(\lambda)} \dyad{\lambda, r} \dd{\lambda}
+\end{equation}
+
+Note that the integral of $\dd{P^A(\lambda)}$ is 1.
+
+\paragraph{Heisenberg approach, and Poisson brackets}
+
+Instead of evolving the wavefuction $\psi \rightarrow U(t) \psi$ we can evolve the operators $A \rightarrow U^\dag A U = A^H(t)$. This is equivalent to the Schrödinger approach.
+
+The Poisson brackets between averages of operators on a fixed state are equal to averages of Lie brackets between the operators (divided by a factor of $i\hbar$:
+
+\begin{equation}
+    \qty{\ev{A}{\psi}, \ev{B}{\psi}} = \ev**{\frac{[A, B]}{i\hbar}}{\psi} 
+\end{equation}
+
+\paragraph{Probability current}
+
+Given any solution $\psi$ to the Schrödinger equation with $H = p^2/2m + V(x)$, we want to find the continuity equation for the probability density $\abs{\psi}^2$. To do this, writing SE for the Schrödinger equation, we calculate $\psi^* \text{SE} - \psi \text{SE}^*$, which after the manipulation 
+$(b \partial^2 b^* - b^* \partial^2 b) = \partial(b \partial b^* - b^* \partial b)$ yields:
+
+\begin{equation}
+\partial_{tt} \abs{\psi}^2 + \frac{\hbar}{2mi} \partial_x \qty(
+\psi^* \partial_x \psi - \psi \partial_x \psi^*
+) = 0
+\end{equation}
+
+If we generalize this to 3 dimensions, then the current $\mathbf{j}$ in $\partial_t \abs{\psi}^2 + \nabla \cdot \mathbf{j} = 0$
+is
+
+\begin{equation}
+    \mathbf{j} = \frac{\hbar}{2mi} \qty(
+    \psi^* \nabla \psi - \psi \nabla \psi^*
+    )
+\end{equation}
+
+\paragraph{Tensor product basics}
+
+We can obtain a basis for the product space as $\ket{e_i} \otimes \ket{e_j}$, $i, j \in \mathbb{N}$.
+
+It is known that for $\mathcal{H}_d = L^2 (\mathbb{R}^d, \dd[d]{x})$: 
+
+\begin{equation}\label{eq-dimension-tensorspaces}
+    \mathcal{H}_d \otimes \mathbb{C}^N \simeq \bigoplus_{j=1}^N \mathcal{H}_d \qquad \mathcal{H}_n \otimes \mathcal{H}_m \simeq \mathcal{H}_{m+n} 
+\end{equation}
+
+We also have $L^2 (\mathbb{R}^3, \dd[3]{x}) = L^2 (\mathbb{R}\ni r, r^2 \dd{r}) \otimes L^2 (S^2 \ni (\theta, \phi), \sin \theta \dd{\theta} \dd{\phi})$
+
+\paragraph{A matrix identity}
+For operators $A$ and $B$, the following holds:
+
+\begin{equation} \label{eq-matrix-identity}
+    e^{-A} B e^A = \sum_{n=0}^\infty \frac{1}{n!} L_A ^n (B) 
+\end{equation}
+
+where $L_A (B) = [B, A]$ is the operator which takes the commutator with $A$.
+
+\paragraph{Representation of translations} Translations, $\bra{x} \rightarrow \bra{x - a}$, are represented with
+
+\begin{equation}
+    U(a) = \exp(a \cdot \nabla)
+    =\exp( -\frac{a \cdot p}{i\hbar})
+\end{equation}
+
+since $\mathbb{R}^n$ is simply connected: a projective unitary representation is the same as a regular unitary representation, and we find this formula by differentiating the translated autobra, applied to a generic test ket.
+
+\paragraph{Representation of rotations} It can be shown that
+
+\begin{equation}
+    \exp(\frac{\varphi L_3}{i\hbar}) x \exp(-\frac{\varphi L_3}{i\hbar}) = R(\hat{u}_3, \varphi) x
+\end{equation}
+
+where $R(\hat{u}_3, \varphi) x$ is a rotation of angle $\varphi$ around the $z$ axis (by using formula \eqref{eq-matrix-identity}).
+
+A generic rotation $\exp(-\varphi (L\cdot n) / i\hbar)$ must equal the identity if $\varphi \in 2 \pi \mathbb{N}$: but then $\sigma(L\cdot n) \subseteq \hbar \mathbb{Z}$.
+
+The universal covering of $SO(3)$ is unitarily represented in $\mathcal{H}$. $SO(3)$ is isomorphic to $S^3$ with all of its antipodes identified, or equivalently to unit quaternions or matrices in $SU(2)$ (still, with antipodes identified).
+
+A unitary representation of $SU(2)$ is then a projective unitary representation of $SO(3)$. The algebra of its generators is the same as that of the generators of regular rotations (by the definition of universal covering), 
+
+\paragraph{Properties of angular momentum} Angular momentum always obeys $[J^2, J_i] = 0$.
+
+For a generic angular momentum we define: $J_\pm = J_1 \pm iJ_2$. Then $[J_3, J_\pm] = \hbar J_\pm$.
+
+\begin{equation}
+    J^2 = J_\pm J_\mp \pm \hbar J_3 + J_3^2
+\end{equation}
+
+We can prove that, for a simultaneous eigenvalue of $J^2, J_3$: $\ket{\lambda m}$ (where $J^2 \ket{\lambda m} = \hbar ^2 \lambda \ket{\lambda m}$ and $J_3 \ket{\lambda m} = \hbar m \ket{\lambda m}$):
+
+\begin{itemize}
+    \item $\lambda = j(j+1)$, $j\in \mathbb{N}/2$;
+    \item $\abs{m} \leq j$;
+    \item $j$ and $m$ are either both half-integer of both integers;
+    \item $\sigma(J^2, J_3)$ is \emph{discrete}.
+\end{itemize}
+
+\begin{equation} \label{eq-eigenvalues-j-}
+    J_\pm \ket{\lambda m} = \hbar \sqrt{j(j+1) - m(m\pm 1)} \ket{\lambda, m\pm 1}
+\end{equation}
+
+\paragraph{Orbital momentum}
+
+Orbital momentum obeys $[L_i, x_j] = i \hbar \varepsilon_{ijk} x_k$, and an identical formula for $p$ instead of $x$.
+
+In spherical coordinates on $S^2$, we have $L_3 = -i\hbar \pdv{}{\varphi}$. We can express $L_\pm$ and $L^2$; then by applying $L_-$ repeatedly to $\ket{ll}$ (which satisfies ($L_+ \ket{ll} = 0)$ we can find the eigenfunctions.
+These are the spherical harmonics $Y^m_l(\theta, \varphi)$. For even/odd values of $l$ they are even/odd. They form an orthonormal basis of $L^2(S^2, \dd{\Omega})$.
+
+If we fix the total angular momentum in a specific direction we cannot precisely measure the directional momentum $n\cdot L$ in two different directions since they do not commute. We find
+
+\begin{equation}
+    \Delta (L\cdot n)_\psi 
+    \Delta (L\cdot m)_\psi \geq
+    \frac{\hbar}{2} \abs{\ev{(n\wedge m)\cdot L}{\psi}}
+\end{equation}
+
+\paragraph{Spin} A unitary representation of $SU(2)$ must be the one to generate spatial rotations. But the exponential of the orbital angular momentum is a representation of $SO(3)$: so there must be some other rotation. It cannot be something we simply add onto $L$ as in $L+S$, still acting on $\mathbb{R}^3$, since then it would also not commute with position and momentum, but since those are irreducible it would necessarily be zero.
+
+$S$ must act on another space: so it must be that $\mathcal{H} = L^2 (\mathbb{R}^3, \dd[3]{x}) \otimes \mathcal{H}_s$.
+
+$S$ will also be a rotation operator in $\mathcal{H}_s$, and since $\qty{x, p, S}$ are an irreducible set of operators, and $S^2$ commutes with all of them, it must be constant. So a quantum particle is defined by its total spin $s \in \mathbb{N}/2$.
+$S_3$ can take all the values with integer difference from $s$, with absolute value less than or equal to it. Then we must have $\dim \mathcal{H}_s = 2s+1$. 
+
+Using identity \eqref{eq-dimension-tensorspaces} we see that our system will be described by $2s+1$ wavefunctions.
+
+\subparagraph{Spin 1/2} $\mathcal{H}_{1/2}$ is $\mathbb{C}^2$, so our operators are complex 2x2 matrices. The eigenvalues must be $\pm \hbar/2$, so we normalize by the absolute value of this and get $S = \frac{\hbar}{2} \sigma$, where $\sigma$ is a 3-vector of 2x2 matrices. We can go to a basis in which one is diagonal: we take $\sigma_3$, then it will necessarily be $\smqty(\pmat{3})$.
+
+We now want to find $\sigma_i$ for $i=1, 2$. Since $\sigma_3^2 = \mathbb{1}$, it must be the same for the others. Also, they must be self-adjoint.\footnote{We start by manipulating $0 = \sigma_z^2 \sigma_y - \sigma_y \sigma_z^2$, then define the anticommutator...}
+
+We find the other two matrices, $\smqty(\pmat{1})$ and $\smqty(\pmat{2})$. We generally work in this basis, $\ket{\uparrow}_3$ and $\ket{\downarrow}_3$. The eigenvalues of $\sigma \cdot n$ for a generic unit vector $n \in S^2$ with the usual coordinates are:
+
+\begin{equation}
+\mqty(\ket{\uparrow}_n \\ \ket{\downarrow}_n) = 
+\mqty( \cos(\theta/2) e^{-i\varphi/2} & \sin(\theta/2) e^{i\varphi/2} \\
+-\sin(\theta/2) e^{-i\varphi/2} & \cos(\theta/2) e^{i\varphi/2} )
+\mqty(\ket{\uparrow}_3 \\ \ket{\downarrow}_3)
+\end{equation}
+
+\paragraph{Composition of angular momenta} We have two angular momenta $j_1$, $j_2$. Their square and value along $z$ can be simultaneously diagonalized; but we can also diagonalize their sum $J^2$ and $J_z$, along with $j_1^2$ and $j_2^2$.
+
+We always keep the same eigenvalue for $j_1^2$ and $j_2^2$, and switch between the bases $\ket{m_1}\ket{m_2}$ and $\ket{JM}$. The combinations of $m_1, m_2$ corresponding to a single $M$ is said to be a descending multiplet (in which $J$ varies). We have the following isomorphism of Hilbert spaces:
+
+\begin{equation} \label{eq-spaces-angular-momentum}
+    \mathcal{H}_{j_1} \otimes \mathcal{H}_{j_2} = \bigoplus_{J=\abs{j_1-j_2}}^{j_1+j_2} \mathcal{H}_J
+\end{equation}
+
+where $\mathcal{H}_{j_i}$ are the spaces in which $j_i$ has a fixed value, so they have an eigenbasis written as $\ket{m_j}$ (and analogously in $\mathcal{H}_J$ a basis is $\ket{M}$). 
+
+The spaces in \eqref{eq-spaces-angular-momentum} are those within which we work when treating a single particle (whose spin and orbital momentum do not change), but if we want to consider the general Hilbert space and write its completeness relation, we just take the direct sum of \eqref{eq-spaces-angular-momentum} for all possible values of $j_1$, $j_2$. 
+
+\subparagraph{Clebsch-Gordan}
+
+The coefficients which allow us to switch between the two bases are the \emph{Clebsch-Gordan coefficients}: they are $(\bra{j_1, m_1} \otimes \bra{j_2, m_2}) \ket{J, M}$ (and we will denote $\bra{j_1, m_1} \otimes \bra{j_2, m_2}$ as $\bra{j_1, m_1, j_2, m_2}$). In general they could be complex numbers, and to perform the inverse switch of basis we would have to take the conjugate: this is unwieldy, so (since we work in Hilbert spaces modulo a complex phase) we can take them to be real and positive.
+
+They can be found in tables, but the way to calculate them if lost on an island filled with angry fermions is to start from $\braket{j_1, m_1=j_1, j_2, m_2=j_2}{J, M=J}$ (both momentums are aligned), we can then repeatedly apply the operator $J_- = j^1_- \otimes \mathbb{1} + \mathbb{1} \otimes j^2_-$ and calculate the eigenvalues with formula \eqref{eq-eigenvalues-j-}.
+
+\section{Specific problems}
+
+\paragraph{Wavepackets and constant potentials}
+
+If our Hamiltonian is of the form $H = p^2 /2m + V_0$ (we work in $\mathbb{R}$ for simplicity, but the generalizations to $n$ dimensions are straightforward), its general eigenfunction $\phi_\varepsilon$ such that $H\phi_\varepsilon = \varepsilon \phi_\varepsilon$ is of the form 
+
+\begin{equation}
+\phi_\varepsilon (x) = c_1 e^{ikx} + c_2 e^{-ikx}
+\end{equation}
+
+with $k = \sqrt{2m(\varepsilon - V_0)} / \hbar$. Since $k$ and $\varepsilon$ are dependent on each other, we can write $\phi_k$ as well as $\phi_\varepsilon$.
+
+We can construct a packet of these eigenfunctions so that our wavefunction will be in $L^2 (\mathbb{R})$:
+
+\begin{equation}
+\psi(x) = \frac{1}{\sqrt{2\pi}} \int_0^\infty f_{k_0} (k) \phi_k (x)
+\end{equation}
+
+where $f_{k_0} (k)$ is a positive function with integral 1 and with a maximum in $k_0$.
+
+If the potential $V_0$ is only locally constant, we can do this for every interval, and then connect the solutions by assuming continuity of the wavefunction and its first derivative.
+
+\paragraph{General 1D potentials, qualitatively}
+
+We take the usual Hamiltonian $H = p^2/2m + V(x)$, with $V(x)$ having finite limits at $\pm \infty$.
+
+WLOG, we take the zero of the energy to be $\lim_{x\rightarrow + \infty} V(x)$, and also WLOG $\lim_{x\rightarrow - \infty} V(x) = V_\infty >0$. 
+
+Then we have three cases. We write $\varepsilon$ for the energy of the wavefunction. $\varepsilon$ must be greater than the minimum value of the potential.
+
+\begin{itemize}
+    \item $\varepsilon < 0$: we have discrete spectrum with degeneracy one;
+    \item $0 < \varepsilon < V_\infty$: we have continuous spectrum with degeneracy one;
+    \item $0 < V_\infty < \varepsilon$: we have continuous spectrum with degeneracy two.
+\end{itemize}
+
+\paragraph{Harmonic oscillator} We start with a Hamiltonian $H = p^2/2m + m \omega^2 x^2 /2 = \hbar \omega ( P^2 + X^2)/2$, with $X = x \sqrt{m\omega / \hbar}$, $P = p /\sqrt{m\omega \hbar}$. Note that it is a sum of squares, so the total energy must be positive.
+
+We define $a = (X + iP)/\sqrt{2}$. Then we can see that $H = \hbar \omega (a^\dag a + 1/2) = \hbar \omega H'$.
+So the spectrum of $H'$ is just that of $a^\dag a \equiv N$ plus a constant $1/2$.
+
+We then find the algebra of these operators: $[a, a^\dag] = 1$, $[a, N] = a$, $[N, a^\dag] = a$ (note the inversion of the order in the commutators!).
+
+By using the relation $Na = [N, a] + aN$ we can see that, if $N\psi = \lambda \psi$, $Na\psi = (\lambda -1) \psi$, and analogously $Na^\dag \psi = (\lambda+1)\psi$. This means that if $\lambda$ is an eigenvalue of $N$, $\lambda+m$, $m\in \mathbb{Z}$ also is.
+
+However, $\lambda$ must be nonnegative, since $\ev{a^\dag a}{\psi} \geq 0$. Therefore, $\forall \lambda: \exists m \in \mathbb{N}: a^m \ket{\lambda} = (\lambda -m)\ket{\lambda} = 0$.
+So the $\lambda$ are actually just the natural numbers: this means that we can find all the eigenfunctions like $\ket{n} = (a^\dag)^n \ket{0}$.
+
+We just need to explicitly find $\ket{0}$, which satisfies $a\ket{0}=0$. Since $p = -i \hbar \pdv{}{x}$, we can see that $P = -i \pdv{}{X}$. Therefore $a = X + \pdv{}{X}$, and the solution to $a\psi = 0$ is a gaussian:
+
+\begin{equation}
+    \braket{X}{0} \propto \exp(-\frac{X^2}{2})
+\end{equation}
+
+\paragraph{Two-particle systems and Keplero}
+
+We treat a two-particle system, in which they have a central potential $U(r)$ between them. By Kato-Rellich we do not have concerns about the domain of the Hamiltonian. We switch to center of mass ($R$) and vector distance ($x$) coordinates. We factor $\psi(R, x) = \varphi(R)\psi(x)$. This wavefunction satisfies the stationary Schrödinger equation, with the reduced masses appropriately adjusted (sum of masses and harmonic sum of masses).
+
+The center-of-mass part is just a single particle Hamiltonian, which we know how to treat.
+
+Since the Hamiltonian is rotationally invariant, our CSCO is $\qty{H, L^2, L_3}$. We can split our Hilbert space into $L^2(R^+, r^2\dd{r})$ and $L^2(S^2, \dd{\Omega})$, in the first of which the CSCO is $\qty{H, L^2}$ (quantum numbers $\varepsilon$, $l$); in the second of which the CSCO is $\qty{L^2, L_3}$ (quantum numbers $l$, $m$). 
+
+By direct computation, the following holds:
+
+\begin{equation}
+    P^2 = X^{-2} \qty(L^2 + (X\cdot P )^2 - i\hbar (X \cdot P))
+\end{equation}
+
+We then write this in polar coordinates, and find that
+
+\begin{equation}
+    P^2 = \frac{L^2}{r^2} - \hbar^2 \frac{1}{r} \pdv[2]{}{r}r
+\end{equation}
+
+so our radial momentum is\footnote{Note that these are operators, so $\partial r$ does not mean the derivative of $r$, but instead that when applied to a wavefunction $\psi$ we need to calculate $\partial (r \psi)$.}
+
+\begin{equation} \label{eq-radial-momentum-hydrogen}
+    P_R = -i\hbar \frac{1}{r}\pdv{}{r}r
+\end{equation}
+
+The momentum in \eqref{eq-radial-momentum-hydrogen} can be shown to be self-adjoint in $L^2 ( \mathbb{R}^+, r^2 \dd{r})\cap \qty{r\psi(\pm \infty)=0}$.
+
+To simplify calculation we can go from the eigenfunctions $h_{\varepsilon l}$ to $\chi_{\varepsilon l} = r h_{\varepsilon l}$, which belong to $L^2(\mathbb{R}^+, \dd{r})$.
+This function obeys the equation:
+
+\begin{equation} \label{eq-radial-quantum-keplero}
+    -\hbar^2 \dv[2]{}{r} \chi_{\varepsilon l} = \qty(
+    2m (\varepsilon - U(r)) - \frac{\hbar^2 l (l+1)}{r^2}
+    ) \chi_{\varepsilon l}
+\end{equation}
+
+Which means that, just like the classical tractation of the problem, we can rewrite the equation to have an effective potential which includes the centrifugal barrier.
+
+\subparagraph{Spherical waves} We treat the case of zero potential $U(r)$, which corresponds to free waves. We define $k = \sqrt{2m\varepsilon/\hbar^2}$. By plugging in a polynomial ansatz and imposing $\chi_{\varepsilon l} (0) = 0$ (which gives $h_{\varepsilon l} \sim r^l$, we find that $h_{k l}(r)$ (we write it with index $k$ since there is a bijeciton between the $k$s and the $\varepsilon$s) obeys
+
+\begin{equation}
+ h_{k l}''' + \frac{2 (l+1) h_{k l}''}{r} + \qty(
+ -\frac{2 (l+1)}{r^2} + k^2
+ ) h_{k l}' =0
+\end{equation}
+
+And we can check that $rh_{k (l+1)}$ obeys the same equation as $h_{k l}'$.
+
+Also, for $l=0$ we find the equation $\qty(\dv[2]{}{r} + k^2)\chi_{\varepsilon 0}$, which with the boundary condition gives us $\chi_{\varepsilon 0}\sim \sin(kr)$, so $h_{\varepsilon 0} \sim \sin(kr)/r$. These two facts together allow us to find the general $h_{\varepsilon l}$ (which we show with the right normalization):
+
+\begin{equation}
+    h_{k l} (r) = \sqrt{\frac{2m}{k\pi}} k (-kr)^l \qty(\frac{1}{kr} \dv{}{(kr)})^l \frac{\sin (kr)}{kr}
+\end{equation}
+
+These functions are not in $L^2$, so the spectrum of the Hamiltonian is continuous. 
+
+\subparagraph{Coulomb potential} We treat equation \eqref{eq-radial-quantum-keplero} with $U(r) = - e^2 /r$, that is, a hydrogen atom. We define $a=\hbar^2 / (mc^2)$, $\nu = 1/(ka)$, $x = 2kr$.
+The equation becomes:
+
+\begin{equation}
+    \dv[2]{\chi_{\varepsilon l}}{x} + \qty( -\frac{1}{4} + \frac{\nu}{x} - \frac{l(l+1)}{x^2}) \chi_{\varepsilon l}(x) = 0
+\end{equation}
+
+We can construct an ansatz by requiring the solution to not diverge at 0 and $\infty$. This gives us $\chi_{\varepsilon l} (x) = x^{l+1} e^{-x/2} v_l (x)$, where $v_l(x)$ is an unknown function. We can expand it into a power series, $v_l(x) = \sum_p a_p x^p$. Throwing this into the equation gives us a recurrence formula: 
+
+\begin{equation} \label{eq-hydrogen-recurrence}
+    a_{p+1} = -a_p \frac{\nu -l -1-p}{(p+1)p + (p+1)(2l+2)} \sim a_p /p
+\end{equation}
+
+This means that either the expansion for $v_l(x)$ terminates (ie it is a polynomial) or it is an exponential, $v_l(x) \sim e^x$, but this would mean that the whole solution diverges exponentially $\sim e^{x/2} \notin \mathcal{S}^*$. So it terminates: then we have a $p_{max}$ for which the numerator in \eqref{eq-hydrogen-recurrence} is zero this means $\nu \in \mathbb{N}$, since all the other terms are!
+
+By putting together the results we now have, we find the general form of the radial part of the solution of the Schrödinger equation for a Coulomb potential. It is written with Laguerre Polynomials:
+
+\begin{equation}
+    L^k_j = \sum_{p=0}^j (-)^p \frac{(j-k)!}{(j-p)! (k+p)! j!} x^p
+\end{equation}
+
+\begin{equation}
+    \chi_{nl}(x) = x^{l+1} e^{-x/2} L^{2l+1}_{n-l-1} \qty(\frac{(2l+1)!(n-l-1)!}{(n+l)!})
+\end{equation}
+
+By differentiating the eigenfunction with the maximum angular momentum $l = n-1$, we can find the $r$ for which the probability of finding the particle is largest, which is $r = n^2 a = n^2 \hbar^2 / (mc^2)$
+
+\paragraph{Landau levels} If we have a spinless quantum particle in a plane with a perpendicular magnetic field, the spectrum of the Hamiltonian is just like that of a harmonic oscillator, with $\omega = eB/m$.
+
+\paragraph{Scattering} We consider a particle impacting a target, and we impose the following conditions: the impact must be (relativistically) elastic; the distance between the scattering centers must be larger than their potentials' influence and the target is thin enough (so we can consider just one scattering center).
+
+We want to calculate the differential scattering cross section $\sigma (\theta, \varphi) = \dv{\sigma}{\Omega}$, which is the ratio of the differential probability densities of being scattered in the solid angle $\dd{\Omega}$ when coming from the differential area $\dd{\sigma}$. If we know the impacting and diffused probability currents $j_i$ and $j_d$, the differential scattering cross section is: $\sigma(\theta,\varphi) = r^2 \abs{j_d \cdot r} / \abs{j_i}$ (the formula is like this because we want this to be invariant wrt going further away from the scattering point: the current density will decrease like $1/r^2$, so we multiply by $r^2$).
+
+If we treat the scattering as if it was stationary, and consider an asymptotic wavefunction:
+
+\begin{equation}
+    \psi (x) = \exp(\frac{t\varepsilon}{i\hbar}) \qty(
+    \exp( -\frac{p\cdot x}{i\hbar}) + \frac{f_p (\theta, \varphi)}{r} 
+    \exp(-\frac{pr}{i\hbar})
+    )
+\end{equation}
+
+If we calculate the diffused and incident currents (with the help of the probability conservation formula), we find that the scattering cross section to be $\sigma(\theta, \varphi) = \abs{f_p (\theta, \varphi)}^2$.
+
+This also holds for the generic case.
+
+\paragraph{Nonstationary case} We wish to solve $H\ket{\psi} = (H_0 + V) \ket{\psi} = E\ket{\psi}$, where $H_0$ is the free particle Hamiltonian, ie $-\hbar^2 \nabla^2/(2m)$.
+We know that the Schrödinger equation must be satisfied everywhere, even at infinity where $V=0$. So $E$ is the energy corresponding just to $H_0$ (since it must be conserved).
+Now, we define $\Omega^{-1} = 1/(E-H_0 \pm i\varepsilon)$ as a formal operator which inverts $E-H_0$. Then, inserting a spatial completeness, and denoting $\psi_{HOM}$ as the solution of the homogeneous equation (($E-H_0) \psi_{HOM}=0$), we have:
+
+\begin{equation}
+    \braket{x}{\psi} = \braket{x}{\psi_{HOM}}+ \int \dd[3]{y} \bra{x} \Omega^{-1} \dyad{y} V \ket{\psi} 
+\end{equation}
+
+Note that $\bra{y} V \ket{\psi}$ just means $V(y) \psi(y)$.
+
+We can find the matrix elements $\bra{x}\Omega^{-1} \ket{y}$ by inserting a momentum completeness (we denote the variable momentum as $q$, and the momentum eigenvalue corresponding to $E$ as $p$):
+
+\begin{equation}
+    \bra{x}\Omega^{-1} \ket{y} = \int \dd[3]{q} \bra{x}\Omega^{-1}\dyad{q} \ket{y} = \int \dd[3]{q} \frac{1}{(p^2 - q^2)/2m \pm i\varepsilon} \frac{e^{q \cdot (x-y) / (i\hbar)}}{\sqrt{2\pi}}
+\end{equation}
+
+Now, we create a wavepacket with a small momentum uncertainty, such that the position uncertainty is much larger than the wavelength. Also, the position uncertainty must be larger than the width of the scattering cross section total ($\int \sigma \dd{\Omega}$).
+Also, we do not consider any interference between incoming and diffused wavefunction.
+
+So, we know how to solve the eigenvalue problem to find the incoming $\psi_{in}$ --- note that we have fixed $E$, the eigenvalue for the free Hamiltonian. Now, we can construct a wavepacket with some momentums around $p_0$, distributed according to $g_{p_0}(p)$ (which, without being too specific, should look like a symmetric and rather sharp peak around $p_0$). We also evolve each eigenfunction in this wavepacket.
+
+\begin{equation}
+    \psi(x, t) = \int  g_{p_0} (p) e^{\frac{\varepsilon t}{i\hbar}} \psi_{IN}(x) \dd[3]p
+\end{equation}
+
+This looks like a small packet happily travelling along with speed $p_0 / m$. We need to do a lot of calculations and approximations to solve this integral; and after doing so we find that the differential scattering cross section depends on a function of the incoming wave:
+
+\begin{equation}
+    f_P (\theta, \varphi) = - \frac{2m}{k} \int \frac{\dd[3]{y}}{4 \pi} V(y) \psi_{IN}(y) e^{-ipr\cdot y}
+\end{equation}
+
+To actually calculate $\sigma$, we integrate the probability density of the outgoing wavefunction, multiplied by $r^2$, along an outgoing ray, and divide it by the integral of the probability density of the incoming function over a line parallel to the propagation direction. 
+We then get $\sigma = \abs{f_P}^2$.
+
+\paragraph{Particle swaps} We treat a many-particle system: it is described in $\mathcal{H}^{\otimes N}$. In this space we want to find a unitary representation of the operation of switching particles. The group of particle permutation $S_N \ni \sigma$ is generated by adjacent particle swaps $\sigma_i$, and it obeys the properties: $[\sigma_i \sigma_j] =0$ when $\abs{i-j}>2$; $\sigma_i \sigma_{i+1} \sigma_i = \sigma_{i+1} \sigma_i \sigma_{i+1}$.
+
+The representation of this group can be said tom just remap the basis vectors $e_{ij}$ to $e_{i \sigma{j}}$.
+
+In general, by the unitarity of the representation of a swap $U(\sigma)$, it needs to hold that $U(\sigma) \ket{\psi} = c \ket{\psi}$ for some $c \in \mathbb{C}$.
+
+\subparagraph{Superselection sectors}
+
+\emph{If} it holds that $\sigma_i^2 = \mathbb{1}$, then $c=\pm 1$. $c$ must be the same for all particles in a set of identical particles we are allowed to swap (otherwise we would have a contradiction by the rule $\sigma_i \sigma_{i+1} \sigma_i = \sigma_{i+1} \sigma_i \sigma_{i+1}$). Then, we can distinguish \emph{fermions} for which $c=-1$ and \emph{bosons} for which $c=+1$.
+This immediately gives us the Pauli exclusion principle.
+
+\subparagraph{Fractionary quantum Hall effect} If it is not the case that $\sigma_i^2 = \mathbb{1}$, then the orientation of the swaps matters, we need to keep track of it ($\sigma_i^+ \neq \sigma_i^-$).
+we must still have $U(\sigma) \ket{\psi} = c \ket{\psi}$, but now $c = e^{i\theta}$ for \emph{any} theta. These are braid statistics
+The particles obeying these statistics are called anyons.
+
+We can see this in an experiment. We create an almost two dimensional system, by having two charged semiconductor plates near each other with a magnetic field. We see Landau levels ($\sim$ harmonic oscillator energy levels), but because of impurities we also observe slight imperfections in the energy distribution. This is the whole Hall effect.
+
+Now, at very low temperatures, our particles ($e^-$) are almost all the the lowest energy level ($n\hbar c / (eB) = 1/3$) and they obey braid statistics with $\theta=2\pi /3$: their wavefunction is
+
+\begin{equation}
+    \psi (z_1, \dots, z_n) = \prod_{i<j} (z_i-z_j)^{1/3} \prod_{i=1}^N e^{-i \abs{B}^2}
+\end{equation}
+
+\paragraph{Aharonov-Bohm}
+
+We try to define a self-adjoint momentum operator on $\mathbb{R}/\sim$, where $x \sim x+ 2\pi$. 
+The condition to satisfy is $\eval{\phi^*(x) \psi(x)}_{0}^{2\pi} =0$.
+
+We find that $\phi(2\pi) = e^{i\gamma} \phi(0)$ is sufficient (although the naîve $\gamma = 0$ also works). We call this momentum $P_\gamma$. Its eigenfunctions look like $\exp(\frac{i\gamma}{2\pi})\psi_n = A \psi_n$, where $\psi_n$ is an eigenfunction of $P_0$.
+
+Then, $P_\gamma = A^\dag P_0 A$, therefore we can calculate: $P_0 + \frac{\gamma \hbar}{2\pi} = P_\gamma$.
+
+This is physically realized by putting an infinite radially small solenoid through the ring on which the particle lives. We can then perform the canonical substitution $p \rightarrow p - eA/c$ with $-eA/c = \gamma \hbar / (2\pi)$. This implies an observable shift in the spectrum of the momentum, which is observable experimentally.
+
+\subparagraph{Berry phase} The result which expresses this generally is that when going around a loop $C$ the wavefunction gains a phase given by:
+
+\begin{equation}
+    e^{i\gamma} = \exp(\oint_C \braket{\psi}{\dd{\psi}})
+\end{equation}
+
+\paragraph{EPR} We can see experimentally that $\neg (R\wedge L\wedge C)$, and that also $\neg (R \wedge L \wedge \neg C)$.
+
+We see this by having $N$ spinless particles decaying into two fermions with spin $1/2$. Their state is thus $\ket{\psi} = (\ket{\uparrow}_A \ket{\downarrow}_B - \ket{\downarrow}_A \ket{\uparrow}_B)/\sqrt{2}$.
+
+Now, we measure one of them and then see that the other always has the opposite spin. After the measurement, we see around $N/2$ of them with $\ket{\uparrow}_A \ket{\downarrow}_B$ and $N/2$ with $\ket{\downarrow}_A \ket{\uparrow}_B$.
+
+So, were they in a mixed state before the measurement? No, since we can compute that the expected value for the spin in the $x$ direction is $0$ for the superposition, and $1/4$ for the mixed state.
+
+Then, in the time interval between the moment when the supports of the particles start having spacelike distance, and when the measurement is done (on $A$), we have a contradiction: is $B$ in a mixed state, or in a superposition? If $R+L+C$ were the case, both. 
+Experiment says ``superposition''.
+
+\subparagraph{Bell inequalities} We take a two-fermion system, with spins $S_A$ and $S_B$, and define:
+
+\begin{equation}
+    B(\qty{u_i}_i) = S_A \cdot u_0 \otimes (S_B \cdot u_1 - S_B \cdot u_2) + S_A \cdot u_3 \otimes (S_B \cdot u_1 + S_B \cdot u_2)
+\end{equation}
+
+where $u_i$ are 4 unit vectors, and we define the angles $\theta_i$, $i=1,2,3,4$ to be the ones between ($u$\dots) 01, 02, 13, 32 respectively. Then $\theta_1 + \theta_3 + \theta_4 = \theta_2$.
+
+If we take a classical approach to calculating $B$, by making it have a probability distribution wrt a parameter $\lambda$, we see that it must be $\abs{B} \leq 1/2$.
+
+If, instead, we compute $\ev{B}{\psi}$ by allowing for superpositions, we get a different result. Call $\ket{\pm}_{A, B}$ the eigenvector corresponding to spin up/down along the $z$ direction for particle $A$, $B$. Then, for both particles, we can calculate the following values for the spin a given unit vector $u (\theta, \varphi) \in S^2$:
+
+\begin{equation}
+    \ev{S\cdot u}{\pm} = \pm \frac{\cos\theta}{2}
+    \qquad
+    \bra{\pm} S\cdot u \ket{\mp} = \frac{1}{2} \sin\theta e^{\pm i\varphi}
+\end{equation}
+
+Note that the second term is crucial for the interference!
+Using this, we calculate 
+
+\begin{equation}
+    \ev{(S_A \cdot u)(S_B \cdot u')}{\psi} = -\frac{\cos(\theta - \theta')}{4}
+\end{equation}
+
+Now, we take $\theta_1 = \theta_3 = \theta_4 \equiv \theta$, so $\theta_2 = 3\theta$. So $\ev{B}{\psi} = -(3 \cos \theta-\cos(3\theta) /4$, which has a maximum in $\theta=\pi/4, 3\pi/4$. There, $\ev{B}{\psi} = \pm 1/\sqrt{2}$. This is incompatible with $\abs{B} \leq 1/2$.

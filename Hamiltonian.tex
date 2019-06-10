@@ -1,0 +1,33 @@
+\section{Canonical transformations}
+
+The action $A_H$ of the Hamiltonian $H(q, p, t)$ is
+
+\begin{equation}
+    A_H = \int_{t_1}^{t_2} p \cdot \Dot{q} - H \dd{t}
+\end{equation}
+
+We want to change the coordinates, so that we get $K(Q, P, t)$ as the new Kamiltonian. We require $A_H = c A_K + \Delta F$, where $c$ and $\Delta F$ are real constants.
+
+Then
+
+\begin{equation}
+    A_H - c A_K = \int_{t_1}^{t_2}
+    p \cdot \dd{\Dot{q}} + H - c (P \cdot \dd{\Dot{Q}} + K) \dd{t} 
+    = \Delta F
+\end{equation}
+
+and looking at the corresponding differential forms:
+
+\begin{align}
+    \dd{F} (q, Q, t) &= p \cdot \dd{q} + H - c P \cdot \dd{Q} - cK \dd{t} \\  
+    &= p \cdot \dd{q} - c P \cdot \dd{Q} + (H-cK)\dd{t}
+\end{align}
+
+The \emph{canonicity} of the transformation corresponds to the \emph{closure} of the form $\dd{F}$.
+Some other kinds of transformations:
+
+\begin{align}
+    S(q, P, t) &= F(q, Q, t) + c Q \cdot P \\
+    \dd{S} &= p \cdot \dd{q} + cQ \cdot \dd{P} + (cK-H) \dd{t}
+\end{align}
+

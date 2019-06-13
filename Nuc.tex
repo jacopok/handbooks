@@ -5,7 +5,7 @@
 
 \section{Introduction}
 
-Things to remember about nuclear units: \(\hbar c \approx \SI{197}{MeV fm} \) and \(\SI{}{MeV fm} = \SI{10}{eV \angstrom} \); there are weird things like \(e^2 = \SI{1.44}{MeV fm} \). The atomic mass unit is equal to \(\SI{931.5}{MeV} \).
+Things to remember about nuclear units: \(\hbar c \approx \SI{197}{MeV fm} \) and \(\SI{}{MeV fm} = \SI{10}{eV \angstrom} \); there are weird things like \(e^2 = \SI{1.44}{MeV fm} \), \(4 \pi \varepsilon_0 = \). The atomic mass unit is equal to \(\SI{931.5}{MeV} \).
 
 We have indetermination both between position and momentum: \(\Delta x \Delta p \geq \hbar/2\) and between time and energy: \(\Delta E \Delta t \geq \hbar /2\).
 
@@ -28,6 +28,179 @@ We can approximate it as a radial distribution
 
 where \(\rho_0 \approx 0.15 \divisionsymbol \SI{0.2}{ nucleons  \per fm^3} \) is the approximately constant density in the central region, \(r_0 \approx 1.20 \divisionsymbol \SI{1.25}{fm} A ^{1/3}  \) is the approximate radius of the nucleus (corresponding to where the density becomes half of \(\rho_0\)), \(a \approx 0.65 \divisionsymbol \SI{0.7}{fm} \) is the \emph{diffusivity}, which quantifies the length scale at which the density distribution goes to zero.
 
-There are also asymmetric effects, such as a skin of neutrons in the outermost part of the nucleus or a halo, which extends much further than a skin.
+\begin{bluebox}
+  Taking \(r_0 \approx \SI{1.2}{fm} \), we can estimate the nucleon density
+
+  \begin{equation}
+      \rho_0 \approx \frac{A}{V} = \frac{A}{\frac{4}{3} \pi \qty(r_0 A^{1/3})^3} \approx \SI{0.138}{fm^{-3}}
+  \end{equation}
+
+  and the corresponding mass density will be \(\approx \SI{129}{MeV \per fm^3}\) corresponding to \( \SI{2.3e17}{kg \per m^3}\), which is huge when compared to, say, that of a block of Osmium, which is around \(\SI{2.26e5}{kg \per m^3}\).
+\end{bluebox}
+
+There are also asymmetric effects, such as a skin of neutrons in the outermost part of the nucleus or a halo, which extends much further than a skin. This can be seen by looking at the differences in the scattering cross section \(\sigma \approx \pi r_0^2\).
+
+We distinguish the nuclei by the proton number \(Z\), the neutron number \(N\) and their sum \(A = N+Z\). They are written as \(^{A} [Z]\).
+
+\begin{itemize}
+    \item Isotopes have the same \(Z\), \(^{235} \ce{U} \) and \(^{233} \ce{U}  \);
+    \item Isobares have the same \(A\), \(^{44} \ce{Ca} \) and \(^{44} \ce{Ti} \);
+    \item Isotones have the same \(N\), \(^{40} \ce{Ca} \) and \(^{38} \ce{Ar} \);
+    \item Isomeres have the same \(Z\) and \(N\), but are in different excitation states. We require them to be somewhat stable, with half-life \({\gtrsim \SI{e-12}{s}}\), \(^{99}\ce{Tc}  \) and \(^{99m}\ce{Tc}  \).
+\end{itemize}
+
+We also define specular nuclei: denoting the nuclear numbers as \((N,Z)\), \((a, b)\) is isobaric and specular to \((b, a)\).
+
+\begin{bluebox}
+  At the driplines, the excess nucleons are not bound (the effective potential they are in does not have a minimum).
+
+  \(^{8} \ce{B} \) and \(^{8} \ce{Be} \) are isobares.
+
+  \(^{19} \ce{F} \) is an isotone to \(^{17} \ce{F} \).
+
+  The stable isotopes of Samarium are those with \(A=144\), 150, 152, 154.
+
+  The specular nuclide to \(^{11} \ce{Li} \) would be \(^{11} \ce{O} \), but it does not seem to exist.
+\end{bluebox}
+
+The mass of a nuclide is given by \(M (A, Z) = Z m_p + (A-Z) m_n - B(A, Z)\) where \(B\) is the binding energy. It is a good first approximation to say \(B/A \approx \text{const}\), around \(\SI{8}{MeV} \).
+
+Actually, this value increases up to iron, then very slowly decreases, with slight bumps at magic numbers.
+
+\section{Waterdrop model}
+
+A nucleus is similar to a water droplet, like:
+
+\begin{itemize}
+    \item \(\nabla \cdot \vec{v} = 0  \) and similarly the nucleons are roughly incompressible, mantaining a constant density inside the nucleus;
+    \item The evaporation heat of a water drop is directly proportional to its mass, and similarly we can approximate \(B \propto A\);
+    \item The water molecules are held together by intermolecular Van der Waals forces, with expressions like \(r ^{-12} - r ^{-6} \), and similarly the strong nuclear force has a short range.
+\end{itemize}
+
+We can write a Semi Empiric Mass Formula, which will give us  the best estimate of the waterdrop model for the nuclear mass. We will assume that the nuclear forces \emph{saturate} after a certain point, that is, they have finite support.
+
+\paragraph{Volume term}
+
+The full potential is
+
+\begin{equation} \label{eq:waterdrop-volume-full-potential}
+    V = \sum _{i<j} V_{ij} (\abs{r_i - r_j})
+\end{equation}
+
+so if the nuclear force was long-range we would have \(B \propto A (A-1) \expval{V} \), since the terms in the sum \eqref{eq:waterdrop-volume-full-potential}  are \(A(A-1)/2\) (by \(\expval{V} \) I mean the average binding energy in a nucleon pair).
+
+We must account for the fact that the nucleons only interact with their neighbours in some fixed volume \(V_ \text{int}\): so
+
+\begin{equation}
+    B \propto \frac{A(A-1) V _ \text{int}}{ \underbrace{V_\text{total}}_{\substack{\propto A}} } \propto A-1 \sim A
+\end{equation}
+
+So our first term will be
+
+\begin{equation}
+    B \sim a_V A
+\end{equation}
+
+\paragraph{Surface term}
+
+The surface nucleons interact with less nucleons than the internal ones. This effect will surely be negative and proportional to the surface area, and we are only interested in proportionality, so
+
+\begin{equation}
+    B \sim a_V A - a_S A ^{2/3}
+\end{equation}
+
+\paragraph{Coulomb term}
+
+The positively charged nucleons repel each other: we model the nucleus as a uniformly charged sphere, which will have charge density \(\rho = 3Ze / \qty(4 \pi R^3)\), where \(R\) is the radius of the nucleus. Applying \(\nabla \cdot E = \rho/ \varepsilon_0\) and integrating over a sphere of radius \(r\), we get
+
+\begin{equation}
+    E(r) = \begin{cases}
+        \frac{Zer}{4 \pi \varepsilon_0 R^3 } = \frac{\rho r}{4 \varepsilon_0} \qquad r \leq R  \\
+        \frac{Ze}{4 \pi \varepsilon_0 r^2} = \frac{\rho R^3}{3 \varepsilon r^2} \qquad r \geq R
+\end{cases}
+\end{equation}
+
+The energy density of the electric field is given by \(u = \varepsilon_0 E^2/2\); its integral over all of  space \(U = 4 \pi \int _{0}   ^{\infty} ur^2\dd{r}   \), which corresponds to the Coulomb term to subtract to the binding energy, can be calculated analytically, and is the sum of the external and internal contributions:
+
+\begin{equation}
+    U = \qty(1 + \frac{1}{5}) \frac{(Ze)^2}{8 \pi \varepsilon R}
+\end{equation}
+
+Then we can put all the constants into a term, leaving out only the proportionalities to \(Z^2\) and \(R^{-1} \propto A^{-1/3}\). Now our formula is:
+
+\begin{equation}
+    B \sim a_V A - a_S A ^{2/3} - a_C Z^2 A ^{-1/3}
+\end{equation}
+
+with
+
+\begin{equation}
+    a_C = \frac{3}{5} \frac{e^2}{4 \pi \varepsilon_0} \frac{1}{r_0} \approx \SI{0.7}{MeV}
+\end{equation}
+
+which can be found by recalling \(e^2 = e^2 / (4 \pi \varepsilon_0) \approx \SI{1.44}{MeV fm} \) and \(r_0 \approx 1.2 \divisionsymbol \SI{1.3}{fm} \).
+
+\paragraph{Asymmetry term}
+
+The binding energy between \(pp\) is similar to that between \(nn\), let us call it \(v\), but it is smaller than the \(pn\) attraction by a factor \(\sim 2\), so let us call the \(np\) energy \(2v\). This can be seen empirically from the fact that \(nn\) and \(pp\) are not bound states, while the deuton (\(^{2} \ce{H} \)) is.
+The factor is around 2 because of the Pauli exclusion principle: nucleons are spin\(-1/2\) fermions, so if their spins and isospins are the same they cannot come near one another: the spins will be aligned around half of the times that the isospins are aligned, so this justifies the factor of 2.
+
+The asymmetry term becomes relevant for large \(A\).
+
+When counting the total binding energy we must divide by \(A\) to account for the fact that every nucleon only interacts with its neighbours.
+
+\begin{subequations}
+\begin{align}
+    B _A
+    &= \frac{N v}{A} \qty(N + 2 P)  + \frac{P v}{A} \qty(2N + P) \\
+    &= \frac{v}{A} \qty(N^2 + P^2 + 4 NP)  \\
+    &= \frac{v}{2A} \qty(3N^2 + 3P^2 + 6NP - N^2 - P^2 + 2NP) \\
+    &= \frac{v}{2A} \qty(3A^2 - (N-Z)^2)
+\end{align}
+\end{subequations}
+
+The linear term in \(A\) is the volumetric term; the term to add is \(\propto (N-Z)^2 / A\). So now we have
+
+\begin{equation}
+    B \sim a_V A - a_S A ^{2/3} - a_C Z^2 A ^{-1/3} - a_A \frac{(N-Z)^2}{A}
+\end{equation}
+
+This can be also seen by approximating the nucleus as a Fermi sea: if \(N=Z\) all the nucleons can be at the Fermi energy \(\varepsilon_F\), while if there is a difference some of them will have more energy.
+
+Take \(N-Z = 4i\), with \(i \in \N\), and imagine moving to this configuration from \(i=0\). The first two protons becoming neutrons will raise the energy of the nucleus by \(2 \Delta E\), where \(\Delta E\) is the separation between the energy levels. The next step will take \(6 \Delta E\), and in general  the \(j+1\)-th will take \(2 (2j+1) \Delta E\): we need to add these up,
+
+\begin{equation}
+    \sum _{j=1} ^{i} 2 (2j+1) \Delta E =   2 i^2 \Delta E = 2\frac{(N-Z)^2}{16} \Delta E
+\end{equation}
+
+It can also be shown (CHECK LATER) that \(\Delta E \propto 1/A\). Then we get the same formula as before.
+
+\paragraph{Pairing term}
+
+It is added to the formula to explain the experimental data: the term we need to add looks like
+
+\begin{equation}
+    B_P = \frac{a_P}{A^{1/2}} \qquad a_P = \begin{cases}
+        + \delta \quad &\text{even-even}  \\
+        0 \quad &\text{even-odd}  \\
+        - \delta \quad &\text{odd-odd}
+\end{cases}
+\end{equation}
+
+with \(\delta \sim 11 \divisionsymbol \SI{12}{MeV} \). It is due to the wavefunctions of the nuclides ``pairing up'' in some sense. The exponent being 1/2 is not certain, some say 3/4 fits the data better\dots
+
+\paragraph{SEMF}
+
+The full formula looks like
+
+\begin{equation} \label{eq:SEMF}
+    B \sim a_V A - a_S A ^{2/3} - a_C Z^2 A ^{-1/3} - a_A \frac{(N-Z)^2}{A} \pm \frac{a_P}{A^{1/2}}
+\end{equation}
+
+with \(a_V \approx \SI{16}{MeV} \), \(a_S \approx \SI{17}{MeV} \), \(a_C \approx \SI{0.7}{MeV} \), \(a_A \approx \SI{23}{MeV} \), \(a_P \approx \SI{12}{MeV} \). It fits the data well, for \(A>10 \divisionsymbol 20\).
+
+\paragraph{Mass parables}
+
+If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). Actually, it looks like two parabolas, distanced \(\delta\) apart, with the nuclides switching from one to the other as the parity of \(Z\) changes.
 
 \end{document}

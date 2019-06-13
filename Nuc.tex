@@ -1,7 +1,33 @@
 \documentclass[main.tex]{subfiles}
 
 \begin{document}
+\chapter{Nuclear physics}
 
-Lucky
+\section{Introduction}
+
+Things to remember about nuclear units: \(\hbar c \approx \SI{197}{MeV fm} \) and \(\SI{}{MeV fm} = \SI{10}{eV \angstrom} \); there are weird things like \(e^2 = \SI{1.44}{MeV fm} \). The atomic mass unit is equal to \(\SI{931.5}{MeV} \).
+
+We have indetermination both between position and momentum: \(\Delta x \Delta p \geq \hbar/2\) and between time and energy: \(\Delta E \Delta t \geq \hbar /2\).
+
+We can characterize the atomic particles by mass \(m\), charge \(q\), spin \(s\), half-life and mean charge radius \(\expval{\rho r^2} \sqrt{c} \): this last quantity is of the order \(\SI{.87}{fm}\) for the proton, and \(\SI{-0.1}{fm} \) for the neutron.
+
+\section{Nuclear density}
+
+It it roughly constant up to some radius, then it decays.
+The proper way to write it would be to sum the modulus square of the wavefunction \(\psi_i\) of every nucleon:
+
+\begin{equation}
+    \rho(r) = \sum _{i} \abs{\psi_i (r)}^2
+\end{equation}
+
+We can approximate it as a radial distribution
+
+\begin{equation}
+    \rho(r) \sim \frac{\rho_0}{1 + \exp(\frac{r - r_0}{a})}
+\end{equation}
+
+where \(\rho_0 \approx 0.15 \divisionsymbol \SI{0.2}{ nucleons  \per fm^3} \) is the approximately constant density in the central region, \(r_0 \approx 1.20 \divisionsymbol \SI{1.25}{fm} A ^{1/3}  \) is the approximate radius of the nucleus (corresponding to where the density becomes half of \(\rho_0\)), \(a \approx 0.65 \divisionsymbol \SI{0.7}{fm} \) is the \emph{diffusivity}, which quantifies the length scale at which the density distribution goes to zero.
+
+There are also asymmetric effects, such as a skin of neutrons in the outermost part of the nucleus or a halo, which extends much further than a skin.
 
 \end{document}

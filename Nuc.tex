@@ -140,6 +140,14 @@ with
 
 which can be found by recalling \(e^2 = e^2 / (4 \pi \varepsilon_0) \approx \SI{1.44}{MeV fm} \) and \(r_0 \approx 1.2 \divisionsymbol \SI{1.3}{fm} \).
 
+It might be more accurate for this term to be proportional to \(Z(Z-1)\), since the proper expression for the energy will be:
+
+\begin{equation}
+    U = \frac{e^2}{4 \pi \varepsilon_0} \sum _{i=1}   ^{Z} \sum _{j<i} \frac{1}{\abs{r_i - r_j} }  \propto \frac{Z(Z-1)}{\abs{\overline{r} } }  \propto \frac{Z(Z-1)}{A^{1/3}}
+\end{equation}
+
+where \(\overline{r} \) is the average distance between the protons in the nucleus. We do not know what it looks like, but surely \(\overline{r} \propto r _{\text{nucleus}}  \propto A^{1/3}\).
+
 \paragraph{Asymmetry term}
 
 The binding energy between \(pp\) is similar to that between \(nn\), let us call it \(v\), but it is smaller than the \(pn\) attraction by a factor \(\sim 2\), so let us call the \(np\) energy \(2v\). This can be seen empirically from the fact that \(nn\) and \(pp\) are not bound states, while the deuton (\(^{2} \ce{H} \)) is.
@@ -199,8 +207,38 @@ The full formula looks like
 
 with \(a_V \approx \SI{16}{MeV} \), \(a_S \approx \SI{17}{MeV} \), \(a_C \approx \SI{0.7}{MeV} \), \(a_A \approx \SI{23}{MeV} \), \(a_P \approx \SI{12}{MeV} \). It fits the data well, for \(A>10 \divisionsymbol 20\).
 
+The empirical data do not exactly follow the SEMF: the binding energy is slightly higher at certain \emph{magic numbers}.
+
+The highest binding energy per nucleon is found with \(^{62} \ce{Ni} \) (\(B/A = \SI{8.7945}{MeV} \)), while the lowest mass per nucleon is found with \(^{56} \ce{Fe} \). They can be different because they have different proton/neutron ratios.
+
 \paragraph{Mass parables}
 
-If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). Actually, it looks like two parabolas, distanced \(\delta\) apart, with the nuclides switching from one to the other as the parity of \(Z\) changes.
+If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). Actually, if \(A\) is even it looks like two parabolas, distanced \(2\delta\) apart, with the nuclides switching from one to the other as the parity of \(Z\) changes; if \(A\) is odd the nuclides are always even-odd so it is just one parabola. The asymmetry term is proportional to \((A-2Z)^2\), so we get:
+
+\begin{equation} \label{eq:mass-parabola-params}
+    B = Z^2 \qty(-a_C A^{-1/3} - \frac{4 a_A}{A}) + Z\qty(4a_A) + \text{const}
+\end{equation}
+
+\begin{bluebox}
+  We perform a parabolic fit for the nuclei at \(A = 148\), and compute the coefficients corresponding to the fit parameters according to formula \eqref{eq:mass-parabola-params}. The results are shown in \ref{fig:mass-parabola-fit}.
+
+  The fit parameters give \(a_A = \SI{21.41}{MeV}\), \(a_C = \SI{0.65}{MeV}\), \(a_P = \SI{12.26}{MeV}\). The energy at the vertex of the parabola can be calculated from the model assuming \(a_V = \SI{16}{MeV}\) and \(a_S = \SI{17}{MeV}\) to be \SI{1340}{MeV}, while the real energy is  \SI{1225}{MeV}.
+\end{bluebox}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{figures/parabolic_fits.eps}
+      \caption{Parabolic fit of the mass parabola}
+  \end{subfigure}%
+  \begin{subfigure}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{figures/residuals.eps}
+      \caption{Residuals of the fit}
+  \end{subfigure}
+  \caption{Mass parabola fit}
+  \label{fig:mass-parabola-fit}
+\end{figure}
+
+
 
 \end{document}

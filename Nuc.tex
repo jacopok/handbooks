@@ -307,6 +307,55 @@ instead, we use
 
 where \(\text{sp}\) means 'single particle', \(\mu ^{-1} = m _{\text{sp}} ^{-1} + m _{\text{nucleus}} ^{-1}\).
 
-For nuclei at human temperatures, \(\lessim \SI{e3}{K} \), we have energies \(\lessim \SI{0.13}{eV} = \frac{3}{2} k_B T \ll MeV \), so thermal motion is negligible
+For nuclei at human temperatures, \(\lesssim \SI{e3}{K} \), we have energies \(\lesssim \frac{3}{2} k_B T = \SI{0.13}{eV}  \ll MeV \), so thermal motion is negligible.
+
+\paragraph{\(1D\) infinite well}
+
+We have an infinite well from \(-a/2\) to \(a/2\), and inside it a particle of mass \(m\).
+
+The solutions to the time-independent Schrödinger equation are in the form
+
+\begin{equation}
+    \psi(x) = A \sin(kx) +B \cos(kx)
+\end{equation}
+
+where \(k^2  = 2mE / \hbar^2\) is the square of the wavenumber, which is directly proportional to the momentum \(k = p/\hbar = 2 \pi / \lambda\). We must also consider the boundary conditions: the domain of the Hamiltonian is \(\qty{\psi(x) \in L^2 \,|\, \psi(\pm a/2)=0 } \).
+
+So we have two classes of solutions, proportional to either \(\cos((2q)\pi x/a)\) or \(\sin((2q+1)\pi x/a)\) with \(n
+\in \N\). If we call the even or odd number \(2q (+1) = n_x\), the energy comes out to be
+
+\begin{equation}
+    E = \frac{\hbar^2 k^2}{2m} = \frac{h^2 n_x^2}{8ma^2}
+\end{equation}
+
+\paragraph{\(3D\) potential well}
+
+The problem works out analogously, with
+
+\begin{equation}
+    E = \frac{h^2}{8ma^2} \sum _i  n_i^2
+\end{equation}
+
+so we work in the space \(\Z_+^3 \ni \vec{n} \), where same-energy states live in spherical shells.
+
+The differential number of states in these shells is (approximately) given by the volume of the shell, which is an eighth of the sphere's: \(N = \frac{1}{8} 4 \pi n^2 \dd{n} \). This can also be written as \(\rho(E) \dd{E} \), that is, it corresponds to a density of states.
+
+Then, since the energy is just a function of \(n\), we have
+
+\begin{equation}
+    \dd{E} = \frac{h^2}{8ma^2} \dd{(n^2)} =   \frac{h^2}{4ma^2} n\dd{n}
+\end{equation}
+
+Therefore we can substitute in:
+
+\begin{equation}
+    \rho(E) \dd{E} = \frac{\pi}{2} \underbrace{n}_{\substack{\sqrt{8ma^2 E/h^2}}} \underbrace{n \dd{n} }_{\substack{4ma^2 / h^2} \dd{E} } = \frac{2 \pi  \qty(2ma^2)^{3/2}}{h^3} \sqrt{E} \dd{E}
+\end{equation}
+
+and we can also express this wrt \(p = \sqrt{2mE} \); its differential is \(p\dd{p} = m \dd{E} \):
+
+\begin{equation}
+    \rho(p) \dd{p} = V \frac{4 \pi a^3 p^2 \dd{p} }{h^3} 
+\end{equation}
 
 \end{document}

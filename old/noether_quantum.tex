@@ -1,0 +1,33 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+Prendi la trasformazione e ne trovi il generatore infinitesimo \(\xi\) (in termini della funzione d'onda) corrispondente alla trasformazione \(x \rightarrow x'(s)\)
+
+\begin{equation}
+    \xi = \dv{\psi}{x} \cdot \dv{x'}{s} = \qty(\nabla \psi) \cdot \dv{x'}{s}
+\end{equation}
+
+imposti l'equazione
+
+\begin{equation}
+    \xi = J \nabla_{L^2} K = \frac{1}{i \hbar} \begin{pmatrix}
+    0   & 1 \\
+    -1   & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+    \fdv*{K}{\psi}  \\
+    \fdv*{K}{\psi*}
+    \end{pmatrix}
+\end{equation}
+
+dove \(K = \ev{\hat{K}}{\psi}\): quindi \(\fdv*{K}{\psi*} = \hat{K} \psi\).
+
+Sviluppando il conto, ad esempio, per una rotazione \(R(s)\) con \(\dv*{R}{s} = A = \omega \wedge \), ti dovrebbe venire una cosa come
+
+\begin{equation}
+    \hat{K} \psi = \omega \cdot \qty(x \wedge (-i \hbar \nabla)) \psi
+\end{equation}
+
+e il teorema di Noether ti dice che questa cosa, che è il valor medio della componente di \(L\) lungo \(\omega\), è conservata.
+
+\end{document}

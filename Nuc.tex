@@ -355,7 +355,79 @@ Therefore we can substitute in:
 and we can also express this wrt \(p = \sqrt{2mE} \); its differential is \(p\dd{p} = m \dd{E} \):
 
 \begin{equation}
-    \rho(p) \dd{p} = V \frac{4 \pi a^3 p^2 \dd{p} }{h^3} 
+    \rho(E) \dd{E} = \rho(p) \dd{p} = V \frac{4 \pi a^3 p^2 \dd{p} }{h^3}
+\end{equation}
+
+Where \(a^3 = V\) is the volume, and since we treat a spherically symmetric problem we can rewrite it as \(V = \frac{4}{3}\pi r_0^3\). Then, we put two fermions in each shell, thus getting \(N\) particles in total; multiplying by \(A\) since there are \(A\) nucleons in total and our pdf is normalized for 1 particle.
+
+\begin{equation} \label{eq:fermi-state-density}
+    \dd{N} = 2 \rho(p) \dd{p} = \frac{4}{3 \pi} \frac{r_0^3 p^2}{\hbar^3} A \dd{p}
+\end{equation}
+
+\paragraph{Fermi sea}
+
+This probability density must be normalized: let us consider the protons first. If their occupation is maximal up to \(p_F\) and null after, it must be
+
+\begin{equation}
+    Z
+    = \int _{0}  ^{p_F} 2 \rho( p)  \dd{p}
+    = \int _{0}  ^{p_F} \frac{4}{3 \pi} \frac{r_0^3 p^2}{\hbar^3} A \dd{p}
+    = \frac{4 A}{9 \pi} \frac{r_0^3 p_F^3}{\hbar^3}
+\end{equation}
+
+Turning this around gives
+
+\begin{equation} \label{eq:fermi-sea-momentum-protons}
+    p_F c = \frac{\hbar c}{r_0} \sqrt[3]{\frac{9 \pi }{8} \frac{2Z}{A}}
+\end{equation}
+
+and we can find a similar result for the neutrons.
+Note that, if the nucleus is close to being symmetric, \(p_F\) only depends on \(r_0 \propto \rho_0 = A/V\), not on \(A\) or \(V\) separately.
+
+For light nucluei we can assume \(2Z/A \approx 1\), and we know that \(r_0 \approx \SI{1.25}{fm} \). Then \(p_F \approx \SI{240}{MeV/c} \) and \(E_F \approx \SI{31}{MeV/c^2} \)
+
+If we assume that \(V = E_F + B/A\) (as in, if we were to remove one nucleon at a time we would on average find them at the energy \(-B/A\)) we find that the potential well is around \(\SI{40}{MeV}\) deep.
+
+One more prediction of this model is that, for heavy nuclei with \(N>Z\), \(E_{F_N} > E_{F_P}\); the magnitude of the difference is around \(32\) vs \(\SI{28}{MeV} \) for Uranium.
+
+\paragraph{Isospin}
+
+We consider nucleons as different manifestations of a single particle, with different eigenvalues for the \(z\) component of an operator \(\vec{T} \), which has algebra \(\mathfrak{su}(2)\). So, we assume that the nucleon is an isospin-\(1/2\) particle (that is, the eigenvalue of \(T^2\) is \(3\hbar^2 /4 = \hbar^2 i (i+1)\)).
+
+\paragraph{Average kinetic energy}
+
+We have computed the state distribution differential \(\dd{N} \), with \(\int   \dd{N}  = A\) in equation \eqref{eq:fermi-state-density}. It is useful to split the neutron and proton contributions since in heavy nuclei their numbers differ significantly.
+For both of them we can find:
+
+\begin{equation}
+    \expval{E_k}
+    = \frac{1}{A} \int _{0}   ^{A} p^2 /(2m) \dd{N}
+    = \frac{1}{A} \int _{0}   ^{p_F} \frac{p^2}{2m} \frac{4}{3 \pi} \frac{r_0^3 p^2}{\hbar^3} A \dd{p}
+    = \frac{4}{3 \pi} \frac{r_0^3 }{\hbar^3} \int _{0}   ^{p_F} \frac{p^4}{2m} \dd{p}
+\end{equation}
+
+so adding their contributions we get
+
+\begin{equation}
+    \expval{E_k} = \frac{4 r_0^3}{3 \pi \hbar^3} \qty(\frac{p_{F_p}^5}{10 m_p} + \frac{p_{F_n}^5}{10 m_n})
+\end{equation}
+
+and we can substitute in the formula for the Fermi momentum \eqref{eq:fermi-sea-momentum-protons}, and approximate \(m \approx  m_n \approx  m_p\): we get
+
+\begin{subequations}
+\begin{align}
+    \expval{E_k}
+    &= \frac{4 r_0^3}{30 m \pi \hbar^3} \qty(\qty(\frac{\hbar}{r_0} \sqrt[3]{\frac{9 \pi }{8} \frac{2Z}{A}})^5 + \qty(\frac{\hbar}{r_0} \sqrt[3]{\frac{9 \pi }{8} \frac{2(A-Z)}{A}})^5)  \\
+    &= \frac{3^{7/3}}{80} \frac{\pi^{2/3} \hbar^2}{80 Am r_0^2} \qty(\qty(\frac{2Z}{A})^{5/3} + \qty(\frac{2(A-Z)}{A})^{5/3})
+\end{align}
+\end{subequations}
+
+Now, \(2Z/A\) is approximately 1, so we can do a series expansion! \(2Z/A \approx 1+x\), where \(x = (2Z-A)/A\).
+
+We can use \((1+x)^{5/3} + (1-x)^{5/3} = 2 + 10x^2/9 + O(x^3)\). So,
+
+\begin{equation}
+    \expval{E_k} =  \frac{3^{7/3}}{80} \frac{\pi^{2/3} \hbar^2}{40 Am r_0^2} \qty(1 + \frac{5}{9} \qty(\frac{2Z-A}{A})^2)
 \end{equation}
 
 \end{document}

@@ -63,7 +63,13 @@ We also define specular nuclei: denoting the nuclear numbers as \((N,Z)\), \((a,
   The specular nuclide to \(^{11} \ce{Li} \) would be \(^{11} \ce{O} \), but it does not seem to exist.
 \end{bluebox}
 
-The mass of a nuclide is given by \(M (A, Z) = Z m_p + (A-Z) m_n - B(A, Z)\) where \(B\) is the binding energy. It is a good first approximation to say \(B/A \approx \text{const}\), around \(\SI{8}{MeV} \).
+The mass of a nuclide is given by
+
+\begin{equation}
+M (A, Z) = Z m_p + (A-Z) m_n - B(A, Z)
+\end{equation}
+
+ where \(B\) is the binding energy. It is a good first approximation to say \(B/A \approx \text{const}\), around \(\SI{8}{MeV} \).
 
 Actually, this value increases up to iron, then very slowly decreases, with slight bumps at magic numbers.
 
@@ -142,7 +148,7 @@ which can be found by recalling \(e^2 = e^2 / (4 \pi \varepsilon_0) \approx \SI{
 
 It might be more accurate for this term to be proportional to \(Z(Z-1)\), since the proper expression for the energy will be:
 
-\begin{equation}
+\begin{equation} \label{eq:SEMF-coulomb-correction}
     U = \frac{e^2}{4 \pi \varepsilon_0} \sum _{i=1}   ^{Z} \sum _{j<i} \frac{1}{\abs{r_i - r_j} }  \propto \frac{Z(Z-1)}{\abs{\overline{r} } }  \propto \frac{Z(Z-1)}{A^{1/3}}
 \end{equation}
 
@@ -225,11 +231,11 @@ If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). 
   The fit parameters give \(a_A = \SI{21.41}{MeV}\), \(a_C = \SI{0.65}{MeV}\), \(a_P = \SI{12.26}{MeV}\). The energy at the vertex of the parabola can be calculated from the model assuming \(a_V = \SI{16}{MeV}\) and \(a_S = \SI{17}{MeV}\) to be \SI{1340}{MeV}, while the real energy is  \SI{1225}{MeV}.
 \end{bluebox}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{subfigure}{0.5\textwidth}
       \includegraphics[width=\textwidth]{figures/parabolic_fits.eps}
-      \caption{Parabolic fit of the mass parabola}
+      \caption{Fit and raw data}
   \end{subfigure}%
   \begin{subfigure}{0.5\textwidth}
       \includegraphics[width=\textwidth]{figures/residuals.eps}
@@ -239,6 +245,68 @@ If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). 
   \label{fig:mass-parabola-fit}
 \end{figure}
 
+There are some odd-odd stable nuclei, like \(^{14} \ce{N} \), but they are rare.
 
+\paragraph{Specular nuclei}
+
+If they have \(\Delta Z = 1\) and \(A\) is odd, interesting things happen. Our working example is \(^{15} _{8   } \ce{O} _{7} \) and \(^{15} _{7} \ce{N}_8 \).
+
+The only term which changes in the SEMF between them is the Coulomb term: their \(Z\)s are \((A \pm 1)/2\), therefore (applying the corrected Coulomb formula given in \eqref{eq:SEMF-coulomb-correction}) their difference in energy is given by
+
+\begin{subequations}
+\begin{align}
+  \Delta B  &= \frac{a_C}{A^{1/3}} \qty(\frac{(A+1)(A-1)}{4} - \frac{(A-1)(A-3)}{4})  \\
+  &= \frac{a_C}{A^{1/3}} \qty(\frac{4A -4}{4})  \\
+  &= a_C \qty(A^{2/3} - A^{-1/3})
+\end{align}
+\end{subequations}
+
+We can plot the data for \(\Delta B\) wrt \(x \defeq A^{2/3}\). The plot will be of the form
+
+\begin{equation}
+    \Delta B  = a_C x - \frac{a_C}{\sqrt{x}}
+\end{equation}
+
+The fit works, giving us \(a_C = \SI{631(5)}{keV}\) in this parametrization.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figures/odd_A_fit.eps}
+        \caption{Fit}
+    \end{subfigure}%
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=\textwidth]{figures/odd_A_residuals.eps}
+        \caption{Residuals}
+    \end{subfigure}%
+    \caption{Fit of the difference in \(B\) between symmetric nuclei. The chi square is \(\SI{0.136}{MeV^2} \) for the \(Z^2\) model, and \(\SI{0.062}{MeV^2}\) for the \(Z(Z-1)\) model.}
+    \label{fig:odd-A-fit}
+\end{figure}
+
+\section{Fermi gas model}
+
+\paragraph{Hypotheses}
+
+\begin{itemize}
+    \item The nucleons are spin \(1/2\) fermions;
+    \item the nucleons' collective actions can be represented with a spherically symmetric potential well \(U(r)\), extended in a radius \(R = r_0 A^{1/3}\);
+    \item the nucleon gas is degenerate: the kinetic energy of the nucleons is much less than the thermal energy \(k_B T\).
+\end{itemize}
+
+The proper Hamiltonian, without the mean-field approximation,  would be
+
+\begin{equation}
+    H = \sum _{i} T_i + \sum _{i<j} V_{ij} \qty(\abs{r_i - r_j} )
+\end{equation}
+
+instead, we use
+
+\begin{equation}
+    H_{\text{sp}} = -\frac{\hbar^2 \nabla^2}{2 \mu} + U(r)
+\end{equation}
+
+where \(\text{sp}\) means 'single particle', \(\mu ^{-1} = m _{\text{sp}} ^{-1} + m _{\text{nucleus}} ^{-1}\).
+
+For nuclei at human temperatures, \(\lessim \SI{e3}{K} \), we have energies \(\lessim \SI{0.13}{eV} = \frac{3}{2} k_B T \ll MeV \), so thermal motion is negligible
 
 \end{document}

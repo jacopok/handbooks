@@ -382,7 +382,7 @@ Turning this around gives
 \end{equation}
 
 and we can find a similar result for the neutrons.
-Note that, if the nucleus is close to being symmetric, \(p_F\) only depends on \(r_0 \propto \rho_0 = A/V\), not on \(A\) or \(V\) separately.
+Note that, if the nucleus is close to being symmetric, \(p_F\) only depends on \(r_0 \propto \rho_0 = A/V\), not on \(A\) or \(V\) re
 
 For light nucluei we can assume \(2Z/A \approx 1\), and we know that \(r_0 \approx \SI{1.25}{fm} \). Then \(p_F \approx \SI{240}{MeV/c} \) and \(E_F \approx \SI{31}{MeV/c^2} \)
 
@@ -428,6 +428,20 @@ We can use \((1+x)^{5/3} + (1-x)^{5/3} = 2 + 10x^2/9 + O(x^3)\). So,
 
 \begin{equation}
     \expval{E_k} =  \frac{3^{7/3}}{80} \frac{\pi^{2/3} \hbar^2}{40 Am r_0^2} \qty(1 + \frac{5}{9} \qty(\frac{2Z-A}{A})^2)
+\end{equation}
+
+\section{Ellipsoid deformations}
+
+The nucleus is approximately spherical, but we can model its oscillations as having an axis of rotational symmetry, thus having the shape of an ellipsoid. We call its two equal axes \(b\) and its different axis \(a\). If \(a>b\) the ellipsoid is prolate, otherwise it is oblate.
+
+Since the volume is conserved, if \(R=a=b\) is the spherical configuration, a small perturbation of it must look like \(a = R(1+ \varepsilon )\), \(b = R(1+\varepsilon)^{1/2}\).
+
+Complicated calculations show that the surface increases like \( 4 \pi R^2 \rightarrow 4 \pi R^2 \qty(1  + (2/5) \varepsilon^2 + O(\varepsilon^3))\).
+
+The part of the SEMF that changes looks like
+
+\begin{equation}
+    B = - c_S R^2 - c_C \frac{Z^2}{R}  \text{const}
 \end{equation}
 
 \end{document}

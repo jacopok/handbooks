@@ -430,18 +430,91 @@ We can use \((1+x)^{5/3} + (1-x)^{5/3} = 2 + 10x^2/9 + O(x^3)\). So,
     \expval{E_k} =  \frac{3^{7/3}}{80} \frac{\pi^{2/3} \hbar^2}{40 Am r_0^2} \qty(1 + \frac{5}{9} \qty(\frac{2Z-A}{A})^2)
 \end{equation}
 
-\section{Ellipsoid deformations}
+\section{Nuclear fission}
+
+\paragraph{Ellipsoid deformations}
 
 The nucleus is approximately spherical, but we can model its oscillations as having an axis of rotational symmetry, thus having the shape of an ellipsoid. We call its two equal axes \(b\) and its different axis \(a\). If \(a>b\) the ellipsoid is prolate, otherwise it is oblate.
 
-Since the volume is conserved, if \(R=a=b\) is the spherical configuration, a small perturbation of it must look like \(a = R(1+ \varepsilon )\), \(b = R(1+\varepsilon)^{1/2}\).
+Since the volume is conserved, if \(R=a=b\) is the spherical configuration, a small perturbation of it must look like \(a = R(1+ \varepsilon )\), \(b = R(1+\varepsilon)^{-1/2}\).
 
-Complicated calculations show that the surface increases like \( 4 \pi R^2 \rightarrow 4 \pi R^2 \qty(1  + (2/5) \varepsilon^2 + O(\varepsilon^3))\).
+Calculations show that the surface increases like \( 4 \pi R^2 \rightarrow 4 \pi R^2 \qty(1  + (2/5) \varepsilon^2 + O(\varepsilon^3))\), therefore \(A^{2/3} \rightarrow \qty(1+ (2/5)\varepsilon^2) A^{2/3}\); we will also need the fact that \(A^{-1/3} \rightarrow \qty(1-(1/5)\varepsilon^2) A^{-1/3}\).
 
 The part of the SEMF that changes looks like
 
 \begin{equation}
-    B = - c_S R^2 - c_C \frac{Z^2}{R}  \text{const}
+    B = - a_S A^{2/3} - a_C \frac{Z^2}{A^{1/3}} +  \text{const}
+    \rightarrow - a_S A^{2/3} \qty(1+ \frac 25 \varepsilon^2)  - a_C \frac{Z^2}{A^{1/3}} \qty(1-\frac 15 \varepsilon^2)+  \text{const}
 \end{equation}
+
+so we can compute the difference \(B_ \text{new} - B _ \text{old} = \Delta B\):
+
+\begin{equation}
+    \Delta B
+    = A^{2/3} \qty( - a_S  \frac 25 \varepsilon^2 + a_C \frac{Z^2}{A} \frac 15 \varepsilon^2)
+    = A^{2/3} \frac{\varepsilon^2}{5} \qty(-2a_S + a_C \frac{Z^2}{A})
+\end{equation}
+
+this changes sign, becoming positive, for \(a_S / a_C < Z^2 / (2A)\). The ratio of the constants is known and approximately equal to \(2a_S /a_C \approx 49\). At that point, becoming more elliptical corresponds to gaining energy, so the nucleus is unstable and will fission.
+
+The inequality is reached around \(Z \approx 114\), \(A \approx 270\). This is not the limit seen experimentally: nuclei fission as early as \(Z^2 / A \approx 35\), but it gives a good theoretical justification of the fact that after a certain point we do not find any more stable nuclei.
+
+\paragraph{Nuclear fission}
+
+\(^{235, 238}\ce{U} \) fission spontaneously, around \(\SI{e-9}{}\) to \(\SI{e-5}{} \) of the times they alpha-decay.
+
+In fisssion from \(^{238} \ce{U} \) to \(A \approx 119\) nuclei around \(\SI{200}{MeV} \) of energy is emitted.
+
+\paragraph{Neutron capture causing change in \(Z\)}
+
+It works like this: the atom (say, \(^{238} \ce{U} \)) absorbs a neutron, becoming the excited \(^{239*} \ce{U} \); then, this nucleus emits gamma radiation becoming \(^{239} \ce{U} \), finally it balances the neutron excess by decaying \(\beta^-\) and thus becoming \(^{239} \ce{Np} \).
+
+\paragraph{Neutron capture causing fission}
+
+The capture of a neutron can make an atom unstable wrt deformation, and then it might tunnel through the potential barrier.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/barium_decay_chain.png}
+    \caption{Barium decay chain}
+    \label{fig:barium-decay}
+\end{figure}
+
+Since the \(N/Z\) ratio is higher in heavier nuclei, the fission products will not be stable with the amount of neutrons they end up with, so they will tend to emit neutrons.
+
+Some atoms have low energy barriers for fission, which can be surpassed by ambient temperature neutrons with \(E = k_B T_ \text{amb} \approx \SI{26}{meV} \) (\(^{235} \ce{U} \) is like this), while others need fast-moving neutrons (like \(^{238} \ce{U} \)).
+
+The probability of a nucleus of mass \(A\) being emitted in symmetric nuclear fission is bimodal, with high regions around \(A \approx 90\) and \(A \approx 130\).
+
+\section{Nuclear Fusion}
+
+Nuclear fission reactions can have very high energy yields,  but also have high activation energies because of the Coulomb barrier.
+
+\begin{equation}
+    Q = - \sum _ \text{reagents} E_i + \sum _{\text{products}} E_i
+\end{equation}
+
+Between the first nuclear fusion reactions one can write, the highest in \(Q\) is \(\ce{d}+\ce{d} \rightarrow ^{4} \ce{He} + \gamma\) with \(Q  \approx  \SI{24}{MeV} \), while other reactions with protons and deutons have \(Q = 3 \divisionsymbol \SI{5}{MeV} \).
+
+\paragraph{Coulomb barrier}
+
+Its height is
+
+\begin{equation}
+    V_C = \frac{e^2}{4 \pi \varepsilon_0} \frac{Z_1 Z_2}{R}
+\end{equation}
+
+where \(R\) is the sum of the radii of the nuclei, a distance at which we assume the nuclear forces take over. For example, in the \(\ce{d} + \ce{d}\) reaction, \(V_C \approx \SI{500}{keV} \).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/sun_nuclear_fusion.png}
+    \caption{Nuclear decay chain in the Sun.}
+    \label{fig:nuclear-fusion-sun}
+\end{figure}
+
+In figure \ref{fig:nuclear-fusion-sun} we show the nuclear fusion chain in the sun: from just protons we get \(^{4} \ce{He} \), with a release of \(\SI{26.73}{MeV} \).
+
+To get a high yield in nuclear fusion we need a kinetic energy on the order of \(\SI{10}{keV} \), which corresponds to very high temperatures.
 
 \end{document}

@@ -517,4 +517,70 @@ In figure \ref{fig:nuclear-fusion-sun} we show the nuclear fusion chain in the s
 
 To get a high yield in nuclear fusion we need a kinetic energy on the order of \(\SI{10}{keV} \), which corresponds to very high temperatures.
 
+\section{Deuton}
+
+It is the only two-nucleon bound state; it has a \emph{total}  energy of \(\SI{2.224}{MeV} \)
+
+Its rms radius is around \(\SI{2}{fm} \), its spin-parity is \(j^\pi = +1\), its magnetic moment is \(\mu = \SI{0.86}{} \mu_N \).
+
+It just has one degree of freedom, to study we only need the radial coordinate between the two nucleons: we assume our wavefunction to be in the form
+
+\begin{equation}
+    \psi(r, \Omega) = \frac{u(r)}{r} Y_{ml} (\Omega)
+\end{equation}
+
+where \(\Omega\) is a pair of angles describing the relative position of the particles: \(\vec{r} = (\vec{r_1} - \vec{r_2})/2 \) is described by \((r, \Omega)\).
+
+The radial part of the Schrödinger equation is
+
+\begin{equation} \label{eq:deuton-radial-shroed}
+    -\frac{\hbar^2}{2\mu} \dv[2]{u}{r}  + \qty(
+    V(r) + \frac{\hbar^2 l (l+1)}{2 \mu r^2}
+    ) u(r) = E u(r)
+\end{equation}
+
+with \(\mu = m_n m_p / (m_n + m_p) \approx m_p /2\). This comes from the fact that
+
+\begin{equation}
+    P^2 = \frac{L^2}{r^2} - \hbar^2 \frac{1}{r} \pdv[2]{}{r}r
+\end{equation}
+
+We model the potential as a well: then the (reduced) wavefunction \(u\) will look like \(\sin(r) \) up to the end of the well, and \(\exp(-r) \) after it, with wavevectors like \(k_{\text{in}} = i \sqrt{2m(V_0 + E) /\hbar^2} \) and \(k_{\text{out}} = \sqrt{-2m(E)/\hbar^2} \) as argument of the exponential.
+
+\paragraph{Spin coupling}
+
+The neutron and proton have either 0 or 1 as total spin \(S\), and they are both even under spatial parity.
+The angular wavefunction has momentum \(L\), and parity equal to \((-)^L\). Then, since we know that for the full deuton \(j^\pi = +1\)
+
+\begin{equation}
+    (+)(+)(-)^L = (+) \qquad 1 = \vec{L} + \vec{S}
+\end{equation}
+
+The first equation implies \(L \in 2 \N\). By the other, if \(S=0\) then \(L=1\), which cannot be. So \(S=1\), but this means \(1 = \vec{1} + \vec{L}\), so \(0 \leq L \leq 2\), therefore \(L = 0, 2\).
+
+By the Hund rule, we expect the state with the lower angular momentum (\(^{3} \ce{S}_1 \)) to be the ground state.
+
+With our newly found ground state we can compute expectation values, like the one of
+
+\begin{equation}
+    \vec{\mu}  = \frac{e \hbar}{2m} \vec{L} + \sum g_S \mu_N \vec{S}
+    = (g_L^p + g_L^n) \mu_N \vec{L} + (g_S^p \vec{S_p} + g_S^n \vec{S_n})  \mu_N
+\end{equation}
+
+We know the values of the \(g\) factors.
+
+In the ground state we expect \(S = 0\), \(L=0\), and our particles have \(s = 1/2\), therefore the expectation value will be \(\ev{\vec{\mu}}{\psi} = \frac{1}{2} (g_S^p + g_S^p) \mu_N\).
+
+This is close to the true value but the measurement can be made very precisely, and the theoretical value does not hold up.
+
+This is due to our hypothesis that the ground state is \(\ket{L=0} \) not being completely correct: the state is really a linear combination of mostly \(\ket{L=0} \) with a bit of \(\ket{L=2} \).
+
+This suggest the existence of a tensorial term in the binding force, which mixes different angular momentum eigenstates. This is confirmed by the measurement of the quadrupole moment \(Q \approx \SI{3}{meb} \),  which could not be nonzero if the ground state had only \(L=0\).
+
+\section{Shell model}
+
+Allows us to explain the magic numbers, and to model excited nuclear states.
+
+
+
 \end{document}

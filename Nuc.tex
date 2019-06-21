@@ -581,6 +581,85 @@ This suggest the existence of a tensorial term in the binding force, which mixes
 
 Allows us to explain the magic numbers, and to model excited nuclear states.
 
+We work assuming all but one of the nucleons just form the \emph{core} with its mean field, and just work with the outermost nucleon in this mean field: \(\hat{H}_{\text{single particle}} = p^2 / 2m + U_ \text{mean} (r) \).
 
+\paragraph{Evidence}
+
+The plots of the separation energies for a neutron or a proton have dips at 1+ a magic number (of protons / of neutrons).
+
+The residuals from the SEMF also have dips at magic numbers.
+
+The magic numbers are 2, 8, 20, 28, 50, 82, 126. 40 is less magic.
+
+\paragraph{Parabolic potential}
+
+Our first idea is to Taylor expand the potential (wrt position): we have a constant term, the first derivative is zero, the second derivative gives us the harmonic term: so we have a Hamiltonian like \(\hat{H} = \frac{1}{2m} p^2 + \frac{1}{2} m x^2 \omega^2\).
+
+Since it is a 3d oscillator, the energies look like \(E_N = (N+ \frac{3}{2}) \hbar \omega\), with \(N = \sum _i n_i \). This is in cartesian coordinates, in polars instead we can write \(N = 2(n_r-1) + L\), with \(L \leq N\).
+
+It can be shown with a group theory argument that the angular momentum must have the same parity as \(N\).
+
+Then the total degeneracy is
+
+\begin{equation}
+    D(N) = \sum _{\substack{L \leq N \\ N + L \equiv 0 \mod 2}} 2(2L+1)
+\end{equation}
+
+since for every \(L\) we can have \(2L+1\) values of \(L_z\) and for each of those two spin configurations.
+
+This works up to around \(Z=20\), then we need to include some corrections.
+
+\paragraph{Woods-Saxon potential}
+
+It is a better approximation of the real potential than the parabolic one: it looks like the density function but with its sign flipped, so:
+
+\begin{equation}
+    V_ \text{WS} = \frac{-V_0}{1+ \exp(\frac{r_r_0}{a})}
+\end{equation}
+
+with \(V_0 \approx \SI{57}{MeV} \), \(r_0 \approx \SI{1.25}{fm} A^{1/3}\), \(a \approx \SI{0.65}{fm} \).
+
+
+\paragraph{Spin-orbital correction}
+
+It is a perturbation to the total Hamiltonian of the form \(L \cdot S = \frac{1}{2} \qty(J^2 - L^2 - S^2)\) which, somewhat \emph{ad hoc}, we multiply by a radial function.
+
+\begin{equation}
+    E_{\text{spin-orbital}} = k \dv{V _ \text{WS}}{r} L \cdot S
+\end{equation}
+
+\paragraph{Other corrections}
+
+The proton potential well will be higher than the neutron one, and it will have Coulomb tails.
+
+There will also be an \(LL\) coupling term.
+
+\paragraph{Excitations}
+
+The number of possible excited states grows with \(A\), because they depend on the \(j\) coupling. They can be formed in various ways: photoexcitation, inelastic scattering, or the nucleus can decay into an excited state.
+
+\paragraph{How to calculate the ground state}
+
+Look at figure \ref{fig:shell-orbits} and start filling the neutron and proton shells separately. Hopefully you get to a configuration close to a full shell, then \(j^\pi\) can be calculated by looking at the single additional or missing nucleon(s).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/nuclear_shells.png
+    \caption{One-particle orbits}
+    \label{fig:shell-orbits}
+\end{figure}
+
+\section{Collective model}
+
+It is used to describe the vibrations of the nucleus.
+In full generality, the angular distribution of the radius will look like
+
+\begin{equation}
+    R (\theta, \varphi) = R_0 \qty(1 + \sum _{l=0}   ^{\infty} \sum _{m=-l}   ^{l} \alpha_{lm} Y_{lm} (\theta, \varphi))
+\end{equation}
+
+where the \(Y_{lm}\) are the normalized spherical harmonics (which satisfy \(\nabla^2 Y = 0\), \(L^2 Y_{lm} = \hbar^2 l (l+1)\), \(L_z Y_{lm} = \hbar m\)).
+
+The term \(\alpha_{00}\) is only relevant at very high energies (it is spherically symmetrical compression/expansion). The term \(\alpha_{1m}\) correspond to translation, not an intrinsic vibration. So, we look at the quadrupole term, \(\alpha_{2m}\).
 
 \end{document}

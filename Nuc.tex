@@ -614,7 +614,7 @@ This works up to around \(Z=20\), then we need to include some corrections.
 It is a better approximation of the real potential than the parabolic one: it looks like the density function but with its sign flipped, so:
 
 \begin{equation}
-    V_ \text{WS} = \frac{-V_0}{1+ \exp(\frac{r_r_0}{a})}
+    V_ \text{WS} = \frac{-V_0}{1+ \exp(\frac{r-r_0}{a})}
 \end{equation}
 
 with \(V_0 \approx \SI{57}{MeV} \), \(r_0 \approx \SI{1.25}{fm} A^{1/3}\), \(a \approx \SI{0.65}{fm} \).
@@ -644,7 +644,7 @@ Look at figure \ref{fig:shell-orbits} and start filling the neutron and proton s
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/nuclear_shells.png
+    \includegraphics[width=0.7\textwidth]{figures/nuclear_shells.png}
     \caption{One-particle orbits}
     \label{fig:shell-orbits}
 \end{figure}
@@ -661,5 +661,74 @@ In full generality, the angular distribution of the radius will look like
 where the \(Y_{lm}\) are the normalized spherical harmonics (which satisfy \(\nabla^2 Y = 0\), \(L^2 Y_{lm} = \hbar^2 l (l+1)\), \(L_z Y_{lm} = \hbar m\)).
 
 The term \(\alpha_{00}\) is only relevant at very high energies (it is spherically symmetrical compression/expansion). The term \(\alpha_{1m}\) correspond to translation, not an intrinsic vibration. So, we look at the quadrupole term, \(\alpha_{2m}\).
+
+We can perform a rotation \(\alpha_{2 \mu} \rightarrow a _{2 \mu} \) using the Wigner matrices, to go into a frame where \(a_{21} = a_{2(-1)} = 0\) and \(a_{22} = a_{2(-2)}\). We parametrize the nonzero \(a\)s as \(a_{20} = \beta \cos(\gamma) \), \(a_{2(\pm 2} = \beta \sin(\gamma) / \sqrt{2}\). We used up 3 of the 5 dimensions for this.
+
+The parameter \(\beta = \sum  \abs{a_{2m}}^2  \) describes the magnitude of the deformation, the parameter \(\gamma\) describes its direction: it can be shown that
+
+\begin{equation}
+    R_k = R_0 \qty(1+\frac{5}{4 \pi} \beta \cos(\gamma + \frac{2}{3} \pi k) )
+\end{equation}
+
+where \(k = 1, 2, 3\).
+
+We write the Hamiltonian of the oscillation with respect to the parameters \(\alpha_{2\mu}\): the corresponding momenta are \(\pdv*{}{\alpha_{2\mu}} = \pi_{2\mu}\). Modelling the low-energy vibrations as a harmonic oscillator we get
+
+\begin{equation} \label{eq:collective-oscillation-hamiltonian}
+    H = \frac{\pi_{2\mu} \pi_{2\mu}^*}{2B} + \frac{C}{2} \alpha_{2\mu} \alpha_{2\mu}^*
+\end{equation}
+
+and we have expressions for \(B, C\).
+
+The solutions for the Hamiltonian \eqref{eq:collective-oscillation-hamiltonian} can be shown to have energy \(E = (\sum_\mu n_\mu + 5/2) \hbar \omega\), with \(\omega = \sqrt{C/B}\). This formula implies the presence of degeneracy, but this is partially removed when introducing perturbations.
+
+We can express the energy quantum number wrt the parameters \(\beta\) and \(\gamma\): \(\sum _{\mu}  n_\mu = 2n_\beta + \tau \), where \(\tau (\tau+3)\) is the eigenvalue of the Casimir operator on \(SO(5)\).
+
+\section{\(\alpha\) decay}
+
+\(\alpha\) particles are \(^{4} \ce{He} \) nuclei. That configuration has a particularly high binding energy per nucleon. The reaction in \(\alpha\) decay looks like
+
+\begin{equation}
+    ^{A} _Z X \rightarrow ^{A-4} _{Z-2} Y + \alpha
+\end{equation}
+
+For it to happen, we must have \(M(A, Z) > M(A-4, Z) + M(4, 2)\). We can expand this in terms of the binding energies, and see that it will happen only for nuclei for which \(B/A\) is decreasing with \(A\). The difference in energy between \(X\) and \(Y + \alpha\) is denoted as \(Q\). Since the velocities are not relativistic, the energy can be written as \(Q = p_\alpha^2 /2m_\alpha + p_Y^2 /2m_Y\), and since \(m_\alpha \ll m_Y\) but \(\abs{p_\alpha} = \abs{p_Y}\) the energy is almost all kept by the \(\alpha\).
+
+Different decays have wildly different half-lives: the empirical law they follow is called the \emph{Geiger-Nuttal} \eqref{eq:geiger-nuttal}. It is very closely followed if we fix an even \(Z\) and vary \(N\) keeping it even as well.
+
+\begin{equation} \label{eq:geiger-nuttal}
+    \log(t_{1/2} ) \propto Q^{-1/2}
+\end{equation}
+
+This can be understood with quantum tunneling. First of all, we assume the \(\alpha\) can be spontaneously formed inside the nucleus as a cluster since it is a stable configuration, with some probability \(\P _ \text{formation} = \abs{\bra{\psi(A, Z)} \qty(\ket{\psi(A-4, Z-2)} \otimes \ket{\psi(4, 2)})}^2 \).
+
+Then, this \(\alpha\) will collide with the nucleus border at some rate, which we estimate as \(f = 2 r / v\). A very rough estimate gives \(1/f \sim \hbar/\SI{}{MeV} \approx \SI{200}{MeVfm}/ (c\SI{}{MeV}) \approx \SI{e-21}{s} \).
+
+So, we have to understand what happens at the nucleus border. We model the potential as a well, flat inside the nuclear radius \(R\); outside, the \(\alpha\) will feel the Coulomb repulsion of the nucleus
+
+\begin{equation}
+    V(r) = \frac{e^2}{4 \pi \varepsilon_0} \frac{Z_Y Z_\alpha}{r} [r \geq R] - V_0 [0 \leq r < R]
+\end{equation}
+
+Where \([\cdot]\) is the Iverson bracket.
+
+The \(\alpha\) can tunnel through the potential barrier: how likely is it to do so? Let us call this probability \(T\). We can calculate it modelling our potential as many infinitesimal rectangular slices, let us also call \(r=b\) the point at which \(V(r) = Q\). Then,
+
+\begin{equation}
+    T = \exp(-2 \int _{R}   ^{b} \sqrt{\frac{2m(V(r) - Q)}{\hbar^2}}  \dd{r}  )
+\end{equation}
+
+since we know the wavefunction to be exponentially depressed as \(\exp(-\Delta r \sqrt{2m(V-Q)/\hbar^2} ) \) for a constant \(V>Q\) and finite \(\Delta r\), so we make \(\Delta r\) small and then we multiply together all the infinitesimal exponential probability decreases. The factor 2 comes from the fact that, to get the probabilities, we must take the square modulus.
+
+This can be analytically calculated: if \(T = \exp(-2G) \), then
+
+\begin{equation}
+G = 2 \frac{Ze^2}{\hbar c} \sqrt{\frac{2m_\alpha c^2}{Q}}
+\qty(\arccos(\sqrt{\frac{Q}{B}} ) - \sqrt{\qty(\frac{Q}{B}) \qty(1 - \frac{Q}{B})} )
+\end{equation}
+
+In the end, we can calculate the rate of decay as \(\lambda = \P _ \text{formation} T f\). As always, the decay law is \(N(t) = N_0 \exp(-\lambda t) \).
+
+The orders of magnitude at play are as follows: \(\P _{\text{formation}} \sim 1 \), \(f \sim \SI{e21}{Hz} \), \(G \sim 30 \divisionsymbol 50\).
 
 \end{document}

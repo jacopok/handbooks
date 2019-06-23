@@ -675,7 +675,7 @@ where \(k = 1, 2, 3\).
 We write the Hamiltonian of the oscillation with respect to the parameters \(\alpha_{2\mu}\): the corresponding momenta are \(\pdv*{}{\alpha_{2\mu}} = \pi_{2\mu}\). Modelling the low-energy vibrations as a harmonic oscillator we get
 
 \begin{equation} \label{eq:collective-oscillation-hamiltonian}
-    H = \frac{\pi_{2\mu} \pi_{2\mu}^*}{2B} + \frac{C}{2} \alpha_{2\mu} \alpha_{2\mu}^*
+    H = \frac{\pi_{2\mu} \pi_{2\mu}^\dag}{2B} + \frac{C}{2} \alpha_{2\mu} \alpha_{2\mu}^\dag
 \end{equation}
 
 and we have expressions for \(B, C\).
@@ -730,5 +730,40 @@ G = 2 \frac{Ze^2}{\hbar c} \sqrt{\frac{2m_\alpha c^2}{Q}}
 In the end, we can calculate the rate of decay as \(\lambda = \P _ \text{formation} T f\). As always, the decay law is \(N(t) = N_0 \exp(-\lambda t) \).
 
 The orders of magnitude at play are as follows: \(\P _{\text{formation}} \sim 1 \), \(f \sim \SI{e21}{Hz} \), \(G \sim 30 \divisionsymbol 50\).
+
+\section{\(\beta\) decay}
+
+A nucleon has its isospin flipped, emitting a \(e^{\pm}\) and an electronic (anti)neutrino. This type of decay is due to the weak interaction.
+
+Since it is a three-body process, we get a continuous spectrum of energies for the electron/positron.
+
+\paragraph{Fermi theory}
+
+Our assumptions are:
+
+\begin{itemize}
+    \item we neclect the Coulomb interaction between the electron and the nucleus (this will have to be reconsidered, since it only gives accurate predictions for \(Z<10\));
+    \item we neglect the recoil of the nucleus after the decay (the mass differences are very large: this will always work);
+    \item we assume \(m_\nu = 0\);
+    \item we assume the distribution of energy partitions between the electron and neutrino to be uniform.
+\end{itemize}
+
+\paragraph{Fermi's golden rule}
+
+The rate \(\lambda\) of a transition is given by
+
+\begin{equation}
+    \lambda = \frac{2 \pi}{\hbar} \abs{M}^2 \dv{n}{E}
+\end{equation}
+
+where \(M = \bra{\psi_i} H \ket{\psi_f}  \) is the matrix element between the initial and final states, \(H\) being the Hamiltonian due to which the transition happpens, \(\dv*{n}{E} \) is the differential phase volume corresponding to the energy \(E\).
+Note that \(H\) is dimensional, it is an energy!
+
+% this is trivial in retrospect but I spent some time
+% assuming M was adimensional trying to figure out the
+% dimensionality of this formula...
+
+
+
 
 \end{document}

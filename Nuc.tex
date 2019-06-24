@@ -354,7 +354,7 @@ Therefore we can substitute in:
 
 and we can also express this wrt \(p = \sqrt{2mE} \); its differential is \(p\dd{p} = m \dd{E} \):
 
-\begin{equation}
+\begin{equation} \label{eq:fermi-model-momentum-density}
     \rho(E) \dd{E} = \rho(p) \dd{p} = V \frac{4 \pi a^3 p^2 \dd{p} }{h^3}
 \end{equation}
 
@@ -658,11 +658,16 @@ In full generality, the angular distribution of the radius will look like
     R (\theta, \varphi) = R_0 \qty(1 + \sum _{l=0}   ^{\infty} \sum _{m=-l}   ^{l} \alpha_{lm} Y_{lm} (\theta, \varphi))
 \end{equation}
 
-where the \(Y_{lm}\) are the normalized spherical harmonics (which satisfy \(\nabla^2 Y = 0\), \(L^2 Y_{lm} = \hbar^2 l (l+1)\), \(L_z Y_{lm} = \hbar m\)).
+where the \(Y_{lm}\) are the normalized spherical harmonics (functions \(Y: S^2 \rightarrow \C\) which satisfy \(\nabla^2 Y = 0\), \(L^2 Y_{lm} = \hbar^2 l (l+1)\), \(L_z Y_{lm} = \hbar m\)).
 
 The term \(\alpha_{00}\) is only relevant at very high energies (it is spherically symmetrical compression/expansion). The term \(\alpha_{1m}\) correspond to translation, not an intrinsic vibration. So, we look at the quadrupole term, \(\alpha_{2m}\).
 
-We can perform a rotation \(\alpha_{2 \mu} \rightarrow a _{2 \mu} \) using the Wigner matrices, to go into a frame where \(a_{21} = a_{2(-1)} = 0\) and \(a_{22} = a_{2(-2)}\). We parametrize the nonzero \(a\)s as \(a_{20} = \beta \cos(\gamma) \), \(a_{2(\pm 2} = \beta \sin(\gamma) / \sqrt{2}\). We used up 3 of the 5 dimensions for this.
+We can perform a rotation \(\alpha_{2 \mu} \rightarrow a _{2 \mu} \) using the Wigner matrices\footnote{They are the matrix elements of rotations with respect to the harmonics:
+\begin{equation}
+    \mathcal D^j_{mm'}(\alpha, \beta, \gamma) = \bra{jm'} \exp(-i \alpha J_z) \exp(-i \beta J_y) \exp(-i \gamma J_z) \ket{jm}
+\end{equation}
+}
+to go into a frame where \(a_{21} = a_{2(-1)} = 0\) and \(a_{22} = a_{2(-2)}\). We parametrize the nonzero \(a\)s as \(a_{20} = \beta \cos(\gamma) \), \(a_{2(\pm 2} = \beta \sin(\gamma) / \sqrt{2}\). We used up 3 of the 5 dimensions for this.
 
 The parameter \(\beta = \sum  \abs{a_{2m}}^2  \) describes the magnitude of the deformation, the parameter \(\gamma\) describes its direction: it can be shown that
 
@@ -741,29 +746,156 @@ Since it is a three-body process, we get a continuous spectrum of energies for t
 
 Our assumptions are:
 
-\begin{itemize}
+\begin{enumerate}
     \item we neclect the Coulomb interaction between the electron and the nucleus (this will have to be reconsidered, since it only gives accurate predictions for \(Z<10\));
     \item we neglect the recoil of the nucleus after the decay (the mass differences are very large: this will always work);
-    \item we assume \(m_\nu = 0\);
+    \item we assume \(m_\nu = 0\); \label{item:beta-null-mass-assumption}
     \item we assume the distribution of energy partitions between the electron and neutrino to be uniform.
-\end{itemize}
+\end{enumerate}
 
 \paragraph{Fermi's golden rule}
 
 The rate \(\lambda\) of a transition is given by
 
-\begin{equation}
+\begin{equation} \label{eq:beta-fermi-golden-rule}
     \lambda = \frac{2 \pi}{\hbar} \abs{M}^2 \dv{n}{E}
 \end{equation}
 
-where \(M = \bra{\psi_i} H \ket{\psi_f}  \) is the matrix element between the initial and final states, \(H\) being the Hamiltonian due to which the transition happpens, \(\dv*{n}{E} \) is the differential phase volume corresponding to the energy \(E\).
+where \(M = \bra{\psi_f} H \ket{\psi_i}  \) is the matrix element between the initial and final states, \(H\) being the Hamiltonian due to which the transition happpens, \(\dv*{n}{E} \) is the differential phase volume corresponding to the energy \(E\).
 Note that \(H\) is dimensional, it is an energy!
 
 % this is trivial in retrospect but I spent some time
 % assuming M was adimensional trying to figure out the
 % dimensionality of this formula...
 
+\paragraph{State density}
 
+Recall the momentum dependence of the density of states from equation \eqref{eq:fermi-model-momentum-density}. Then
 
+\begin{equation}
+    \dd{n} = \qty(\frac{4 \pi V}{h})^3 p^2_e \dd{p_e} p^2_\nu \dd{p_\nu}
+\end{equation}
+
+The total energy is \(E_0 = E_e + E_\nu\). We work at a fixed electron energy and momentum: so because of condition \ref{item:beta-null-mass-assumption}, \(E_\nu = p_\nu c\), therefore \(\dd{p_\nu}  = \dd{E_0} /c\) and \(p_\nu^2 = (E_0 - E_e)^2/c^2\).
+%Also, \(E_e = T_e + m_e c^2\).
+So we get
+
+\begin{equation}
+    \dd{n} = \qty(\frac{4 \pi V}{h})^3 \frac{\dd{E_0}}{c} \frac{(E_0 - E_e)^2}{c^2} p^2_e \dd{p_e}
+\end{equation}
+
+\paragraph{Calculation of \(\lambda\)}
+
+We can plug this (with the \(\dd{E_0}\) brought to the left hand side) into equation \eqref{eq:beta-fermi-golden-rule}, but we still have a differential to the right and we fixed \(p_e\), so we will not obtain \(\lambda\) but the \(\dd{\lambda}\) from this momentum to \(p_e + \dd{p_e} \).
+
+\begin{equation} \label{eq:beta-diff-lambda}
+    \dd{\lambda}
+    = \frac{2 \pi}{\hbar} \abs{M}^2  \qty(\frac{4 \pi V}{h})^3 F(Z_Y, E_e) \frac{(E_0 - E_e)^2}{c^3} p^2_e \dd{p_e}
+    =  \abs{M}^2  \frac{(4 \pi V)^3}{c^3 h^4} F(Z_Y, E_e) (E_0 - E_e)^2 p^2_e \dd{p_e}
+\end{equation}
+
+We get \(\lambda\) by integrating this expression. We also added a factor to account for the asymmetry between electrons and positrons: the former are slowed down by electrostatic attraction when leaving the nucleus, the latter are accelerated. So, we multiply \(\lambda\) by \(F(Z_Y, E_e) = 2 \pi \eta / (1- \exp(-2 \pi \eta ))\), %\footnote{\(\approx \eta/2+1\) when \(\eta \approx 0\)}
+where \(\eta = \mp \alpha Z_Y / \beta_e\), \(\alpha\) being the fine-structure constant.
+
+\begin{equation}\label{eq:beta-int-lambda}
+    \lambda = \abs{M}^2  \frac{(4 \pi V)^3}{c^3 h^4} F(Z_Y, E_e) \int (E_0 - E_e)^2 p^2_e \qty[0 \leq (p_e c)^2 \leq E_0^2 - m_e^2 c^4] \dd{p_e}
+\end{equation}
+
+\paragraph{Fermi-Kurie plot}
+
+Flipping equation \eqref{eq:beta-diff-lambda} around, we find that
+
+\begin{equation}
+    K(E_e) = \sqrt{ \dv{\lambda}{p_e} F^{-1} p_e^{-2} } \propto E_0 - E_e
+\end{equation}
+
+a testable prediction, which is experimentally verified. Sometimes we get sums of different lines (in the limit in which the \(K\)s are additive? maybe we can say that the \(\dd{\lambda} \)s are additive and small so we make it work...).
+
+If we had \(m_\nu \neq 0\), the \(K\) plot would no longer be linear in \(E_e\) (instead of \(p_\nu^2 = (E_0 - E_e)^2/c^2\) we would have had \(p_\nu^2 = (E_0 - E_e) \sqrt{(E_0-E_e)^2 - m_\nu ^2 c^4} /c^2\)). This allows us to measure the neutrino mass.
+
+From equation \eqref{eq:beta-int-lambda} we can calculate \(ft \defeq F(Z_Y, E_e) \log(2) / \lambda \). This is known as the \(ft\) value: it gives an estimate of \(\abs{M}^{-2} \). We usually plot its base-10 logarithm, since it varies through many orders of magnitude.
+
+\paragraph{Calculating the matrix element}
+
+We assume the interaction Hamiltonian is in the form \(H = g \delta^3(r_e-r) \delta^3(r_\nu - r)\). In the calculation of \(M\) this will make all the integrals in the same variable, \(r\).
+\(g\)'s value cannot be determined theoretically, experimentally \(g \approx \SI{e-4}{MeV fm^{3}} \).
+We must evaluate an expression as follows:
+
+\begin{equation}
+    M = \int  \psi_\nu^* \psi_e^* \psi_{\text{nuc - f}}^* \psi_{\text{nuc - i}}  \dd{r}
+\end{equation}
+
+where all the wavefunctions are evaluated at \(r\). If the electron and neutrino wavefunctions are planar waves, say \(\psi_e = \exp(-ipr/\hbar) \sim 1 - ipr/\hbar + o(r)\). But we integrate only over the support of the nuclear wavefunctions: let us assume \(r = r_0 A^{1/3} \approx 3 \divisionsymbol 5\) and \(p = \sqrt{E_e^2/c^2 - m_e^2 c^2} \approx \SI{1}{MeV/c}  \). Then we see that the first order term is negligible. We do this for the electron and neutrino, getting
+\(M = g \braket{\text{nuc - f}}{\text{nuc - i}}/V \), where \(V\) is the volume we assume the electron and neutrino wavefunctions are normalized to have support in.
+
+This is equivalent to assuming \(p \wedge r = L = 0\) for the electron and neutrino.
+
+\paragraph{Transition types}
+
+We call the nuclear angular momentum \(I\), the leptons' total angular momentum and spin \(L\) and \(S\). Then
+
+\begin{equation}
+    \vec{I_i} = \vec{I_f} + \vec{L} + \vec{S}
+\end{equation}
+
+we distinguish
+
+\begin{enumerate}
+     \item Fermi transitions: \(S = 0\).
+    \item Gamow-Teller transitions: \(S = 1\).
+\end{enumerate}
+
+\begin{enumerate}
+    \item Permitted transitions: \(\Delta L =0\), they also have no change in parity since \(\Delta \pi = (-)^{\Delta L}\). They are the ones we described in the last paragraph.
+    \item Super-permitted transitions: the starting and ending nuclear configurations are almost identical. This happens with specular nuclei. \(\log_{10}(ft) \sim 3.5 \).
+    \item Prohibited transitions (of various orders): every additional term in the expansion of the lepton wavefunctions depresses \(\abs{M}^{2} \) by a factor \SI{e4}{}, so they get increasingly unlikely.
+\end{enumerate}
+
+\section{\(\gamma \) decay}
+
+\(\gamma\) radiation is almost monochromatic, since excited states usually live for around \(\SI{e-12}{s} \approx 1/ \SI{6.6e-4}{eV} \); its wavelength is also much longer than the nucleus.
+
+The energy lost from the excited state is almost all with the \(\gamma\): if we assume that energy and momentum are conserved we get \(\Delta E = E_\gamma - E_\gamma^2 / (2M)\) since \(E_\gamma = p_{\text{recoil}}\). The solution of this is:
+
+\begin{equation}
+    E_\gamma = M \qty(-1 \pm \sqrt{1+ \frac{\Delta E}{M}} ) \approx \Delta E - \frac{\Delta E ^2}{M} \approx \Delta E
+\end{equation}
+
+\paragraph{Selection rules}
+
+We must have \(\vec{I_i} = \vec{I_f} + \vec{L} \), and the angular momentum of the photon must be nonzero. Also, let us call \(EL\) the electric (due to moving charge) radiation with momentum \(L\) and \(ML\) the analogous magnetic (due to moving current) radiation. We call it \(2^L\)-pole radiation. Then it can be shown that
+
+\begin{equation}
+    EL \iff \Delta \pi = (-)^L \qquad
+    ML \iff \Delta \pi = (-)^{L+1}
+\end{equation}
+
+\paragraph{Emitted power}
+
+Let us compare the emitted power to the first order of an electric dipole \(d\) vs a magnetic dipole \(\mu\), using the EM-fields formulas: \(P(E1) \sim \omega^4 d^2 / c^3\), while \(P(M1) \sim \omega^4 \mu^2 / c^5\). In general, denoting \(\sigma = E, M\):
+
+\begin{equation}
+    P(\sigma L) = \frac{2c}{\varepsilon_0} \frac{(L+1)}{L((2L+1)!!)^2} \qty(\frac{\omega}{c})^{2(L+1)} \mathcal M (\sigma L)^2
+\end{equation}
+
+where \(\mathcal M\) can be interpreted, in a quantum setting, as a \emph{transition amplitude}, whose square modulus is a transition probability. We can find the rate of photon emission as \(T(\sigma L) = P(\sigma L) / \hbar \omega\).
+
+\paragraph{Weisskopf estimations}
+
+To find the probabilities of transition we should use the multipole operators, which for the electric transitions are \(O(EL) = e r^L_i Y_{i,LM}\) (\(i\) labels the particles in the nucleus) while the magnetic ones are much more complicated.
+It would look like \(\mathcal M (EL) = \bra{\psi_f} O(EL) \ket{\psi_i} \).
+Instead, we use estimates:
+
+\begin{equation}
+    \abs{\mathcal M (EL)}^2 \propto \qty(\frac{3}{3+L}) ^2 r_0^{2L} A^{2L/3}
+\end{equation}
+
+the magnetic one is more complicated, but the ratio of the magnetic to electric matrix square element is something like \(0.31A^{-2/3} \sim \SI{e-2}{} \). The take-away is: when \(L\) increases by 1, the transition probability decreases by a factor \(\SI{e4}{} \divisionsymbol \SI{e5}{} \).
+
+\paragraph{Experimental methods}
+
+We can experimentally determine the parity of a \(\Gamma\) transition: we look at the differential cross section \(\dv*{\sigma}{\theta} \) wrt the azimuth angle \(\theta\), if it is odd then the change in parity is \((-)\), if it is even the change in parity is \((+)\).
+
+Also, we can look at the number of nodes \(\dv*{\sigma}{\theta} \), which will be equal to the order of the Legendre polynomial of the radiation.
 
 \end{document}

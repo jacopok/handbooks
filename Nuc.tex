@@ -875,27 +875,73 @@ We must have \(\vec{I_i} = \vec{I_f} + \vec{L} \), and the angular momentum of t
 Let us compare the emitted power to the first order of an electric dipole \(d\) vs a magnetic dipole \(\mu\), using the EM-fields formulas: \(P(E1) \sim \omega^4 d^2 / c^3\), while \(P(M1) \sim \omega^4 \mu^2 / c^5\). In general, denoting \(\sigma = E, M\):
 
 \begin{equation}
-    P(\sigma L) = \frac{2c}{\varepsilon_0} \frac{(L+1)}{L((2L+1)!!)^2} \qty(\frac{\omega}{c})^{2(L+1)} \mathcal M (\sigma L)^2
+    P(\sigma L) = \frac{2c}{\varepsilon_0} \frac{(L+1)}{L((2L+1)!!)^2} \qty(\frac{\omega}{c})^{2L+2} \mathcal M (\sigma L)^2
 \end{equation}
 
-where \(\mathcal M\) can be interpreted, in a quantum setting, as a \emph{transition amplitude}, whose square modulus is a transition probability. We can find the rate of photon emission as \(T(\sigma L) = P(\sigma L) / \hbar \omega\).
+where \(\mathcal M\) can be interpreted, in a quantum setting, as a \emph{transition amplitude}, whose square modulus is a transition probability.
+To calculate \(\mathcal M\) we should use the multipole operators, which for the electric transitions are \(O(EL) = e r^L_i Y_{i,LM}\) (\(i\) labels the particles in the nucleus) while the magnetic ones are much more complicated.
+
+In general, \(\mathcal M (\sigma L) = \bra{\psi_f} O(\sigma L) \ket{\psi_i} \).
+Dimensionally, \([\mathcal M] = C m^L\).
+
+We can find the rate of photon emission as \(T(\sigma L) = P(\sigma L) / \hbar \omega\).
+
+\begin{equation}
+    T(\sigma L ) =
+    \frac{8 \pi \alpha c (L+1)}{e^2 L (2L+1)!!^2} \qty(\frac{\omega }{c})^{2L+1}
+    \abs{\mathcal M (\sigma L)}^2
+\end{equation}
 
 \paragraph{Weisskopf estimations}
 
-To find the probabilities of transition we should use the multipole operators, which for the electric transitions are \(O(EL) = e r^L_i Y_{i,LM}\) (\(i\) labels the particles in the nucleus) while the magnetic ones are much more complicated.
-It would look like \(\mathcal M (EL) = \bra{\psi_f} O(EL) \ket{\psi_i} \).
-Instead, we use estimates:
+Instead of the multipole operators, we use brutal estimates (the radial wavefunctions are proportional to \([r \in \text{nucleus}]\), the angular integrals are 1):
+
+\begin{subequations}
+\begin{align}
+    \abs{\mathcal M (EL)}^2/e^2 &= \frac{1}{4 \pi} \qty(\frac{3}{3+L}) ^2 (r_0 A^{1/3})^{2L} \\
+    \abs{\mathcal M (ML)}^2 &\propto \qty(\frac{3}{3+L}) ^2 (r_0 A^{1/3})^{2L-2}
+\end{align}
+\end{subequations}
+
+The ratio of the magnetic to electric matrix square element is something like \(0.31A^{-2/3} \sim \SI{e-2}{} \). The take-away is: when \(L\) increases by 1, the transition probability decreases by a factor \(\SI{e4}{} \divisionsymbol \SI{e5}{} \).
+
+In the end, setting \(R = r_0 A^{1/3}\), we get
 
 \begin{equation}
-    \abs{\mathcal M (EL)}^2 \propto \qty(\frac{3}{3+L}) ^2 r_0^{2L} A^{2L/3}
+    T(E L ) \approx
+    \frac{2 \alpha (L+1)}{L (2L+1)!!^2} \qty(\frac{\omega}{c})^{2L+1} \qty(\frac{3}{3+L})^2 R^{2L}
 \end{equation}
 
-the magnetic one is more complicated, but the ratio of the magnetic to electric matrix square element is something like \(0.31A^{-2/3} \sim \SI{e-2}{} \). The take-away is: when \(L\) increases by 1, the transition probability decreases by a factor \(\SI{e4}{} \divisionsymbol \SI{e5}{} \).
+Around magic numbers this prediction is close to being verified; mid-shell we see tens or hundreds more than it. The half-life of the decay is given by \(t_{1/2} = \log(2)/T  \)
 
 \paragraph{Experimental methods}
 
 We can experimentally determine the parity of a \(\Gamma\) transition: we look at the differential cross section \(\dv*{\sigma}{\theta} \) wrt the azimuth angle \(\theta\), if it is odd then the change in parity is \((-)\), if it is even the change in parity is \((+)\).
 
 Also, we can look at the number of nodes \(\dv*{\sigma}{\theta} \), which will be equal to the order of the Legendre polynomial of the radiation.
+
+\section{Matter and radiation}
+
+\paragraph{Cross sections}
+
+The flux of particles \(\varphi = \# \text{particles} / (A t)\) decays like \(\Delta \varphi = - \varphi \sigma n_t \Delta x\), where \(n_t\) is the particle density in the target, and the proportionality constant \(\sigma\) \([\SI{}{m^2} ]\) is called the scattering cross section.
+
+\paragraph{Photons}
+
+\textfbf{Photoelectric}: \(\sigma \sim Z^{4 \divisionsymbol 5} / E_\gamma^3\), for \(E _ \gamma < \SI{400}{keV} \).
+
+\textbf{Compton}: continuous spectrum,
+
+\begin{equation}
+    E _ \gamma '  = \frac{E_ \gamma}{1 + (E_\gamma / mc^2) (1- \cos(\theta))}
+\end{equation}
+
+The maximum energy transferred to the electron is at \(\theta \rightarrow \pi\), \(E_ \gamma ' - E_ \gamma \rightarrow m_e c^2/2\).
+
+\textbf{Pair production} Near a nucleus, we can have some momentum transfer and see \(\gamma \rightarrow
+e^- + e^+\).
+
+\paragraph{Bethe-Bloch}
+
 
 \end{document}

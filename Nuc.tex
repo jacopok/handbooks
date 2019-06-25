@@ -5,7 +5,7 @@
 
 \section{Introduction}
 
-Things to remember about nuclear units: \(\hbar c \approx \SI{197}{MeV fm} \) and \(\SI{}{MeV fm} = \SI{10}{eV \angstrom} \); there are weird things like \(e^2 = \SI{1.44}{MeV fm} \), \(4 \pi \varepsilon_0 = \). The atomic mass unit is equal to \(\SI{931.5}{MeV} \).
+Things to remember about nuclear units: \(\hbar c \approx \SI{197}{MeV fm} \) and \(\SI{}{MeV fm} = \SI{10}{eV \angstrom} \); there are weird things like \(e^2 = \SI{1.44}{MeV fm} \), \(4 \pi \varepsilon_0 = 1\). The atomic mass unit is equal to \(\SI{931.5}{MeV} \).
 
 We have indetermination both between position and momentum: \(\Delta x \Delta p \geq \hbar/2\) and between time and energy: \(\Delta E \Delta t \geq \hbar /2\).
 
@@ -358,7 +358,7 @@ and we can also express this wrt \(p = \sqrt{2mE} \); its differential is \(p\dd
     \rho(E) \dd{E} = \rho(p) \dd{p} = V \frac{4 \pi a^3 p^2 \dd{p} }{h^3}
 \end{equation}
 
-Where \(a^3 = V\) is the volume, and since we treat a spherically symmetric problem we can rewrite it as \(V = \frac{4}{3}\pi r_0^3\). Then, we put two fermions in each shell, thus getting \(N\) particles in total; multiplying by \(A\) since there are \(A\) nucleons in total and our pdf is normalized for 1 particle.
+Where \(a^3 = V\) is the volume, and since we treat a spherically symmetric problem we can rewrite it as \(V = \frac{4}{3}\pi r_0^3 A\). Then, we put two fermions in each shell, thus getting \(N\) particles in total.
 
 \begin{equation} \label{eq:fermi-state-density}
     \dd{N} = 2 \rho(p) \dd{p} = \frac{4}{3 \pi} \frac{r_0^3 p^2}{\hbar^3} A \dd{p}
@@ -702,7 +702,7 @@ For it to happen, we must have \(M(A, Z) > M(A-4, Z) + M(4, 2)\). We can expand 
 Different decays have wildly different half-lives: the empirical law they follow is called the \emph{Geiger-Nuttal} \eqref{eq:geiger-nuttal}. It is very closely followed if we fix an even \(Z\) and vary \(N\) keeping it even as well.
 
 \begin{equation} \label{eq:geiger-nuttal}
-    \log(t_{1/2} ) \propto Q^{-1/2}
+    \log(t_{1/2} ) \propto ZQ^{-1/2}
 \end{equation}
 
 This can be understood with quantum tunneling. First of all, we assume the \(\alpha\) can be spontaneously formed inside the nucleus as a cluster since it is a stable configuration, with some probability \(\P _ \text{formation} = \abs{\bra{\psi(A, Z)} \qty(\ket{\psi(A-4, Z-2)} \otimes \ket{\psi(4, 2)})}^2 \).
@@ -924,25 +924,94 @@ Also, we can look at the number of nodes \(\dv*{\sigma}{\theta} \), which will b
 
 \paragraph{Cross sections}
 
-The flux of particles \(\varphi = \# \text{particles} / (A t)\) decays like \(\Delta \varphi = - \varphi \sigma n_t \Delta x\), where \(n_t\) is the particle density in the target, and the proportionality constant \(\sigma\) \([\SI{}{m^2} ]\) is called the scattering cross section.
+The flux of particles \(\varphi = \# \text{particles} / (A t) = nv\) (where \(A\) is the area through which the particles pass, \(t\) is the time interval, \(n\) is the particle density and \(v\) is the velocity) decays like \(\Delta \varphi = - \varphi \sigma n_t \Delta x\), where \(n_t\) is the particle density in the target, and the proportionality constant \(\sigma\) \([\SI{}{m^2} ]\) is called the scattering cross section.
 
-\paragraph{Photons}
+There are three types of interaction between photons and matter. Photoelectric is dominant at low energies, Compton at mid energies, pair production at high energies. As \(Z\) of the material increases, the Compton-dominance region shrinks (on a log plot, somewhat symmetrically around \SI{1}{MeV}).
 
-\textbf{Photoelectric}: \(\sigma \sim Z^{4 \divisionsymbol 5} / E_\gamma^3\),
+\paragraph{Photoelectric}: \(\sigma \sim Z^{4 \divisionsymbol 5} / E_\gamma^3\),
 for \(E _\gamma < \SI{400}{keV} \).
 
-\textbf{Compton}: continuous spectrum,
+\paragraph{Compton}: continuous spectrum,
 
 \begin{equation}
     E _ \gamma '  = \frac{E_ \gamma}{1 + (E_\gamma / m_e c^2) (1- \cos(\theta))}
+    \qquad
+    \text{or}
+    \qquad
+    \frac{1}{E_\gamma '}  - \frac{1}{E_{\gamma}} = \frac{m}{1- \cos(\theta) }
 \end{equation}
 
+Remember: the initial electron mass goes into the energy count!
 The maximum energy transferred to the electron is at \(\theta \rightarrow \pi\), \(E_ \gamma ' - E_ \gamma \rightarrow m_e c^2/2\).
 
-\textbf{Pair production} Near a nucleus, we can have some momentum transfer and see \(\gamma \rightarrow
+\paragraph{Pair production} Near a nucleus, we can have some momentum transfer and see \(\gamma \rightarrow
 e^- + e^+\).
 
+\paragraph{\(\alpha\) particle energy transfer}
+
+The collision is elastic and the \(\alpha\)'s mass is much larger than the electron's: the energy transferred is approximately
+
+\begin{equation}
+    E_e = \frac{4 m_e E_\alpha}{M_\alpha}
+\end{equation}
+
+so, for a regular \(\alpha\), in the single keV range.
+
 \paragraph{Bethe-Bloch}
+
+It describes the \emph{stopping power} \(\dv*{E}{x} \) of a particle in a medium. We use the following assumptions: the particle has mass \(M\), charge \(ze\), velocity \(v\), the impact parameter wrt the medium electrons is \(b\), the material has \(Z, A\). Imagine a very long cylinder centered around the particle: by Gauss, ignoring the circular faces,
+
+\begin{equation}
+    \frac{ze}{\varepsilon_0} = \int E_\perp  \dd{x} b\dd{\theta} = \int eE 2 \pi b  \dd{x}
+\end{equation}
+
+The momentum transferred to the electron is the integral of \(\dd{p}_\perp = F_\perp \dd{t}  = eE_\perp \dd{t} \). Also, recall \(\dd{t} = \dd{x} /v \). Then
+
+\begin{equation}
+    \Delta p _\perp = \int  eE \dd{t}
+    = \int eE \frac{2 \pi b}{2 \pi b} \frac{\dd{x}}{v}
+    = \frac{ze}{\varepsilon_0} \frac{e}{2 \pi b v}
+\end{equation}
+
+So, at fixed \(b\) and electron position, we can calculate \(\Delta E = \Delta p ^2 / 2 m_e\).
+
+But this will hold for all the electrons, and there are \(N\) of them, so \(\Delta E _ \text{tot} = N \Delta E\). We can write \(N = n V\). If we have the density \(\rho\), the (approximate) molar mass \(A\), then \(n =Z N_A \rho/A\) since there are \(Z\) electrons per atom.
+Also, \(V = \int 2 \pi b \dd{b} \dd{x}\).
+
+Putting it all together, and calculating the energy difference for the particle, which is minus that of the electron:
+
+\begin{subequations}
+\begin{align}
+    -\Delta E &= \int  \qty(\frac{ze}{\varepsilon_0} \frac{e}{2 \pi b v})^2 \frac{1}{2 m_e} \frac{ZN_A \rho}{A} 2 \pi b \dd{b} \dd{x} \\
+    - \dv{E}{x} &= \qty(\frac{ze^2}{4 \pi \varepsilon_0})^2 \frac{4 \pi Z N_A \rho}{m_e v^2 A} \int \frac{\dd{b}}{b} \\
+    - \dv{E}{x} &= \qty(\frac{ze^2}{4 \pi \varepsilon_0})^2 \frac{4 \pi Z N_A \rho}{m_e v^2 A}  \log(\frac{m_e v^2}{h \expval{\nu_e}})
+\end{align}
+\end{subequations}
+
+where we used \(b_ \text{max} = 2v / \expval{\nu_e} \), since if the time it takes the electron to oscillate (\(1/\expval{\nu} \)) is larger than the time it takes the interaction to occur  (\(b/2v\), half of the path of the particle) then the electron will not behave as a point particle;
+also \(b_\text{min} = h / p_e = h/(m_ev)\) since then the particle will pass \emph{through} the electron, and quantum stuff will happen.
+We introduce \(I = h \expval{\nu} \) as the ionization potential of the material, and some terms coming from  relativistic considerations
+
+\begin{equation} \label{eq:bethe-bloch}
+    S = - \dv{E}{x} = \qty(\frac{ze^2}{4 \pi \varepsilon_0})^2 \frac{4 \pi Z N_A \rho}{m_e v^2 A}
+    \qty(\log(\frac{2m_e v^2}{I (1-\beta^2)}) - \beta^2)
+\end{equation}
+
+for energies between \(\SI{100}{keV} \) and \(\SI{1}{GeV}\), the shape of the curve is roughly \(S \propto E^{-0.8}\).
+
+\paragraph{Range}
+
+It is the distance travelled by the particle: we can compute it as
+
+\begin{equation}
+    R = \int  \dv{x}{E}  \dd{E}  = \int _{0}   ^{E_0} \frac{\dd{E}}{-S}
+\end{equation}
+
+plugging in a rough version of formula \eqref{eq:bethe-bloch} (we get this by dividing and multiplying by \(M\), the mass of the particle): \(S \approx a z E^{-1} = 2 a z M  /E\). Then
+
+\begin{equation}
+    R \approx \frac{1}{2a}  \frac{E_0^2}{z^2 M}
+\end{equation}
 
 
 \end{document}

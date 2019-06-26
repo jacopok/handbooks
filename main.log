@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.16)  26 JUN 2019 17:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.16)  26 JUN 2019 17:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
 **main.tex
-(/home/jacopo/github/handbooks/main.tex
+(/home/jacopo/Documents/handbooks/main.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
@@ -24,7 +24,7 @@ File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/home/jacopo/github/handbooks/header.tex (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+) (/home/jacopo/Documents/handbooks/header.tex (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
@@ -2537,14 +2537,53 @@ Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-))) (/usr/share/texlive/texmf-dist/tex/latex/subfiles/subfiles.sty
+)) (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
+Package tocloft Info: The document has chapter divisions on input line 51.
+\cftparskip=\skip149
+\cftbeforetoctitleskip=\skip150
+\cftaftertoctitleskip=\skip151
+\cftbeforepartskip=\skip152
+\cftpartnumwidth=\skip153
+\cftpartindent=\skip154
+\cftbeforechapskip=\skip155
+\cftchapindent=\skip156
+\cftchapnumwidth=\skip157
+\cftbeforesecskip=\skip158
+\cftsecindent=\skip159
+\cftsecnumwidth=\skip160
+\cftbeforesubsecskip=\skip161
+\cftsubsecindent=\skip162
+\cftsubsecnumwidth=\skip163
+\cftbeforesubsubsecskip=\skip164
+\cftsubsubsecindent=\skip165
+\cftsubsubsecnumwidth=\skip166
+\cftbeforeparaskip=\skip167
+\cftparaindent=\skip168
+\cftparanumwidth=\skip169
+\cftbeforesubparaskip=\skip170
+\cftsubparaindent=\skip171
+\cftsubparanumwidth=\skip172
+\cftbeforeloftitleskip=\skip173
+\cftafterloftitleskip=\skip174
+\cftbeforefigskip=\skip175
+\cftfigindent=\skip176
+\cftfignumwidth=\skip177
+\c@lofdepth=\count341
+\c@lotdepth=\count342
+\cftbeforelottitleskip=\skip178
+\cftafterlottitleskip=\skip179
+\cftbeforetabskip=\skip180
+\cfttabindent=\skip181
+\cfttabnumwidth=\skip182
+)) (/usr/share/texlive/texmf-dist/tex/latex/subfiles/subfiles.sty
 Package: subfiles 2012/05/23 Federico Garcia
  (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks48
 \verbatim@line=\toks49
 \verbatim@in@stream=\read3
-)) (/home/jacopo/github/handbooks/main.aux)
+)) (/home/jacopo/Documents/handbooks/main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
@@ -2571,19 +2610,19 @@ LaTeX Font Info:    Try loading font information for T1+pplx on input line 10.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
-\c@lstlisting=\count341
+\c@lstlisting=\count343
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count342
+\scratchcounter=\count344
 \scratchdimen=\dimen303
 \scratchbox=\box75
-\nofMPsegments=\count343
-\nofMParguments=\count344
+\nofMPsegments=\count345
+\nofMParguments=\count346
 \everyMPshowfont=\toks50
-\MPscratchCnt=\count345
+\MPscratchCnt=\count347
 \MPscratchDim=\dimen304
-\MPnumerator=\count346
-\makeMPintoPDFobject=\count347
+\MPnumerator=\count348
+\makeMPintoPDFobject=\count349
 \everyMPtoPDFconversion=\toks51
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
@@ -2642,12 +2681,12 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count348
+\c@section@level=\count350
 )
 LaTeX Info: Redefining \ref on input line 10.
 LaTeX Info: Redefining \pageref on input line 10.
 LaTeX Info: Redefining \nameref on input line 10.
- (/home/jacopo/github/handbooks/main.out) (/home/jacopo/github/handbooks/main.out)
+ (/home/jacopo/Documents/handbooks/main.out) (/home/jacopo/Documents/handbooks/main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -2661,7 +2700,7 @@ Dictionary: translator-basic-dictionary, Language: English
 ) (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
 File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 )
-\c__siunitx_mathsf_int=\count349
+\c__siunitx_mathsf_int=\count351
 LaTeX Font Info:    Try loading font information for OT1+pplx on input line 10.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
@@ -2694,7 +2733,7 @@ LaTeX Font Info:    Try loading font information for OT1+zplm on input line 10.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-\c__siunitx_mathtt_int=\count350
+\c__siunitx_mathtt_int=\count352
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 15.0049pt on input line 13.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
@@ -2711,8 +2750,8 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 16.
- (/home/jacopo/github/handbooks/main.toc
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 18.
+ (/home/jacopo/Documents/handbooks/main.toc
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 1.
 LaTeX Font Info:    Try loading font information for U+fplmbb on input line 17.
@@ -2721,14 +2760,12 @@ File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.46 ...aragraph}{Time evolution}{11}{section*.44}
-                                                   [1
-
-] [2] [3])
+l.47 ...}{Von Neumann projection}{11}{section*.44}
+                                                   [1] [2] [3])
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- (/home/jacopo/github/handbooks/QM.tex [4]
+ (/home/jacopo/Documents/handbooks/QM.tex [4]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 8.
@@ -2842,7 +2879,7 @@ Overfull \hbox (12.77434pt too wide) in paragraph at lines 695--696
 []\T1/pplx/m/n/12 WLOG, we take the zero of the en-ergy to be $[][] \OML/zplm/m/it/12 V\OT1/zplm/m/n/12 (\OML/zplm/m/it/12 x\OT1/zplm/m/n/12 )$\T1/pplx/m/n/12 , and also WLOG $[][] \OML/zplm/m/it/12 V\OT1/zplm/m/n/12 (\OML/zplm/m/it/12 x\OT1/zplm/m/n/12 ) =
  []
 
-[18] [19] [20] [21] [22] [23]) (/home/jacopo/github/handbooks/Nuc.tex [24]
+[18] [19] [20] [21] [22] [23]) (/home/jacopo/Documents/handbooks/Nuc.tex [24]
 Chapter 2.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -2888,8 +2925,8 @@ Package epstopdf Info: Source file: <figures/parabolic_fits.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file /home/jacopo/github/handbooks/figures/parabolic_fits-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/parabolic_fits-eps-converted-to.pdf, id=1085, 578.16pt x 397.485pt>
+pdfTeX warning: pdflatex (file /home/jacopo/Documents/handbooks/figures/parabolic_fits-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/parabolic_fits-eps-converted-to.pdf, id=1079, 578.16pt x 397.485pt>
 File: figures/parabolic_fits-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/parabolic_fits-eps-converted-to.pdf>
 Package pdftex.def Info: figures/parabolic_fits-eps-converted-to.pdf  used on input line 237.
@@ -2905,13 +2942,13 @@ Package epstopdf Info: Source file: <figures/residuals.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file /home/jacopo/github/handbooks/figures/residuals-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/residuals-eps-converted-to.pdf, id=1086, 578.16pt x 397.485pt>
+pdfTeX warning: pdflatex (file /home/jacopo/Documents/handbooks/figures/residuals-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/residuals-eps-converted-to.pdf, id=1080, 578.16pt x 397.485pt>
 File: figures/residuals-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/residuals-eps-converted-to.pdf>
 Package pdftex.def Info: figures/residuals-eps-converted-to.pdf  used on input line 241.
 (pdftex.def)             Requested size: 247.5389pt x 170.18134pt.
-[29 </home/jacopo/github/handbooks/figures/parabolic_fits-eps-converted-to.pdf> </home/jacopo/github/handbooks/figures/residuals-eps-converted-to.pdf>]
+[29 </home/jacopo/Documents/handbooks/figures/parabolic_fits-eps-converted-to.pdf> </home/jacopo/Documents/handbooks/figures/residuals-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <figures/odd_A_fit.eps>
 (epstopdf)                    date: 2019-06-18 10:02:36
 (epstopdf)                    size: 255504 bytes
@@ -2923,8 +2960,8 @@ Package epstopdf Info: Source file: <figures/odd_A_fit.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file /home/jacopo/github/handbooks/figures/odd_A_fit-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/odd_A_fit-eps-converted-to.pdf, id=1121, 578.16pt x 397.485pt>
+pdfTeX warning: pdflatex (file /home/jacopo/Documents/handbooks/figures/odd_A_fit-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/odd_A_fit-eps-converted-to.pdf, id=1115, 578.16pt x 397.485pt>
 File: figures/odd_A_fit-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/odd_A_fit-eps-converted-to.pdf>
 Package pdftex.def Info: figures/odd_A_fit-eps-converted-to.pdf  used on input line 275.
@@ -2940,8 +2977,8 @@ Package epstopdf Info: Source file: <figures/odd_A_residuals.eps>
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file /home/jacopo/github/handbooks/figures/odd_A_residuals-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/odd_A_residuals-eps-converted-to.pdf, id=1122, 578.16pt x 397.485pt>
+pdfTeX warning: pdflatex (file /home/jacopo/Documents/handbooks/figures/odd_A_residuals-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/odd_A_residuals-eps-converted-to.pdf, id=1116, 578.16pt x 397.485pt>
 File: figures/odd_A_residuals-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/odd_A_residuals-eps-converted-to.pdf>
 Package pdftex.def Info: figures/odd_A_residuals-eps-converted-to.pdf  used on input line 279.
@@ -2950,7 +2987,7 @@ Package pdftex.def Info: figures/odd_A_residuals-eps-converted-to.pdf  used on i
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 290.
 
-[30 </home/jacopo/github/handbooks/figures/odd_A_fit-eps-converted-to.pdf> </home/jacopo/github/handbooks/figures/odd_A_residuals-eps-converted-to.pdf>]
+[30 </home/jacopo/Documents/handbooks/figures/odd_A_fit-eps-converted-to.pdf> </home/jacopo/Documents/handbooks/figures/odd_A_residuals-eps-converted-to.pdf>]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 314.
@@ -2987,7 +3024,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 470.
 
 [33]
-<figures/barium_decay_chain.png, id=1190, 1366.10374pt x 732.7375pt>
+<figures/barium_decay_chain.png, id=1184, 1366.10374pt x 732.7375pt>
 File: figures/barium_decay_chain.png Graphic file (type png)
 <use figures/barium_decay_chain.png>
 Package pdftex.def Info: figures/barium_decay_chain.png  used on input line 478.
@@ -2997,17 +3034,17 @@ Package pdftex.def Info: figures/barium_decay_chain.png  used on input line 478.
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 501.
 
-<figures/sun_nuclear_fusion.png, id=1192, 1058.95625pt x 742.775pt>
+<figures/sun_nuclear_fusion.png, id=1186, 1058.95625pt x 742.775pt>
 File: figures/sun_nuclear_fusion.png Graphic file (type png)
 <use figures/sun_nuclear_fusion.png>
 Package pdftex.def Info: figures/sun_nuclear_fusion.png  used on input line 511.
 (pdftex.def)             Requested size: 346.55293pt x 243.07642pt.
-[34 </home/jacopo/github/handbooks/figures/barium_decay_chain.png>]
+[34 </home/jacopo/Documents/handbooks/figures/barium_decay_chain.png>]
 
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 552.
 
-[35 </home/jacopo/github/handbooks/figures/sun_nuclear_fusion.png>]
+[35 </home/jacopo/Documents/handbooks/figures/sun_nuclear_fusion.png>]
 
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 588.
@@ -3017,12 +3054,12 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 (hyperref)                than one, level fixed on input line 596.
 
 [36]
-<figures/nuclear_shells.png, id=1221, 764.8575pt x 855.195pt>
+<figures/nuclear_shells.png, id=1215, 764.8575pt x 855.195pt>
 File: figures/nuclear_shells.png Graphic file (type png)
 <use figures/nuclear_shells.png>
 Package pdftex.def Info: figures/nuclear_shells.png  used on input line 647.
 (pdftex.def)             Requested size: 346.55293pt x 387.48318pt.
- [37] [38 </home/jacopo/github/handbooks/figures/nuclear_shells.png>]
+ [37] [38 </home/jacopo/Documents/handbooks/figures/nuclear_shells.png>]
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 18.00587pt on input line 692.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
@@ -3101,7 +3138,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\alpha' on input line 952.
 
-[44]) (/home/jacopo/github/handbooks/quantum_info.tex [45]
+[44]) (/home/jacopo/Documents/handbooks/quantum_info.tex [45]
 Chapter 3.
 
 Package hyperref Warning: Difference (3) between bookmark levels is greater 
@@ -3121,31 +3158,29 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 [46
 
-]
-LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 123.
-) [47] [48]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 24.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 24.
- (/home/jacopo/github/handbooks/main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 24.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 24.
+]) [47] [48]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
+ [49]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
+ (/home/jacopo/Documents/handbooks/main.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 57999E95E90B17948A32AFDC483C85CA;10206.
+(rerunfilecheck)             Checksum: 3149D15CAB3588DD2404A3EFDF961E63;10136.
  ) 
 Here is how much of TeX's memory you used:
- 35975 strings out of 492982
- 702944 string characters out of 6134896
- 764318 words of memory out of 5000000
- 38486 multiletter control sequences out of 15000+600000
- 617340 words of font info for 217 fonts, out of 8000000 for 9000
+ 36233 strings out of 492982
+ 706864 string characters out of 6134896
+ 769364 words of memory out of 5000000
+ 38743 multiletter control sequences out of 15000+600000
+ 615033 words of font info for 214 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,17n,82p,10434b,1003s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,17n,82p,10434b,1004s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on /home/jacopo/github/handbooks/main.pdf (49 pages, 889199 bytes).
+Output written on /home/jacopo/Documents/handbooks/main.pdf (50 pages, 889500 bytes).
 PDF statistics:
- 1483 PDF objects out of 1728 (max. 8388607)
- 1392 compressed objects within 14 object streams
- 437 named destinations out of 1000 (max. 500000)
- 1304 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1481 PDF objects out of 1728 (max. 8388607)
+ 1389 compressed objects within 14 object streams
+ 436 named destinations out of 1000 (max. 500000)
+ 1296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

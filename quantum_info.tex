@@ -3,6 +3,130 @@
 
 \chapter{Quantum Information}
 
+\section{The basics}
+
+\paragraph{Qubit}
+
+It can be physically realized with any two-state system.
+It is a complex superposition of \(\ket{0} \) and \(\ket{1} \). Thanks to normalization and \(U(1)\) gauge invariance (a ket is defined up to a phase) we can always make \(\ket{0} \)'s coefficient real and positive: the ket can always be written as
+
+\begin{equation} \label{eq:qubit}
+    \ket{\psi} = \cos(\frac{\theta}{2}) \ket{0} + \sin(\frac{\theta}{2}) e^{ i  \varphi} \ket{1}
+\end{equation}
+
+with \(\varphi \in [0,2 \pi]\) and \(\theta \in [0, \pi]\): these can be interpreted as angles on a sphere.
+
+We can use an \(n\)-qubit system:
+
+\begin{equation}
+    \ket{\psi } = \sum _{i=0} ^{2^n-1} a_i \ket{i}
+\end{equation}
+
+where \(\ket{i} \) is a base state of the tensor product space of the \(n\) Hilbert spaces: \(\ket{i} = \ket{\alpha_0}_0 \otimes \ket{\alpha_1}_1 \otimes \dots \ket{\alpha_{n-1}}_{n-1} \); the \(\alpha_j\) are the components of the representation of \(i\) in binary: \(\alpha_0 \alpha_1 \dots \alpha_{n-1}\) (with \(\alpha_j =0,1\)). This is called the \emph{computational basis}.
+
+We assume the state to be normalized: \(\sum _{i}  \abs{a_i} ^2 = 1 \)
+
+\paragraph{Entanglement}
+
+A state \(\ket{\psi } \) is called \emph{entangled} if there are no subsystem kets \(\ket{\psi _i} _i\), \(i = A, B\) such that \(\ket{\psi } = \ket{\psi _A} _A \otimes \ket{\psi _B} _B\).
+
+\paragraph{Quantum gates}
+
+They are unitary trasformations: \(U: \H \rightarrow \H\), \(U ^\dag U = UU^\dag= \mathbb{1}\).
+
+\textbf{Lemma}: they can be decomposed into smaller \emph{quantum gates}, which are \(2n \times 2n\) complex unitary matrices.
+
+\section{Quantum gates}
+
+\paragraph{Hadamard}
+It is a \emph{one-qubit gate} which switches from the computational basis to the eigenstates of \(\sigma_z\), which we call \(\ket{+} = H \ket{0} \propto \ket{0} +\ket{1}   \) and \(\ket{-} = H \ket{1} \propto \ket{0} - \ket{1} \).
+
+\begin{equation}
+    H = \frac{1}{\sqrt{2} } \begin{pmatrix}
+    1   & 1 \\
+    -1   & 1
+    \end{pmatrix}
+\end{equation}
+
+\paragraph{Phase}
+It is a \emph{one-qubit gate} which  gives a phase to a state: applying it to a generic qubit, written as \eqref{eq:qubit}, we get \(R_z(\delta) \ket{\psi} =  \cos(\theta/2) \ket{0} + \exp(i(\varphi+\delta)) \sin(\theta/2)\ket{1}\).
+
+\begin{equation} \label{eq:phase-gate}
+    R_z (\delta) = \exp(i \delta \sigma_z) = \begin{pmatrix}
+    1   & 0 \\
+    0   & \exp(i \delta)
+    \end{pmatrix}
+\end{equation}
+
+\paragraph{State generation} We can get any state \(\ket{\psi }\) written as \eqref{eq:qubit} with Hadamard and phase-shift:
+
+\begin{subequations}
+\begin{align}
+  \ket{\psi }  &= R_z(\pi/2 + \varphi) H R_z(\theta) H\ket{0}  \\
+  &= \frac{1}{2} \begin{pmatrix}
+    1 + e^{i \theta} \\
+     i  \qty(e^{i \varphi}  - e^{i (\theta + \varphi)})
+  \end{pmatrix}  \\
+  &= \label{eq:sub-gate-phase}
+  \frac{1}{2} \begin{pmatrix}
+    e^{i \theta /2} + e^{-i \theta /2} \\
+    i^{-1} \qty(e^{i \theta/2} - e^{-i \theta/2}) e^{i \varphi}
+\end{pmatrix}  \\
+ &= \begin{pmatrix}
+ \cos(\theta/2)  \\
+ \sin(\theta/2) e^{i \varphi}
+ \end{pmatrix}
+\end{align}
+\end{subequations}
+
+where in the step \eqref{eq:sub-gate-phase} we used the fact that a quantum state is only defined up to a phase, and multiplied by \(\exp(-i \theta/2) \).
+
+\paragraph{Control not} It is a \emph{two-qubit gate}  which cannot be written as a tensor product of one-qubit gates.
+
+\begin{equation}
+    \text{CNOT} = \begin{pmatrix}
+    1   &  0 &   &  \\
+      0 & 1  &   &  \\
+       &   & 0  & 1 \\
+       &   & 1  & 0
+    \end{pmatrix}
+\end{equation}
+
+It generates entanglement: let us apply it to the separable state \(\alpha \ket{00} + \beta \ket{10} \): it returns \(\alpha \ket{00} + \beta \ket{11} \), which is entangled.
+
+\paragraph{Control phase}
+
+It is a \emph{two-qubit gate}:
+
+\begin{equation}
+    \text{CPHASE}(\delta) = \begin{pmatrix}
+    \mathbb 1   & 0 \\
+    0   & R_z(\delta)
+    \end{pmatrix}
+\end{equation}
+
+where we used the phase gate \eqref{eq:phase-gate}.
+
+\paragraph{Binary function unitarity}
+
+In general a function \(f: \qty{0,1}^n \rightarrow \qty{0,1}\) will not be injective, therefore it will not be unitary. In order to represent it as unitary we must "carry over" the input:
+
+
+
+in order to have a more general trasformation we define it for arbitrary input on the second system:
+
+\begin{equation}
+    U_f \ket{x} \ket{y} = \ket{x} \ket{y \oplus f(x)}
+\end{equation}
+
+where \(\oplus\) is bitwise XOR.
+
+\subsection{Parallelism}
+
+
+
+\subsection{No cloning}
+
 
 
 \end{document}

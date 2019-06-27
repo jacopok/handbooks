@@ -35,6 +35,14 @@ They are unitary trasformations: \(U: \H \rightarrow \H\), \(U ^\dag U = UU^\dag
 
 They can be decomposed into smaller gates, which are in general \(2n \times 2n\) complex unitary matrices, but we will usually just use \(n=1, 2\).
 
+If two gates are represented by \(2 \times 2\) matrices, indexed in the computational basis as \(A_i ^j\) and \(B_k^l\) with \(i, j, k, l = 0,1\),  then their tensor product will be
+
+\begin{equation}
+    [A_i^j B_k^l] = [A \otimes B]_i^j\,_k^l = [A \otimes B ] _M ^N
+\end{equation}
+
+where we grouped the indices \(ik = M\) and \(jl=N\), in order to write two-component fourth order tensors as four-dimensional order two matrices. What are \(M\) and \(N\)  then? \(i, j\) and so on are binary digits, so it is natural to interpret \(M\) and \(N\) as numbers between \(0\) and \(3\) written in binary.
+Of course, this can be generalized to any order, keeping the same pattern.
 
 \paragraph{Hadamard} \label{par:hadamard}
 It is a \emph{one-qubit gate} which switches from the computational basis to the eigenstates of \(\sigma_z\), which we call \(\ket{+} = H \ket{0} \propto \ket{0} +\ket{1}   \) and \(\ket{-} = H \ket{1} \propto \ket{0} - \ket{1} \).
@@ -58,7 +66,8 @@ It is a \emph{one-qubit gate} which  gives a phase to a state: applying it to a 
     \end{pmatrix}
 \end{equation}
 
-\paragraph{Control not} It is a \emph{two-qubit gate}  which cannot be written as a tensor product of one-qubit gates.
+\paragraph{Control not} \label{par:cnot}
+It is a \emph{two-qubit gate}  which cannot be written as a tensor product of one-qubit gates.
 
 \begin{equation}
     \text{CNOT} = \begin{pmatrix}
@@ -84,8 +93,51 @@ It is a \emph{two-qubit gate}:
 
 where we used the phase gate \eqref{eq:phase-gate}.
 
+\begin{bluebox}
+It can be written as \(\text{CPHASE} (\delta) = [\mathbb 1 \otimes R_z(\delta/2)] [\text{CNOT}] [\mathbb 1 \otimes R_z(-\delta/2)] [\text{CNOT}] [ R_z(\delta/2) \otimes\mathbb 1 ]\): the steps  (multiplying from right to left, starting from just \([ R_z(\delta/2) \otimes\mathbb 1 ]\)) are as follows:
 
-\paragraph{State generation} We can get any state \(\ket{\psi }\) written as \eqref{eq:qubit} with Hadamard and phase-shift:
+\begin{multline}
+    \begin{pmatrix}
+    1   &   &   &  \\
+       & 1  &   &  \\
+       &   & e^{i \delta/2}  &  \\
+       &   &   & e^{i \delta /2}
+    \end{pmatrix}
+\rightarrow
+    \begin{pmatrix}
+    1   &   &   &  \\
+       & 1  &   &  \\
+       &   &  & e^{i \delta/2}  \\
+       &   &   e^{i \delta /2} &
+    \end{pmatrix}
+\rightarrow
+    \begin{pmatrix}
+    1   &   &   &  \\
+       & e^{-i \delta/2}  &   &  \\
+       &   &  & e^{i \delta/2}  \\
+       &   &   1 &
+    \end{pmatrix}
+\rightarrow
+\\
+\rightarrow
+    \begin{pmatrix}
+    1   &   &   &  \\
+       & e^{-i \delta/2}  &   &  \\
+       &   &  1 &  \\
+       &   &    & e^{i \delta/2}
+    \end{pmatrix}
+\rightarrow
+    \begin{pmatrix}
+    1   &   &   &  \\
+       & 1  &   &  \\
+       &   &  1 &  \\
+       &   &    & e^{i \delta}
+    \end{pmatrix}
+\end{multline}
+\end{bluebox}
+
+\begin{bluebox}
+We can get any state \(\ket{\psi }\) written as \eqref{eq:qubit} with Hadamard and phase-shift:
 
 \begin{subequations}
 \begin{align}
@@ -107,6 +159,8 @@ where we used the phase gate \eqref{eq:phase-gate}.
 \end{subequations}
 
 where in the step \eqref{eq:sub-gate-phase} we used the fact that a quantum state is only defined up to a phase, and multiplied by \(\exp(-i \theta/2) \).
+\end{bluebox}
+
 
 \paragraph{Binary function unitarity}
 
@@ -159,6 +213,39 @@ but also
 \end{align}
 \end{subequations}
 
-and in general \(\braket{\psi}{\varphi} \neq 0,\pm 1\), so we found a contradiction. Note that we \emph{can} create a partial cloning machine which works only on the basis states of some basis.
+and in general \(\braket{\psi}{\varphi} \neq 0,\pm 1\), so we found a contradiction. Note that we \emph{can} create a partial cloning machine which works only on the basis states of some basis: we extend by linearity the desired cloning. If we want to clone the computational basis, the gate is the CNOT (see \Nameref{par:cnot}).
+
+\begin{bluebox}
+  Alternative proof: apply \(U (\ket{x} + \ket{y}) \otimes \ket{0} = (\ket{x} + \ket{y}) ^{\otimes 2} \) (a separable state), but \(U\) must be linear, so \(U (\ket{x} + \ket{y}) \otimes \ket{0} = \ket{x} \ket{x} + \ket{y} \ket{y} \), generally an entangled state.
+\end{bluebox}
+
+\section{Miscellaneous concepts}
+
+\subsection{Algorithmic complexity}
+
+We can distinguish algorithms by how many resources (computation time, RAM, ...) they require:
+
+\begin{enumerate}
+    \item \(P\): classical polynomial time;
+    \item \(NP\): classical nondeterministic polynomial time: there exists a nondeterministic Turing machine\footnote{Same as a regular Turing machine, except that in a certain configuration it can have different actions, and in a certain sense it ``tries them all''.} which finds the solution in polynomial time --- the solution can thus be verified in polynomial time;
+    \item \(NP-\text{hard}\): problems to which every \(P\) problem can be reduced in polynomial time;
+    \item \(NPC\): \(NP\) problems which are also \(NP-\text{hard}\);
+    \item \(BPP\): bounded error probabilistic polynomial: it can give us the correct answer in polynomial time with probability \(\P>1/2\).
+    \item \(BQP\): bounded error quantum polynomial: it is a quantum algorithm which can give us the correct answer in polynomial time with probability \(\P>1/2\).
+\end{enumerate}
+
+Surely \(P \subseteq BPP \subseteq BQP\). We are not sure whether \(BQP \subseteq BPP\).
+
+\subsection{Fidelity}
+
+We introduce a notion of distance between states:
+
+\begin{equation}
+    F = \abs{\braket{\psi_1}{\psi_2} }^2
+\end{equation}
+
+it is monotonous in \norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \braket{\psi_1}{\psi_2}}\)
+
+\(F\) is also the \(\cos^2(\theta/2) \), where \(\theta\) is the angle between the two vectors in Bloch space.
 
 \end{document}

@@ -8,13 +8,13 @@
 \paragraph{Qubit}
 
 It can be physically realized with any two-state system.
-It is a complex superposition of \(\ket{0} \) and \(\ket{1} \). Thanks to normalization and \(U(1)\) gauge invariance (a ket is defined up to a phase) we can always make \(\ket{0} \)'s coefficient real and positive: the ket can always be written as
+It is a complex superposition of \(\ket{0} \) and \(\ket{1} \). Thanks to normalization and \(U(1)\) gauge invariance (a ket is defined up to a phase) we can always make \(\ket{0} \)'s coefficient real and \(\in [0,1]\): the ket can always be written as
 
 \begin{equation} \label{eq:qubit}
     \ket{\psi} = \cos(\frac{\theta}{2}) \ket{0} + \sin(\frac{\theta}{2}) e^{ i  \varphi} \ket{1}
 \end{equation}
 
-with \(\varphi \in [0,2 \pi]\) and \(\theta \in [0, \pi]\): these can be interpreted as angles on a sphere.
+with \(\varphi \in [0,2 \pi]\) and \(\theta \in [0, \pi]\): these can be interpreted as angles on a sphere. The fact that \(\theta\) is divided by two comes from the coordinates we choose in \(S^3 \subset \C^2\).
 
 We can use an \(n\)-qubit system:
 
@@ -244,8 +244,19 @@ We introduce a notion of distance between states:
     F = \abs{\braket{\psi_1}{\psi_2} }^2
 \end{equation}
 
-it is monotonous in \norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \braket{\psi_1}{\psi_2}}\)
-
+\(F\) is monotonous in \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2\).
 \(F\) is also the \(\cos^2(\theta/2) \), where \(\theta\) is the angle between the two vectors in Bloch space.
+
+\begin{bluebox}
+  Let us prove these two statements: first of all notice that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \Re \braket{\psi_1}{\psi_2}}\).
+  Now, the scalar product \(\braket{\psi_1}{\psi_2}\) is in general a complex number but we can rotate the starting functions by an arbitrary phase, making it real and positive. So we get \(\Re \braket{\psi_1}{\psi_2} = \abs{\braket{\psi_1}{\psi_2}}  = \sqrt{F} \). Then, we can see that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2(1-\sqrt{F})} \)
+\end{bluebox}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/Fidelity.pdf}
+    \caption{Norm of difference vs fidelity}
+    \label{fig:fidelity}
+\end{figure}
 
 \end{document}

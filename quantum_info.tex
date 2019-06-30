@@ -42,7 +42,7 @@ If two gates are represented by \(2 \times 2\) matrices, indexed in the computat
 \end{equation}
 
 where we grouped the indices \(ik = M\) and \(jl=N\), in order to write two-component fourth order tensors as four-dimensional order two matrices. What are \(M\) and \(N\)  then? \(i, j\) and so on are binary digits, so it is natural to interpret \(M\) and \(N\) as numbers between \(0\) and \(3\) written in binary.
-Of course, this can be generalized to any order, keeping the same pattern.
+Of course, this can be generalized to any order, keeping the same pattern, and be applied to vectors as well.
 
 \paragraph{Hadamard} \label{par:hadamard}
 It is a \emph{one-qubit gate} which switches from the computational basis to the eigenstates of \(\sigma_z\), which we call \(\ket{+} = H \ket{0} \propto \ket{0} +\ket{1}   \) and \(\ket{-} = H \ket{1} \propto \ket{0} - \ket{1} \).
@@ -166,6 +166,9 @@ where in the step \eqref{eq:sub-gate-phase} we used the fact that a quantum stat
 
 In general a function \(f: \qty{0,1}^n \rightarrow \qty{0,1}\) will not be injective, therefore it will not be unitary. In order to represent it as unitary we must "carry over" the input:
 
+\begin{equation}
+    U_f \ket{x} \ket{0} = \ket{x} \ket{f(x)}
+\end{equation}
 
 in order to have a more general trasformation we define it for arbitrary input on the second system:
 
@@ -249,14 +252,84 @@ We introduce a notion of distance between states:
 
 \begin{bluebox}
   Let us prove these two statements: first of all notice that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \Re \braket{\psi_1}{\psi_2}}\).
-  Now, the scalar product \(\braket{\psi_1}{\psi_2}\) is in general a complex number but we can rotate the starting functions by an arbitrary phase, making it real and positive. So we get \(\Re \braket{\psi_1}{\psi_2} = \abs{\braket{\psi_1}{\psi_2}}  = \sqrt{F} \). Then, we can see that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2(1-\sqrt{F})} \)
+  Now, the scalar product \(\braket{\psi_1}{\psi_2}\) is in general a complex number but we can rotate the starting functions by an arbitrary phase, making it real and positive. So we get \(\Re \braket{\psi_1}{\psi_2} = \abs{\braket{\psi_1}{\psi_2}}  = \sqrt{F} \). Then, we can see that
+
+  \begin{equation} \label{eq:norm-of-difference-fidelity}
+    \norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2(1-\sqrt{F})}
+  \end{equation}
+
+  Now, we want to prove \(F = \cos^2(\theta/2) \): let \(U\) be a unitary transformation which maps \(\ket{\psi _1} \) to \(\ket{0}\). We can rewrite \(F = \abs{\bra{\psi_1} U^\dag U \ket{\psi_2}}^2\). We can expand the applications of \(U\) to the vectors to get \(\abs{\bra{0} \qty(\alpha \ket{0} + \beta \ket{1} ) }^2\).
+
+  Now, since states are always defined up to a phase, we can pick \(\alpha\) to be real and positive. Then we have put the state \(U \ket{\psi_1}\) in the canonical form \eqref{eq:qubit}, and the result follows.
 \end{bluebox}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{figures/Fidelity.pdf}
-    \caption{Norm of difference vs fidelity}
+    \caption{Norm of difference vs fidelity: a plot of equation \eqref{eq:norm-of-difference-fidelity}}
     \label{fig:fidelity}
 \end{figure}
+
+\section{Quantum teleportation}
+
+It is possible to clone a generic quantum state \(\ket{\psi } = \alpha \ket{0} + \beta \ket{1}  \) assuming we start with two entangled qubits, one in the starting location and one at the destination: so, if these two qubits are called \(A\) and \(B\) and the state we want to transmit is in subsystem \(C\), we start with
+
+\begin{equation}
+    \qty(\frac{\ket{00} + \ket{11} }{\sqrt{2} })_{AB} \otimes \ket{\psi}_C
+\end{equation}
+
+The protocol is this:
+
+\begin{enumerate}
+    \item Apply the gate \(\text{C}_C\text{NOT}_A\); \label{step:cnot}
+    \item apply the gate \(H_C\); \label{step:hadamard}
+    \item measure \(A\) and \(C\) in the computational basis: call the result \(x\);
+    \item apply a gate \(V_x\), selected according to table \ref{tab:teleportation-gate}, to \(B\).
+\end{enumerate}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \(x\) & \(V_x\) \\
+        \hline
+        00 & \(\mathbb 1\) \\
+        01 & \(\sigma_z\) \\
+        10 & \(\sigma_x\) \\
+        11 & \(\sigma_z \sigma_x\)
+    \end{tabular}
+    \caption{Possibilities for gate \(V_x\). }
+    \label{tab:teleportation-gate}
+\end{table}
+
+\begin{greenbox}
+  Possibly, when Montangero wrote \(AC=01\) he meant \(A=1\) and \(C=0\).
+\end{greenbox}
+
+We can realize all of this with the gates \(\text{CNOT}\), Hadamard and \(\sigma_z\) (we can recover \(\sigma_x\) as \(\sigma_x = H \sigma_z H\).
+
+\section{Quantum interferometry}
+
+\paragraph{Beam splitter}
+
+We call the sides of the BS \(A\) and \(B\), and denote the absence or presence of light on either side by \(\ket{0,1} _{A, B}\). Then the action of the beam splitter is unitary and can be represented in the partial basis \(\ket{0}_A \otimes \ket{1} _B , \ket{1}_A \otimes \ket{0} _B\) as
+
+\begin{equation}
+    U_{BS} = \frac{1}{\sqrt{2} }
+    \begin{pmatrix}
+    1   & i \\
+    i   & 1
+    \end{pmatrix}
+\end{equation}
+
+Note that \(U_{BS}^2 = i\sigma_x\) in the BS-side basis: if we build a Mach-Zender interferometer, that is, we chain two beam-splitters, the light from the two paths interferes and we get some only on one side of the BS (the side opposite of the starting one).
+
+\paragraph{Bomb detection}
+
+If we block one of the paths between the detectors, around half of the time the light will hit this obstacle (our `bomb'). Around half the time it will go to the second BS, and then a quarter of the time it will be detected on either side of the BS. On the other hand, if there is no obstacle, we will see photons \emph{only} on a certain side of the final BS.
+
+So around \(\frac[i]{1}{4} \) of the time we will have detected the bomb without the photon actually \emph{having been there}.
+
+\section{Zeno effect}
+
 
 \end{document}

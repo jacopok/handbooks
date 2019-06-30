@@ -63,3 +63,8 @@
 
 \newcommand{\hlc}[2]{%
   \colorbox{#1!50}{$\displaystyle#2$}}
+
+\usepackage{nicefrac}
+\usepackage{ifthen}
+\let\oldfrac\frac
+\renewcommand{\frac}[3][d]{\ifthenelse{\equal{#1}{d}}{\oldfrac{#2}{#3}}{\nicefrac{#2}{#3}}}

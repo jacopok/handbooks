@@ -9,13 +9,16 @@ rc('text.latex', preamble=r'''\usepackage{amsmath}
           \usepackage{physics}
           ''')
 
+def gen_fidelity():
+    F = np.linspace(0,1)
+    f = lambda x : np.sqrt(2*(1-np.sqrt(x)))
 
-F = np.linspace(0,1)
-f = lambda x : np.sqrt(2*(1-np.sqrt(x)))
+    fig = plt.figure(1)
+    plt.plot(F,f(F), label = '')
+    plt.xlabel('$F$')
+    plt.ylabel('$\\norm{\\ket{\\psi_1} - \\ket{\\psi _2} }_2$')
 
-fig = plt.figure(1)
-plt.plot(F,f(F), label = '')
-plt.xlabel('$F$')
-plt.ylabel('$\\norm{\\ket{\\psi_1} - \\ket{\\psi _2} }_2$')
+    fig.savefig('../figures/Fidelity.pdf', format = 'pdf')
 
-fig.savefig('../figures/Fidelity.pdf', format = 'pdf')
+if __name__ == '__main__':
+    gen_fidelity()

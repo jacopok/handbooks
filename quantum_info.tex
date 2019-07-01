@@ -464,4 +464,167 @@ Where \(\sigma_x\) is meant to be in the \(\ket{-}, \ket{+}  \) basis. Now, let 
 
 We will write the Schrödinger equation for the evolution of \(x\), \(y\) and \(z\) and show that, if we just consider the first two, the effective Hamiltonian looks like the one in \eqref{eq:interaction-hamiltonian}.
 
+The system so solve can be separated into
+
+\begin{subequations}
+\begin{align}
+  i \dot{x} &= \Omega y \\
+  i \dot{y} &= \Omega x +\sqrt{\frac{\Gamma}{2 \pi}} \int z \dd{\omega}   \\
+  i \dot{z} &= \omega z +\sqrt{\frac{\Gamma}{2 \pi}} y
+\end{align}
+\end{subequations}
+
+In can be readiliy verified that, with starting conditions \(x=1\), \(y=z=0\), we have
+
+\begin{equation}
+    z(\omega, t) = -i \sqrt{\frac{\Gamma}{2 \pi}} \int _{0}   ^{t} \dd{\tau} y(\tau) e^{-i \omega (t-\tau)}
+\end{equation}
+
+so we substitute into the equation for \(y\)
+
+\begin{equation}
+    i \dot{y} = \Omega x  -i\frac{\Gamma}{2 \pi} \int \dd{\omega} \int _{0}   ^{t} \dd{\tau} y(\tau) e^{-i \omega (t-\tau)}
+\end{equation}
+
+but \(\int   \dd{\omega} e^{-i \omega (t- \tau)} = 2 \pi \delta(t- \tau)\): so
+
+\begin{equation}
+    i \dot{y} = \Omega x  -i\Gamma y(t) /2
+\end{equation}
+
+The factor \(1/2\) comes from the fact we integrated a \(\delta\) on the \emph{boundary} of the domain.
+We can combine the results into
+
+\begin{equation}
+    i \dv{}{t} \begin{pmatrix}
+    x \\
+    y
+    \end{pmatrix}
+    = \begin{pmatrix}
+    0   & \Omega     \\
+     \Omega  & -i \Gamma /2
+    \end{pmatrix}
+    \begin{pmatrix}
+    x \\
+    y
+    \end{pmatrix}
+\end{equation}
+
+\section{Implementation of quantum gates}
+
+We want to implement a NOT gate (\(\sigma_x\)): we use a spin-$1/2$ particle, and two magnetic fields described by  a Hamiltonian
+
+\begin{equation}
+    H = - \mu \qty(B_0 \sigma_z + B_1 \qty(\cos(\omega t) \sigma_x + \sin(\omega t)\sigma_y  ))
+\end{equation}
+
+So the zeroth field is fixed on \(z\), while the other rotates around the \(z\) axis staying on the \(xy\) plane.
+
+\begin{greenbox}
+  TODO
+\end{greenbox}
+
+\section{Density matrices}
+
+Say we have a generic observable \(\hat{A} = \sum _{i}  a_i \dyad{a_i} \), and our has a probability \(p_i\) of being in the state \(\ket{\psi_i}\): of course we must have \(\sum _{i}  p_i = 1 \). Then, we want to compute the expectation value \(\expval{A} \) in this ``mixed'' state: it will look like
+
+\begin{subequations}
+\begin{align}
+   \expval{A} &= \sum _{i,k} p_i a_k \braket{\psi_i}{a_k}\braket{a_k}{\psi_i}   \\
+   &= \sum _{i,j,k}  p_i a_k  \bra{a_k}\qty(\ketbra{a_j}{a_j})\ket{\psi_i} \braket{\psi_i}{a_k}  \\
+   &= \sum _{k} \bra{a_k} \qty(\sum_j \underbrace{a_k}_{\substack{k\equiv j\text{ since it is }\\ \text{multiplied by }\delta_{jk}}}  \dyad{a_j} ) \qty(\sum_i p_i \dyad{\psi_i} ) \ket{a_k} \\
+   &= \Tr \qty(A \rho) = \Tr \qty(\rho A)
+\end{align}
+\end{subequations}
+
+So, we have defined
+
+\begin{equation}
+    \rho \defeq \sum _{k} p_k  \dyad{\psi_k}
+\end{equation}
+
+\paragraph{Properties}
+
+\begin{enumerate}
+    \item \(\Tr \rho = 1\)
+    \item \(\rho = \rho^\dag\)
+    \item \(\rho \geq 0\)
+    \item \(\Tr \rho^2 \leq 1\)
+\end{enumerate}
+
+These can be deduced from writing the matrix elements \(\rho _{ij} = \bra{i} \rho \bra{j} \) in an ON basis, or by noticing that \(\rho \) is a positively-weighted sum of projectors, each of which is self-adjoint.
+
+The first one needs the components approach, I think: \(\rho_{ii} = \sum _{ik}  \abs{\braket{\psi_k}{i} }^2 =1 \) since they are the components in a basis of a normalized ket.
+
+The last property can be seen by noticing that \(\rho\) is self-adjoint, so it has an orthonormal basis: then squaring it is easy, and all the coefficients are such that \(p_i^2 \leq p_i\).
+
+\paragraph{Time evolution of a density matrix}
+
+How does \(\rho\) evolve? If we have \(U\), we can write the evolution by linearity as
+
+\begin{equation}
+    \rho(t) = \sum _{k} p_k  U\dyad{\psi_k}U^\dag =  U \rho_0 U^\dag
+\end{equation}
+
+If instead we wish to look at the differential formulation, starting from \(i \hbar \ket{\dot{\psi}_k} = H \ket{\psi_k}\) and its adjunct \(-i \hbar \bra{\dot{\psi}_k} =  \bra{\psi_k} H\) we get
+
+\begin{equation}
+    \dv{}{t} \rho(t) =  \sum _{k} p_k  \dv{}{t} \qty(\dyad{\psi_k})
+    = \frac{1}{i \hbar} \sum _{k} p_k  \qty(H \dyad{\psi_k} - \dyad{\psi_k}H)
+    = \frac{[H, \rho]}{i \hbar}
+\end{equation}
+
+\paragraph{Pure states}
+
+A density matrix is a \emph{pure state} if it has only one component, in the sense that: \(\rho = \dyad{\psi} \). The following are equivalent:
+
+\begin{enumerate}
+    \item \(\rho \) is a density matrix;
+    \item \(\rho\) has rank 1;
+    \item \(\Tr \rho^2 = 1\).
+\end{enumerate}
+
+The quantity \(\Tr \rho^2\) is called the \emph{purity}, and is surely greater than \(1/d\), \(d\) being the dimension of the Hilbert space (consider \(\rho = d^{-1} \mathbb 1\)).
+
+\paragraph{Examples of density matrices}
+
+For a single pure qubit:
+
+\begin{equation}
+    \rho = \dyad{\psi} = \begin{pmatrix}
+    \cos^2(\theta/2)    & \cos(\theta/2) \sin(\theta/2) e^{-i \varphi}    \\
+     \cos(\theta/2) \sin(\theta/2) e^{i \varphi}  & \sin^2(\theta/2)
+    \end{pmatrix}
+\end{equation}
+
+For a generic one-qubit mixed state:
+
+\begin{equation}
+    \rho = \frac{1}{2}\begin{pmatrix}
+    1 \\
+    x  \\
+    y    \\
+    z
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+    \mathbb 1 \\
+    \sigma_x  \\
+    \sigma_y  \\
+    \sigma_z
+    \end{pmatrix}
+    = \frac{1}{2} \begin{pmatrix}
+     1+z  & x-iy \\
+     x+iy  & 1-z
+    \end{pmatrix}
+\end{equation}
+
+it can be shown by direct computation that in this case \(\Tr \rho^2 = \frac[i]{1}{2} (1+\abs{r}^2) \),where \(\vec{r} = (x, y, z) \): so the state is pure for \(\abs{\vec{r}}=1 \), and the purity is quadratic in \(\abs{\vec{r}}\).
+
+We could also look at \(\det \rho = \frac[i]{1}{4} (1-\abs{r}^2)\) and see that it is zero when \(\abs{\vec{r} }=1 \), but that method seems less powerful...
+
+\paragraph{Composite systems}
+
+
+
 \end{document}

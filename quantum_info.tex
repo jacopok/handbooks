@@ -329,7 +329,7 @@ If we block one of the paths between the detectors, around half of the time the 
 
 So around \(\frac[i]{1}{4} \) of the time we will have detected the bomb without the photon actually \emph{having been there}.
 
-\section{Zeno effect}
+\section{Zeno effect} \label{sec:zeno}
 
 We will with \(\hbar=1\).
 We look of the \emph{survival probability} with which we will retain our starting state: if our evolution operator is \(U = \exp(-iHt) \), this probability is \(\P = A^*A\), where \(A = \braket{\psi_0}{\psi (t)} \) and \(\ket{\psi (t)} = U \ket{\psi _0} \).
@@ -367,10 +367,78 @@ If we measure some observable with \(\ket{\psi _0}\) as an eigenspace, a fractio
 So, if in a long time \(t\) we measured \(N\) times, the probability of the system having remained in the original state is at least \(\P (t) \geq \P^N(\frac[i]{t}{N} )\): we consider the case in which the system remained in the state for \emph{all} the measurements. The latter pertains to a small time so we can apply equation \eqref{eq:zeno-probability}:
 
 \begin{equation}
-    \P \geq \P^N(\frac{t}{N}) = \qty(1- \frac{t^2}{N^2 \tau^2} )^N
+    \P \geq \P^N\qty(\frac{t}{N}) = \qty(1- \frac{t^2}{N^2 \tau^2} )^N
 \end{equation}
 
-if we fix the measurement rate \(\frac[i]{N}{t} = R\) this becomes \(\P \geq x^t\), with \(x = \qty(1 - \frac[i]{1}{R^2\tau^2})^R\).
+if we fix the inverse of the measurement rate \(\frac[i]{N}{t} = R\) this becomes \(\P \geq x^t = \exp(t \log x) \), with \(x = \qty(1 - \frac[i]{1}{R^2\tau^2})^R\), so \(\log x =  R \log(1- \frac[i]{1}{R^2 \tau^2} ) < 0\). So, we call \(-\log x = \gamma_{\text{eff}}>0 \): then
+
+\begin{equation}
+    \P \geq e^{-\gamma _{\text{eff}} t }
+\end{equation}
+
+Note that as \(R \rightarrow \infty\), \(\gamma _{\text{eff}} \sim R^{-1}\tau^{-2}\).
+
+\paragraph{An example of nonunitary evolution}
+
+We consider a Hamiltonian like \(H = \Omega \sigma_x \), which might be that of a spin-$1/2$ particle, polarized along \(z\), in a magnetic field along \(x\). Say our system starts at \(\ket{\psi _0}  = \ket{0} \). Then the evolution looks like
+
+\begin{equation}
+    \exp(-iHt) \ket{0} = \cos(\Omega t) \ket{0} -i \sin(\Omega t) \ket{1}
+\end{equation}
+
+We can calculate the quantities from section \ref{sec:zeno}: \(A = \cos(\Omega t) \) and \(\P = \cos^2(\Omega t)\), for small \(t\):  \(\P \sim 1- \Omega^2  t^2\). We recognise the expression for the Zeno time: in this case \(\tau = \Omega^{-1}\)
+
+Let us introduce the nonunitary part: we change \(H\) to
+
+\begin{equation} \label{eq:interaction-hamiltonian}
+    H _{\text{int}}  = \begin{pmatrix}
+    -iV \\
+    \Omega  \\
+    0    \\
+    +iV
+    \end{pmatrix}
+    \cdot
+    \begin{pmatrix}
+    \mathbb 1 \\
+    \sigma_x  \\
+    \sigma_y  \\
+    \sigma_z
+    \end{pmatrix}
+    =
+    -iV \mathbb 1 + \vec{h} \cdot \vec{\sigma}
+    =
+    \begin{pmatrix}
+    0   & \Omega   \\
+    \Omega  & -2iV
+    \end{pmatrix}
+\end{equation}
+
+to represent interaction with a second lower-energy system, to which our first one can decay \emph{if it is in the state \(\ket{1}\)}. Can we get a Zeno-like effect with this kind of interaction, and without \emph{measuring} anything?
+The evolution of this new Hamiltonian will look like
+
+\begin{equation}
+    \exp(-itH) = e^{-tV} \exp(-it \vec{h} \cdot \vec{\sigma} ) = e^{-tV} \qty(\cosh(h t)\mathbb 1 -i \frac{\vec{\sigma} \cdot \vec{h} }{h} \sinh(ht) )
+\end{equation}
+
+where \(h = \sqrt{ V^2 - \Omega^2} \in \R\), since we assume the coupling is strong (\(V \gg \Omega\)). This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \vec{\sigma})^n = \mathbb 1  )\) if \(N\) is odd, \(\vec{n} \cdot \vec{\sigma} \) otherwise.
+
+So, we can compute \(A = \expval{U} _0\):
+
+\begin{equation}
+    A = \frac{1}{2} \qty(1 + \frac{V}{h})e^{-(V-h)t}+
+    \frac{1}{2} \qty(1 - \frac{V}{h})e^{-(V+h)t}
+\end{equation}
+
+\(V\) is close to \(h\) but slightly larger, so both the exponentials' arguments are negative.
+
+For large times we can discard the quickly-decaying second exponential, and be left with
+
+\begin{equation}
+    \P = \abs{\frac{1}{2} \qty(1 + \frac{V}{h})e^{-(V-h)t}}^2
+    \sim \qty(1 + \frac{\Omega^2}{2 V^2}) \exp(-t \frac{\Omega^2}{V})
+\end{equation}
+
+So, weird normalizations for small times aside, \(\gamma _{\text{eff}} = \Omega^2 /V \), but \(Omega = \tau^{-1}\), so \(V = R\), the `rate of observation': the stronger the coupling, the more the other system influences ours.
 
 \section{Non-unitary evolution}
 
@@ -383,5 +451,17 @@ It happens when the particle can escape the system; for example in optical syste
 where \(V \in \R^+\). The unitary evolution has an \(i\) multiplying the Hamiltonian, so we get a decreasing real exponential.
 
 We will have \(A \sim 1 -V \delta t + O(\delta t^2)\), so \(\P  \sim 1 - 2V \delta t + O(\delta t^2)\): the first derivative is nonzero!
+
+\paragraph{An example of a nonhermitian Hamiltonian}
+
+We consider a system and its environment together:
+
+\begin{equation}
+    H = \underbrace{\Omega \sigma_x}_{\substack{\text{system}}}  + \underbrace{\int   \dd{\omega} \dyad{\omega}}_{\substack{\text{environment}}} + \underbrace{\sqrt{\frac{\Gamma}{2 \pi}} \int   \dd{\omega} g(\omega) \qty(\ketbra{-}{\omega} + \ketbra{\omega}{-}  )  }_{\substack{\text{interaction}}}
+\end{equation}
+
+Where \(\sigma_x\) is meant to be in the \(\ket{-}, \ket{+}  \) basis. Now, let us take a generic state \(\ket{\psi } = x(t) \ket{-} + y(t) \ket{+} + \int \dd{\omega} z(\omega, t) \ket{\omega} \).
+
+We will write the Schrödinger equation for the evolution of \(x\), \(y\) and \(z\) and show that, if we just consider the first two, the effective Hamiltonian looks like the one in \eqref{eq:interaction-hamiltonian}.
 
 \end{document}

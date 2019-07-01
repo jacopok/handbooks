@@ -331,5 +331,57 @@ So around \(\frac[i]{1}{4} \) of the time we will have detected the bomb without
 
 \section{Zeno effect}
 
+We will with \(\hbar=1\).
+We look of the \emph{survival probability} with which we will retain our starting state: if our evolution operator is \(U = \exp(-iHt) \), this probability is \(\P = A^*A\), where \(A = \braket{\psi_0}{\psi (t)} \) and \(\ket{\psi (t)} = U \ket{\psi _0} \).
+
+How does this probability look like for small \(t\)? We can expand, for a small \(\delta{t}\):
+
+\begin{equation}
+    U \sim \mathbb 1 -i H \delta{t} - H^2 \delta t^2
+\end{equation}
+
+then we will have
+
+\begin{equation}
+    A = \bra{\psi_0}  \qty(\mathbb 1 -i H \delta{t} - H^2 \delta t^2) \ket{\psi_0}
+    = 1 -i \expval{H}_0 \delta{t} - \frac{1}{2}  \expval{H^2} _0 \delta t^2
+\end{equation}
+
+so we can calculate \(\P\):
+
+\begin{equation} \label{eq:zeno-probability}
+    \P = \abs{1 -i \expval{H}_0 \delta{t} - \frac{1}{2} \expval{H^2} _0 \delta t^2}^2
+    = 1 - \delta t^2 \qty(\expval{H^2} _0 - \expval{H}_0^2)
+\end{equation}
+
+Equation \eqref{eq:zeno-probability} is accurate to the order \(\delta t^3\), since we only ignored a fourth order term. The term multiplying \(\delta t^2\) can be interpreted as the inverse of a characteristic time:
+
+\begin{equation}
+    \tau = \frac{1}{\sqrt{\expval{H^2} _0 - \expval{H}_0^2}} = \frac{1}{\Delta H _0}
+\end{equation}
+
+\paragraph{Repeated measurements}
+
+If we measure some observable with \(\ket{\psi _0}\) as an eigenspace, a fraction \(\frac[i]{t^2}{\tau^2} \) of the time we will get something different from \(\ket{\psi _0} \).
+
+So, if in a long time \(t\) we measured \(N\) times, the probability of the system having remained in the original state is at least \(\P (t) \geq \P^N(\frac[i]{t}{N} )\): we consider the case in which the system remained in the state for \emph{all} the measurements. The latter pertains to a small time so we can apply equation \eqref{eq:zeno-probability}:
+
+\begin{equation}
+    \P \geq \P^N(\frac{t}{N}) = \qty(1- \frac{t^2}{N^2 \tau^2} )^N
+\end{equation}
+
+if we fix the measurement rate \(\frac[i]{N}{t} = R\) this becomes \(\P \geq x^t\), with \(x = \qty(1 - \frac[i]{1}{R^2\tau^2})^R\).
+
+\section{Non-unitary evolution}
+
+It happens when the particle can escape the system; for example in optical systems there can be a complex index of refraction. The Hamiltonian will look like
+
+\begin{equation}
+    H = H_0 - iV \mathbb 1
+\end{equation}
+
+where \(V \in \R^+\). The unitary evolution has an \(i\) multiplying the Hamiltonian, so we get a decreasing real exponential.
+
+We will have \(A \sim 1 -V \delta t + O(\delta t^2)\), so \(\P  \sim 1 - 2V \delta t + O(\delta t^2)\): the first derivative is nonzero!
 
 \end{document}

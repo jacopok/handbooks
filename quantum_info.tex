@@ -625,6 +625,17 @@ We could also look at \(\det \rho = \frac[i]{1}{4} (1-\abs{r}^2)\) and see that 
 
 \paragraph{Composite systems}
 
+Say we have two Hilbert spaces 1 and 2, with their respective orthonormal bases \(\ket{i} \) and \(\ket{\alpha} \) respectively (let us work with finite-dimensional ones for simplicity).
 
+Say we want to calculate the expectation value of an observable \(A_1\) on 1: we must write it as \(A = A_1 \otimes \id_2\).
+Of course, our density matrix will also have four indices.
+Then
+
+\begin{equation}
+    \expval{A} = \Tr \qty(\rho A)
+    = \sum _{k \gamma} \bra{k \gamma} \qty(\sum _{ij \alpha \beta} \rho_{i \alpha}^{j \beta}  )
+\end{equation}
+
+bah
 
 \end{document}

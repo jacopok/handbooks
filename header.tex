@@ -8,7 +8,6 @@
 \usepackage{longtable}
 \usepackage{listings}
 \usepackage{mathtools}
-\DeclareMathOperator{\tr}{Tr}
 \usepackage{commath}
 \usepackage{bbold}
 \usepackage{xcolor}
@@ -51,8 +50,10 @@
 \newcommand{\id}{\mathbb{1}}
 \newcommand{\Z}{\mathbb{Z}}
 \renewcommand{\P}{\mathbb{P}}
+\let\Tr\undefined
+\DeclareMathOperator*{\Tr}{Tr}
 
-\renewcommand{\var}[1]{\text{var} \qty(#1)}
+\renewcommand{\var}{\text{var}}
 \newcommand{\defeq}{\ensuremath{\stackrel{\text{def}}{=}}}
 
 \newcommand\mybox[1]{%

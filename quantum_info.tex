@@ -627,15 +627,242 @@ We could also look at \(\det \rho = \frac[i]{1}{4} (1-\abs{r}^2)\) and see that 
 
 Say we have two Hilbert spaces 1 and 2, with their respective orthonormal bases \(\ket{i} \) and \(\ket{\alpha} \) respectively (let us work with finite-dimensional ones for simplicity).
 
-Say we want to calculate the expectation value of an observable \(A_1\) on 1: we must write it as \(A = A_1 \otimes \id_2\).
+Say we want to calculate the expectation value of an observable \(A_1\) on 1: we must write it as \(A_T = A \otimes \id_2\).
 Of course, our density matrix will also have four indices.
 Then
 
 \begin{equation}
-    \expval{A} = \Tr \qty(\rho A)
-    = \sum _{k \gamma} \bra{k \gamma} \qty(\sum _{ij \alpha \beta} \rho_{i \alpha}^{j \beta}  )
+    \expval{A} = \Tr \qty(\rho A_T)
+    = \sum _{k \gamma} \bra{k \gamma}
+    \qty(\sum _{ij \alpha \beta} \rho_{i \alpha}^{j \beta}  \ketbra{i \alpha}{j \beta})
+    %\qty( A \otimes \id_2)
+    \qty(\sum_{mn \sigma \xi} A_m^n \delta_ \sigma^ \xi \ketbra{m \sigma}{n \xi})
+    \ket{k \gamma}
 \end{equation}
 
-bah
+So we can make the sums implicit,  the components of \(A\) explicit, and simplify some \(\delta\)s:
+
+\begin{equation}
+    \Tr \qty(\rho A_T)
+    = \delta_k^i \delta_\gamma ^\alpha
+    \rho_{i \alpha}^{j \beta}
+    \delta_j ^m \delta_\beta^\sigma
+    A_m^n \delta_ \sigma^ \xi
+    \delta_n^k \delta_\xi^\gamma
+    %= \rho_{i \alpha}^{j \beta} A_m^i \delta_{\beta}^\alpha  \delta^m_k   \delta_j^k
+    = \rho_{i \alpha}^{j \alpha} A_j^i
+\end{equation}
+
+The simplifications are easier to understand by writing the index equivalencies:
+\(m \equiv j\), \(i \equiv k \equiv n\) and \(\alpha \equiv \gamma \equiv \xi \equiv \sigma \equiv \beta\).
+
+The trace with a simple one-subsystem density matrix, with the same one-subsystem observable \(A\), would look like
+
+\begin{equation}
+    \Tr \qty(\rho A) = \rho_i ^j A_j^k \delta_k ^i = \rho_i^j A_j^i
+\end{equation}
+
+So it becomes clear that we can use the traced matrix \(\rho_{i \alpha}^{j \alpha} \defeq (\rho_1)_i^j\) as a \emph{reduced density matrix} for the first subsystem.
+
+We can write this in index-free notation as
+
+\begin{equation} \label{eq:reduced-density-matrix}
+    \rho_1 = \Tr_2 \rho
+\end{equation}
+
+Note that even when \(\rho\) is a pure state, if we trace out a subsystem it can become mixed: this can be seen with \(\rho = \frac[i]{1}{2} (\ket{00} + \ket{11})(\bra{00} + \bra{11})\), whose \(\rho_1 = \frac[i]{1}{2} (\dyad{0} + \dyad{1})\).
+
+\section{Correlations}
+
+We want to characterize quantum observables \(x\) and \(y\). Let us start by defining the standard deviation:
+
+\begin{equation}
+    \sigma_x = \sqrt{\expval{\qty(x - \expval{x} )^2}}
+\end{equation}
+
+So, we can define the covariance between two variables:
+
+\begin{equation}
+    C_{xy} = \frac{\expval{(x - \expval{x}) (y - \expval{y} )}}{\sigma_x \sigma_y}
+    = \frac{\expval{xy} - \expval{x} \expval{y} }{\sigma_x \sigma_y}
+\end{equation}
+
+(Unless \([x,y]=0\) this is not the same as \(C_{yx}\)!)
+
+\section{Schmidt decomposition}
+
+Let us take a generic state in a two-subsystem system: \(\ket\psi = \sum _{i, \alpha} c_{i \alpha} \ket{i}_A \ket{ \alpha}_B \). In general, this will be a superposition of \(\dim A \dim B\) states. Schimdt  says we can write it as
+
+\begin{equation}
+    \ket{\psi}
+    = \sum _{i=1} ^k \sqrt{p_i}  \ket{i}_A \ket{\alpha(i)} _B
+\end{equation}
+
+where \(k\) is called the \emph{Schmidt rank}, and the \(\ket{\alpha(i)} \) are orthormal. Also, \(p_i \geq 0\) and \(\sum _{i} p_i = 1 \).
+
+How do we get this? We start from our generic state and rewrite it:
+
+\begin{subequations}
+\begin{align}
+  \ket\psi &=  \sum _{i, \alpha} c_{i \alpha} \ket{i}_A \ket{ \alpha}_B  \\
+  &= \sum _{i}  \ket{i} \qty(\sum _{\alpha} c_{i \alpha} \ket{\alpha})  \\
+  &= \sum _{i}  \ket{i} \ket{\widetilde{\alpha} (i) } \label{eq:two-subsystem-schmidt-state-nonnormalized}
+\end{align}
+\end{subequations}
+
+This seems fine,  but the \(\ket{\widetilde{\alpha}(i) } \) do not have the properties we want: they are not orthonormal.
+Let us use equation \eqref{eq:reduced-density-matrix}, with an explicit one-subsystem matrix, and set it equal to the density matrix of \eqref{eq:two-subsystem-schmidt-state-nonnormalized}.
+
+\begin{subequations}
+\begin{align}
+  \sum _{i} p_i \dyad{i}   &= \Tr_2 \qty(\sum _{i,j}  \ket{i} \ket{\widetilde{\alpha} (i)} \bra{j} \bra{\widetilde{\alpha }(j)})  \\
+  &= \sum _{\gamma} \bra{\gamma}  \qty(\sum _{i,j}  \ket{i} \ket{\widetilde{\alpha} (i)} \bra{j} \bra{\widetilde{\alpha }(j)}) \ket{\gamma}  \\
+  &= \sum _{i,j}  \ket{i}\bra{j}
+  \qty(\bra{\widetilde{\alpha} (i)} \qty(\sum _\gamma \dyad{\gamma})  \ket{\widetilde{\alpha }(j)})^*  \\
+  &= \sum _{i,j}  \ket{i}\bra{j}
+  \braket{\widetilde{\alpha} (j)}{\widetilde{\alpha} (i)}
+\end{align}
+\end{subequations}
+
+So, in order for the equality to work it must be that \(\braket{\widetilde{\alpha} (j)}{\widetilde{\alpha} (i)} = p_i \delta_{ij}\). So, we can rewrite equation \eqref{eq:two-subsystem-schmidt-state-nonnormalized} with \(\ket{\widetilde{\alpha}(i) }  \rightarrow  \ket{\widetilde{\alpha} (i) } / \sqrt{p_i} \), which are orthonormal.
+So, we get
+
+\begin{equation}
+    \ket{\psi} = \sum _{i} \sqrt{p_i}  \ket{i} \ket{\widetilde{\alpha} (i) }
+\end{equation}
+
+and the properties of the \(p_i\) are inherited from the one-subsystem matrix.
+
+Note that the Schmidt rank is very susceptible to small perturbations.
+
+\paragraph{Correletions for separable states}
+
+A separable state can be written as \(\ket{\psi} = \ket{i}_A \ket{\alpha}_B\). If we have an observable on either system, then the correlation will be zero, since the averaging in \(\expval{x_Ay_B} \) will factor.
+
+\paragraph{Purification} \label{par:purification}
+
+If we have a generic state \(\rho = \sum _{i} p_i \dyad{i}  \), we can add a second subsystem in order to make it into a pure state: let us call the full density matrix \(\sigma = \dyad{\psi} \), which must equal \(\rho\) if we trace out the second system. The components of \(\sigma\) will look like \(\sigma_{i \alpha} ^{j \beta} = c_{i \alpha} c^*_{j \beta}\), \(c\) being the components of \(\ket{\psi } \) in the two-system basis.
+
+\begin{subequations}
+\begin{align}
+    \rho &= \sum _{\gamma}  \bra{\gamma}
+    \qty(\sum _{ij \alpha \beta} \sigma_{i \alpha} ^{j \beta} \ket{i \alpha} \bra{j \beta}   )
+    \ket{\gamma}  \\
+    &= \sum _{ij \alpha \beta} \sigma_{i \alpha} ^{j \beta} \ket{i} \bra{j} \braket{\beta}{\alpha}  \\
+    \sum _{ij} \rho_{ij} \ketbra{i}{j} &= \sum_{ij \alpha \beta} c_{i \alpha} c^*_{j \beta} \delta_ \alpha ^ \beta \ketbra{i}{j}
+\end{align}
+\end{subequations}
+
+So the equation to be solved is \(\rho_{ij} = c_{i \alpha} c_{j \alpha}^*\): these are \((\dim A)^2\) equations, and we have \((\dim B)^2\) parameters to tweak: so this can always be done with \(\dim B = \dim A\).
+
+\section{Kraus representation}
+
+How does a subsystem \(\rho_1\) of \(\rho = \rho_1 \otimes \dyad{G}_2 \) evolve? We are using a pure state for subsystem 2 but the construction will be general, since as we saw in \Nameref{par:purification} we can purify states.
+We know that \(\rho(t) = U \rho U^\dag\), so:
+
+\begin{equation}
+    \rho_1(t) = \Tr_{2} \qty(U\qty(\rho_1 \otimes \dyad{G}_2 )U^\dag)
+    = \sum _k \bra{k} U \ket{G} \rho_1 \bra{G} U^\dag \ket{k}
+\end{equation}
+
+so we define \(E_k = \bra{k} U \ket{G}\). Note that this is still a matrix, since we only contracted the subsystem 2 indices. These matrices obey \(\sum _{k}  E_k ^\dag E_k = \id\).
+With this, we get
+
+\begin{equation}
+    \rho_1 (t) = \sum _{k} E_k \rho_1 E_k ^\dag
+\end{equation}
+
+This defines a \emph{superoperator} \(\mathcal S: \rho \rightarrow \sum _k E_k ^\dag E_k ^\dag \).
+
+Because of how it was defined, \(\mathcal S\) has the following properties:
+
+\begin{enumerate}
+    \item it preserves self-adjointness; \label{item:superoperator-prop-1}
+    \item it preserves the trace;\label{item:superoperator-prop-2}
+    \item it preserves non-negativity.\label{item:superoperator-prop-3}
+\end{enumerate}
+
+The set of the \(\mathcal S\) also has a group structure, and \(\mathcal S^{-1}\) exists iff \(\mathcal S\) is unitary.
+
+\paragraph{Kraus representations}
+
+Any superoperator with properties \ref{item:superoperator-prop-1}, \ref{item:superoperator-prop-2} and \ref{item:superoperator-prop-3} it  can be written as
+
+\begin{equation}
+    \mathcal S (\rho) = \sum _k E_k \rho E_k ^\dag
+\end{equation}
+
+\section{Generalized measurements}
+
+A generalized measurement is defined by a set of operators \(M_i\), such that \(\sum _i M_i ^\dag M_i = \id\). They represent the possible results of the measurement: the wavefunction is reduced to
+
+\begin{equation}
+    \frac{M_i \ket{\psi}}{\norm{M_i \psi}}
+    \qquad
+    \text{with probability}
+    \qquad
+    p_i=
+    \norm{M_i \ket{\psi}}^2
+    = \bra{\psi} M_i ^\dag M_i \ket{\psi}
+\end{equation}
+
+Note that the probabilities are normalized: \(\sum _i p_i = 1\).
+
+If all the \(M_i\) are projectors (\(M_i = M_i ^\dag = M^2_i\)) then we get the usual Von Neumann projective measurements.
+
+\paragraph{Naimark Theorem}
+
+Generalized measurements are equivalent to projective measurements in a larger space: more specifically, a generalized measurement is equivalent to:
+
+\begin{enumerate}
+    \item Adding some ancillary qubits;
+    \item evolving the whole system unitarily;
+    \item taking a projective measurement.
+\end{enumerate}
+
+\subparagraph{Unitary characterization of Kraus evolution}
+
+We have some Kraus evolution \(\rho \rightarrow \sum _{k}  E_k \rho E_k ^\dag \), with \(\sum _{k}  E_k ^\dag E_k = \id \).
+
+Let us introduce a subsystem 2, with dimension the number of Kraus operators, and its orthonormal basis \(\ket{k} \), and the operator
+
+\begin{equation}
+    U \ket{\psi}_1 \ket{0}_2 \defeq \sum _{k}  E_k \ket{\psi}_1 \ket{k} _2
+\end{equation}
+
+We make two claims: \(U\) as defined is unitary, and the the Kraus evolution of \(\rho_1 = \dyad{\psi}\) is equivalent to evolving \(\dyad{\psi 0} \) according to \(U\) and then tracing out subsystem 2.
+
+We can show that \(U\) is unitary by proving \(\bra{\psi 0} U ^\dag U \ket{\psi 0} = 1  \).
+This is then just a calculation:
+
+\begin{equation}
+    \bra{\psi 0} U ^\dag U \ket{\psi 0} =
+    \sum _{k, k'} \bra{\psi}_1 \bra{k'}_2 E_{k'}
+    E_k \ket{\psi}_1 \ket{k} _2
+    = \bra{\psi}_1 \qty(\sum _{k}  E_k ^\dag E_k ) \ket{\psi}_2 
+    = 1
+\end{equation}
+
+\begin{greenbox}
+  Proof of the claims.
+\end{greenbox}
+
+Another claim: evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement is equivalent to a generalized measurement on subsystem 1.
+
+We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
+
+\begin{subequations}
+\begin{align}
+  \Tr_{12} (\rho P_i) &= \sum _{jq} \bra{j} _1 \bra{q} _2
+  \qty(\sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
+  \bra{\psi}_1 \bra{m} _2 E_m ^\dag)
+  \qty(\id_1 \otimes \dyad{i}_2 )
+  \ket{j} _1 \ket{q} _2  \\
+  &= \sum _{j} \bra{j} _1
+  \qty( E_i \dyad{\psi}_1  E_i ^\dag  )
+  \ket{j} _1  \\
+  &= \Tr_1 \qty(\dyad{\psi} E_i ^\dag E_i )
+\end{align}
+\end{subequations}
 
 \end{document}

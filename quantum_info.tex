@@ -1090,4 +1090,180 @@ It moves the population towards \(\dyad{0} \):  it maps \(\dyad{1}  \rightarrow 
 
 The fixed point is a pure state, so this channel can increase the purity of a state; however,  it is fundamentally an incoherent process.
 
+\begin{bluebox}
+  In the Bloch sphere, the amplitude damping channel looks like:
+
+  \begin{equation}
+      r \rightarrow \begin{pmatrix}
+      \sqrt{1-P}    &   &  \\
+         &  \sqrt{1-P}  &  \\
+         &   & 1-P
+      \end{pmatrix}
+      r + \begin{pmatrix}
+      0 \\
+      0  \\
+      P
+      \end{pmatrix}
+  \end{equation}
+
+  So, for example,  \(r = - \hat{z} \rightarrow (2P-1) \hat{z} \).
+  This transformation has only \((0,0,1)\) as its fixed point.
+\end{bluebox}
+
+\paragraph{Phase damping channel}
+
+It models what we might see if our particle was in a variable magnetic field: the phase of the particle is rotated by varying similar continuously distributed angles. We can write the phase gate as \(R_z(\theta) = \diag{e^{-i \theta/2}, e^{i \theta/2}}\). We assume the phase angles are normally distributed with variance \(\lambda\):
+
+\begin{equation}
+    p (\theta) = \frac{\exp(\frac{-\theta^2}{2 \lambda}) }{\sqrt{\pi \lambda} }
+\end{equation}
+
+then the channel looks like
+
+\begin{equation}
+    \rho \rightarrow \int _{-\infty}   ^{+\infty} R_z(\theta) \rho R_z(-\theta) p(\theta)  \dd{\theta}
+\end{equation}
+
+Now let us take a generic density matrix:
+
+\begin{equation}
+    \rho = \begin{pmatrix}
+    P   & \alpha \\
+     \alpha^*  & 1-P
+ \end{pmatrix}
+\rightarrow
+\int   \dd{\theta}p(\theta) \begin{pmatrix}
+P   & \alpha e^{-i \theta} \\
+ \alpha^* e^{i \theta}  & 1-P
+\end{pmatrix}
+\end{equation}
+
+and by putting together \(p(\theta) e^{\pm i \theta}\) we can complete the square to get a Gaussian integral (which equals one since the pdf is already normalized) times \(e^{-\lambda}\). So
+
+\begin{equation}
+    \rho' = \begin{pmatrix}
+    P   & \alpha e^{-\lambda} \\
+     \alpha ^* e^{-\lambda}  & 1-P
+    \end{pmatrix}
+\end{equation}
+
+\begin{bluebox}
+  This can be also be interpreted as repeated application of the channel with the Kraus matrices
+
+  \begin{equation}
+      E_0 = \sqrt{1-P} \begin{pmatrix}
+      1   & 0 \\
+      0   & 1
+      \end{pmatrix}
+      \qquad
+      E_2 = \sqrt{P} \begin{pmatrix}
+      0   & 0  \\
+      0   & 1
+      \end{pmatrix}
+      \qquad
+      E_2 = \sqrt{P} \begin{pmatrix}
+      1   & 0  \\
+      0   & 0
+      \end{pmatrix}
+  \end{equation}
+
+which send
+
+\begin{equation}
+    \rho \rightarrow \begin{pmatrix}
+    \rho_{00}    & \rho_{01}(1-P) \\
+     \rho_{10}(1-P)  & \rho_{11}
+    \end{pmatrix}
+\end{equation}
+
+and if \(P = \lambda \delta t\) for small \(\delta t\) and the interactions are very fast then \(\rho'_{01} \rightarrow (1-\lambda \delta t)^{t/\delta t} \sim e^{-\lambda t}\).
+
+\end{bluebox}
+
+\paragraph{Entanglement damping channel}
+
+Let us consider a nice entangled couple of qubits, with \(\ket{\psi} = \frac[i]{1}{\sqrt{2}} \qty(\ket{01} + \ket{10} )   \). How can we break it? We will use the Kraus operators \(E_{1,2} = \id \otimes \diag{1, \cos(\theta) }\) or \(\id \otimes \diag{1, \sin(\theta) }\).
+
+Then, the density matrix becomes:
+
+\begin{equation}
+    \frac{1}{2}
+    \begin{pmatrix}
+       &   &   &  \\
+       & 1  &  1 &  \\
+       &  1 &  1 &  \\
+       &   &   &
+    \end{pmatrix}
+    \rightarrow
+    \frac{1}{2}
+    \begin{pmatrix}
+       &   &   &  \\
+       & 1  & \cos(\theta)   &  \\
+       &  \cos(\theta)  & 1  &  \\
+       &   &   &
+    \end{pmatrix}
+\end{equation}
+
+If we trace out one subsystem, we get \(\rho_i = \frac[i]{1}{2} \id\), before and after the transformation.
+
+\section{Master equation}
+
+We want to describe the time evolution of a system with Kraus matrices:
+
+\begin{equation}
+    \rho(t) = \mathcal S (t_0, t) \qty[\rho]
+    \qquad
+    \mathcal S \qty[\rho] = \sum _{k=0}  ^{N-1} E_k \rho E_k ^\dag
+\end{equation}
+
+with \(N \leq \qty(\dim \mathcal H)^2 \). It must have the following properties:
+
+\begin{enumerate}
+    \item \(\mathcal S (t, t)=\id\);
+    \item It should become the conventional unitary evolution if \(N=1\);
+    \item at any time, we must have \(\sum _k E_k ^\dag E_k  = \id\). \label{item:condition-identity-kraus-matrices}
+\end{enumerate}
+
+How will these matrices look? We would like to assume \(E_0 = \id +\frac[i]{H}{i \hbar} \dd{t} \), but this will not work: let us add a term \(K \dd{t}\), with a self-adjoint \(K\).
+
+The other \(E_k\) will then be \(L_k \sqrt{\dd{t}} \) to first order.
+
+Expanding condition \ref{item:condition-identity-kraus-matrices} to first order gives:
+
+\begin{equation}
+    \qty(
+    \qty(\id + \qty(\frac{H}{i \hbar} + \frac{K}{\hbar})\dd{t})
+    \qty(\id + \qty(-\frac{H}{i \hbar} + \frac{K}{\hbar})\dd{t})
+    +
+    \sum _{k}  L_k ^\dag L_k
+    )\dd{t} \overset{!}{=} \id \dd{t}
+\end{equation}
+
+So, we must have \(K = -\frac[i]{\hbar}{2} \sum _{k}  L_k ^\dag L_k  \) (indeed self-adjoint).
+How will our density matrix evolve after \(\dd{t}\) then? We will assume \(\mathcal S(t+\dd{t}, t) [\rho] = \rho + \dot{\rho} \dd{t} + O (\dd{t}^2)\).
+
+\begin{equation}
+    \dot{\rho} = \frac{[H, \rho]}{i \hbar} + \frac{\qty{K, \rho}}{\hbar} + \sum _k L_k \rho L_k ^\dag
+\end{equation}
+
+We can plug in our formula for \(K\)  and compact the sums into one, to get the
+
+\paragraph{Gorini–Kossakowski–Sudarshan–Lindblad equation}
+
+\begin{equation}
+    \dot{\rho} = \frac{[H, \rho]}{i \hbar}  + \sum _k \qty( L_k \rho L_k ^\dag  - \frac{1}{2} \qty{L_k ^\dag L_k, \rho})
+\end{equation}
+
+This works if the system has no memory. If, instead, the evolution depends not only on the present state but on events further past, we must use the
+
+\subparagraph{Markovian version}
+
+The form we show here is the diagonal one. We have the restriction that the \(L_k\) must be traceless.
+
+\begin{equation}
+    \dot{\rho} = \frac{[H, \rho]}{i \hbar}  + \sum _{k} \gamma_k \qty( L_k \rho L_k ^\dag  - \frac{1}{2} \qty{L_k ^\dag L_k, \rho} )
+\end{equation}
+
+\section{Cryptography}
+
 \end{document}

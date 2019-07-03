@@ -842,7 +842,6 @@ Let us introduce a subsystem 2, with dimension the number of Kraus operators, an
 \(U\) as defined is unitary.
 \end{claim}
 
-\begin{bluebox}
 \begin{proof}
 We can show this by proving \(\bra{\psi 0} U ^\dag U \ket{\psi 0} = 1  \).
 This is then just a calculation:
@@ -855,13 +854,11 @@ This is then just a calculation:
     = 1
 \end{equation}
 \end{proof}
-\end{bluebox}
 
 \begin{claim}
 Taking the Kraus evolution of \(\rho_1 = \dyad{\psi}\) is equivalent to evolving \( \rho = \dyad{\psi 0} \) according to \(U\) and then tracing out subsystem 2.
 \end{claim}
 
-\begin{bluebox}
 \begin{proof}
 The evolution of \(\rho\) is \( \sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
  \bra{\psi}_1 \bra{m} _2 E_m ^\dag\). Let us take the trace of this wrt subsystem 2: we get
@@ -875,14 +872,11 @@ The evolution of \(\rho\) is \( \sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
       = \sum _{k} E_k \rho_1 E_k ^\dag
 \end{equation}
 \end{proof}
-\end{bluebox}
 
 \begin{claim}
 Evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement is equivalent to a generalized measurement on subsystem 1.
 \end{claim}
 
-
-\begin{bluebox}
 \begin{proof}
 We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
 
@@ -900,8 +894,6 @@ We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
 \end{align}
 \end{subequations}
 \end{proof}
-\end{bluebox}
-
 
 \paragraph{Weak measurements}
 

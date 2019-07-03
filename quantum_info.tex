@@ -420,7 +420,13 @@ The evolution of this new Hamiltonian will look like
     \exp(-itH) = e^{-tV} \exp(-it \vec{h} \cdot \vec{\sigma} ) = e^{-tV} \qty(\cosh(h t)\mathbb 1 -i \frac{\vec{\sigma} \cdot \vec{h} }{h} \sinh(ht) )
 \end{equation}
 
-where \(h = \sqrt{ V^2 - \Omega^2} \in \R\), since we assume the coupling is strong (\(V \gg \Omega\)). This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \vec{\sigma})^n = \mathbb 1  )\) if \(N\) is odd, \(\vec{n} \cdot \vec{\sigma} \) otherwise.
+where \(h = \sqrt{ V^2 - \Omega^2} \in \R\), since we assume the coupling is strong (\(V \gg \Omega\)).
+
+This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \vec{\sigma})^n = \mathbb 1  )\) if \(N\) is odd, \(\vec{n} \cdot \vec{\sigma} \) otherwise: thus we can show that
+
+\begin{equation}
+    \exp(i \theta (\hat{n} \cdot \sigma )) = \cos(\theta) \id + i (\hat{n} \cdot \sigma) \sin(\theta )
+\end{equation}
 
 So, we can compute \(A = \expval{U} _0\):
 
@@ -599,8 +605,10 @@ For a single pure qubit:
 
 For a generic one-qubit mixed state:
 
-\begin{equation}
-    \rho = \frac{1}{2}\begin{pmatrix}
+\begin{equation} \label{eq:bloch-representation-density-matrix}
+    \rho =
+    \frac{1}{2} \qty(\id + \vec{r} \cdot \vec{\sigma}  )
+    =\frac{1}{2}\begin{pmatrix}
     1 \\
     x  \\
     y    \\
@@ -788,7 +796,7 @@ The set of the \(\mathcal S\) also has a group structure, and \(\mathcal S^{-1}\
 
 Any superoperator with properties \ref{item:superoperator-prop-1}, \ref{item:superoperator-prop-2} and \ref{item:superoperator-prop-3} it  can be written as
 
-\begin{equation}
+\begin{equation} \label{eq:kraus-superoperator}
     \mathcal S (\rho) = \sum _k E_k \rho E_k ^\dag
 \end{equation}
 
@@ -830,25 +838,52 @@ Let us introduce a subsystem 2, with dimension the number of Kraus operators, an
     U \ket{\psi}_1 \ket{0}_2 \defeq \sum _{k}  E_k \ket{\psi}_1 \ket{k} _2
 \end{equation}
 
-We make two claims: \(U\) as defined is unitary, and the the Kraus evolution of \(\rho_1 = \dyad{\psi}\) is equivalent to evolving \(\dyad{\psi 0} \) according to \(U\) and then tracing out subsystem 2.
+\begin{claim}
+\(U\) as defined is unitary.
+\end{claim}
 
-We can show that \(U\) is unitary by proving \(\bra{\psi 0} U ^\dag U \ket{\psi 0} = 1  \).
+\begin{bluebox}
+\begin{proof}
+We can show this by proving \(\bra{\psi 0} U ^\dag U \ket{\psi 0} = 1  \).
 This is then just a calculation:
 
 \begin{equation}
     \bra{\psi 0} U ^\dag U \ket{\psi 0} =
     \sum _{k, k'} \bra{\psi}_1 \bra{k'}_2 E_{k'}
     E_k \ket{\psi}_1 \ket{k} _2
-    = \bra{\psi}_1 \qty(\sum _{k}  E_k ^\dag E_k ) \ket{\psi}_2 
+    = \bra{\psi}_1 \qty(\sum _{k}  E_k ^\dag E_k ) \ket{\psi}_2
     = 1
 \end{equation}
+\end{proof}
+\end{bluebox}
 
-\begin{greenbox}
-  Proof of the claims.
-\end{greenbox}
+\begin{claim}
+Taking the Kraus evolution of \(\rho_1 = \dyad{\psi}\) is equivalent to evolving \( \rho = \dyad{\psi 0} \) according to \(U\) and then tracing out subsystem 2.
+\end{claim}
 
-Another claim: evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement is equivalent to a generalized measurement on subsystem 1.
+\begin{bluebox}
+\begin{proof}
+The evolution of \(\rho\) is \( \sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
+ \bra{\psi}_1 \bra{m} _2 E_m ^\dag\). Let us take the trace of this wrt subsystem 2: we get
 
+\begin{equation}
+     %\Tr_2 \sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
+     %\bra{\psi}_1 \bra{m} _2 E_m ^\dag =
+     \sum _{j} \bra{j}_2  \qty(\sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
+      \bra{\psi}_1 \bra{m} _2 E_m ^\dag) \ket{j}_2
+      = \sum _{k} E_k \dyad{\psi}_1 E_k ^\dag
+      = \sum _{k} E_k \rho_1 E_k ^\dag
+\end{equation}
+\end{proof}
+\end{bluebox}
+
+\begin{claim}
+Evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement is equivalent to a generalized measurement on subsystem 1.
+\end{claim}
+
+
+\begin{bluebox}
+\begin{proof}
 We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
 
 \begin{subequations}
@@ -864,5 +899,203 @@ We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
   &= \Tr_1 \qty(\dyad{\psi} E_i ^\dag E_i )
 \end{align}
 \end{subequations}
+\end{proof}
+\end{bluebox}
+
+
+\paragraph{Weak measurements}
+
+We wish to measure a system without disturbing it too much: let us consider a System-Environment couple of qubits, in the initial state \(\ket\psi = \qty(\alpha \ket{0} + \beta \ket{1} )_S \otimes \ket{0} _E = \alpha \ket{00} + \beta \ket{10} \). We apply the gate
+
+\begin{equation}
+    U = (R_z (\theta)_S \otimes \id_E ) \qty(\cos(\theta) \id_{SE} - i \sin(\theta)
+    \text{C}_S\text{NOT}_E  )
+    = \begin{pmatrix}
+    1   &   &   &  \\
+       & 1  &   &  \\
+       &   & e^{i \theta} \cos \theta   & - ie^{i \theta} \sin \theta   \\
+       &   &  - ie^{i \theta} \sin \theta  & e^{i \theta} \cos \theta
+    \end{pmatrix}
+\end{equation}
+
+\begin{greenbox}
+    (Why is the phase included?)
+\end{greenbox}
+
+(\(\theta\) is small).
+The result of the application of this gate to \(\ket{\psi} \) is
+
+\begin{equation}
+    U \ket{\psi}
+    = \alpha \ket{00} + \beta e^{i \theta} \qty( \cos(\theta) \ket{10} -i \sin(\theta) \ket{11}  )
+\end{equation}
+
+Now, we measure the environment: we will most likely (with probability \(\sim 1- \abs{\beta}^2 \theta^2 \)) get \(0\): in this case the system is reduced to
+
+\begin{equation}
+    \frac{\alpha \ket{00} + \beta e^{i \theta} \cos(\theta) \ket{10}}
+    {\sqrt{\abs{\alpha}^2 + \abs{\beta \cos(\theta) }^2  } }
+\end{equation}
+
+which approaches \(\ket\psi\) as \(\theta \rightarrow 0\).
+If, instead, we get 1, the state becomes \(\ket{11}\).
+
+This does not seem very useful, as it can only provide us with some statistical bounds on the size of \(\beta\) if we measure a few times, but we must not do it too often...
+
+\subsection{POVMs}
+
+We get some set of positive operators \(F_i\) such that \(\sum _{i}  F_i = \id \), and use these as the possible results of our measurement, which we will get with probabilities \(p_i = \ev{F_i}{\psi}\).
+
+They are useful in describing destructive measurements, like a photodetector.
+It is interesting when \(p_i = 0\) with some \(\psi\), because if we see that detector go off we know the system was \emph{not} in \(\psi\).
+
+\section{Quantum channels}
+
+\paragraph{An example of decoherence by interaction}
+
+If our first system starts in \(\ket{\psi} = \alpha \ket{0} + \beta \ket{1} \), so
+
+\begin{equation}
+    \rho = \begin{pmatrix}
+    \abs{\alpha}^2   & \alpha  \beta ^*  \\
+     \alpha ^* \beta   & \abs{\beta}^2
+    \end{pmatrix}
+\end{equation}
+
+Now, let us consider a second subsystem, so the state becomes \(\alpha \ket{00} + \beta \ket{10}\), then we apply a CNOT gate controlling on our first subsystem: the state becomes \(\alpha \ket{00} + \beta \ket{11}\). If we trace the second subsystem out, the density matrix becomes
+
+\begin{equation}
+    \rho' = \begin{pmatrix}
+    \abs{\alpha}^2   & 0  \\
+     0   & \abs{\beta}^2
+    \end{pmatrix}
+\end{equation}
+
+\paragraph{Linear transformations in Bloch space}
+
+We take a Kraus transformation of a density matrix as given in equation \eqref{eq:kraus-superoperator}, and represent it as in equation \eqref{eq:bloch-representation-density-matrix}:  \(\rho = \frac[i]{1}{2} \qty(\id + \vec{r} \cdot \vec{\sigma} )\) (and in the same fashion \(\rho'\) with \(r'\)).
+
+\begin{claim}
+This Kraus transformation corresponds to a linear map \(r_i \rightarrow M_i^j r_j + c_i\) which is a contraction.
+\end{claim}
+
+\begin{bluebox}
+\begin{proof}
+We can expand the Kraus matrices as \(E_k = \gamma_k \id + \sum _{i} a_{ik} \sigma_i \): our full expression becomes
+
+\begin{equation}
+    \rho \rightarrow \rho' =
+    \sum _{k}
+    \qty(\gamma_k \id + \sum _{i} a_{ik} \sigma_i)
+    \frac{1}{2} \qty(\id + \vec{r} \cdot \vec{\sigma})
+    \qty(\gamma_k^* \id + \sum _{j} a_{jk}^* \sigma_j ^\dag)
+\end{equation}
+
+and our claim is that
+
+\begin{equation}
+    \rho' =
+    \frac{1}{2} \qty(\id + \qty(M_i^j r_j + c_i) \sigma_i)
+\end{equation}
+
+for some matrix \(M_i^j\) and vector \(c_i\).
+This can be readily seen by noticing that:
+
+\begin{enumerate}
+    \item products of Pauli matrices are linear combinations of Pauli matrices: \(\sigma_a \sigma_b = \delta_{ab} \id + i \varepsilon_{abc} \sigma_c\);
+    \item the Kraus transformation sends density matrices into density matrices, so the trace of \(\rho'\) will still be \(1\) and we will be able to separate the trace term \(\id/2\) from the traceless Pauli matrix part (that is, there will not be any transformation-dependents coefficients multiplying the identity).
+\end{enumerate}
+
+Now, to see that it is a contraction recall that \(\Tr \rho^2 \leq 1\). We will apply the formula:
+
+\begin{equation}
+(\vec{a} \cdot \vec{\sigma}) (\vec{b} \cdot \vec{\sigma}) = (\vec{a} \cdot \vec{b}) \id  + i (\vec{a} \wedge \vec{b}) \cdot \vec{\sigma})
+\end{equation}
+
+So then:
+
+\begin{equation}
+    \Tr (\rho')^2 = \frac{1}{4} \qty(\id + \vec{r'} \cdot \vec{\sigma})^2
+      = \frac{1}{2} \qty(\frac{1 + \abs{r'}^2 }{2} \id + \vec{r'} \cdot \vec{\sigma})
+\end{equation}
+
+therefore \(\abs{r'} \leq 1\): the image of the unit sphere is contained in the unit sphere.
+\end{proof}
+\end{bluebox}
+
+We can write explicit expressions for \(M\) and \(c\):
+
+\begin{subequations}
+\begin{align}
+    M_{jk} &= \sum _{l} \qty(
+    2 \Re \qty(a_{lj} a_{lk}^*)
+    + \delta_{jk} \qty(
+    \abs{\gamma_l}^2 - \sum _p \abs{a_{lp}}^2
+    )
+    + 2 \sum _p \varepsilon_{jkp} \Im \qty(
+    \gamma_l ^* a_{lp}
+    )
+    )  \\
+    c_j &= 2i \sum _{klm} \varepsilon_{jlm} a_{kl} a^* _{km}
+\end{align}
+\end{subequations}
+
+It seems like it should be true that \(\abs{\det M} = 1 \) (and \(\vec{c} = 0\)) iff there is only one \(E_k\), that is, the channel is actually a unitary transformation.
+
+\paragraph{*-flip channel}
+
+\begin{equation}
+    \mathcal S ( \rho) =
+    \abs{\alpha}^2 \sigma_i \rho \sigma_i ^\dag + \qty(1 - \abs{\alpha}^2 ) \rho
+\end{equation}
+
+So \(E_0 = \alpha \sigma_i\) and \(E_1 = \sqrt{1 - \abs{\alpha}^2 } \id\).
+
+\begin{enumerate}
+    \item \(i=x\): bitflip
+    \item \(i=z\): phaseflip
+    \item \(i=y\): bitphaseflip
+\end{enumerate}
+
+In the Bloch sphere, it keeps the dimension \(i\) still and shrinks along the other two by a factor \(1- 2\abs{\alpha}^2 \). For example, the bitflip gate approaches \(\sigma_x\) as \(\abs{\alpha}^2  \rightarrow 1\).
+
+This circuit can be represented as unitary evolution: we add a subsystem with a wavefunction \(\ket{\psi} = \alpha \ket{1} + \sqrt{1- \abs{\alpha}^2 } \ket{0} \), and perform a control-\(\sigma_i\) (where the new subsystem is the controller).
+
+\begin{greenbox}
+  In the expression of \(\psi\) the 0 and 1 are swapped, right?
+\end{greenbox}
+
+\paragraph{Depolarizing channel}
+
+It mixes states: the fixed point is \(r = 0\).
+
+\begin{equation}
+    \mathcal S(\rho) = \frac{P}{3}\qty(\sum _i \sigma_i \rho \sigma_i ^\dag ) +
+    \qty(1-P) \rho
+\end{equation}
+
+\begin{equation}
+    r \rightarrow r \qty(1 - \frac{4P}{3})
+\end{equation}
+
+\paragraph{Amplitude damping channel}
+
+Its Kraus matrices are
+
+\begin{equation}
+    E_0 = \begin{pmatrix}
+    1   & 0 \\
+    0   & \sqrt{1- P}
+    \end{pmatrix}
+    \qquad
+    E_1 = \begin{pmatrix}
+    0   & \sqrt{P}  \\
+     0  & 0
+    \end{pmatrix}
+\end{equation}
+
+It moves the population towards \(\dyad{0} \):  it maps \(\dyad{1}  \rightarrow P \dyad{0} + (1-P) \dyad{1}  \).
+
+The fixed point is a pure state, so this channel can increase the purity of a state; however,  it is fundamentally an incoherent process.
 
 \end{document}

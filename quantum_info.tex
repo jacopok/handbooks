@@ -48,10 +48,10 @@ Of course, this can be generalized to any order, keeping the same pattern, and b
 It is a \emph{one-qubit gate} which switches from the computational basis to the eigenstates of \(\sigma_z\), which we call \(\ket{+} = H \ket{0} \propto \ket{0} +\ket{1}   \) and \(\ket{-} = H \ket{1} \propto \ket{0} - \ket{1} \).
 
 \begin{equation}
-    H = \frac{1}{\sqrt{2} } \begin{pmatrix}
+    H = \frac{1}{\sqrt{2} } \begin{bmatrix}
     1   & 1 \\
     1   & -1
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 We can also express it, for the basis states, as \(H \ket{x} = \sqrt{1/2} \sum _{y=0}^1 (-)^{xy} \ket{y}  \).
@@ -60,22 +60,22 @@ We can also express it, for the basis states, as \(H \ket{x} = \sqrt{1/2} \sum _
 It is a \emph{one-qubit gate} which  gives a phase to a state: applying it to a generic qubit, written as \eqref{eq:qubit}, we get \(R_z(\delta) \ket{\psi} =  \cos(\theta/2) \ket{0} + \exp(i(\varphi+\delta)) \sin(\theta/2)\ket{1}\).
 
 \begin{equation} \label{eq:phase-gate}
-    R_z (\delta) = \exp(i \delta \sigma_z) = \begin{pmatrix}
+    R_z (\delta) = \exp(i \delta \sigma_z) = \begin{bmatrix}
     1   & 0 \\
     0   & \exp(i \delta)
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \paragraph{Control not} \label{par:cnot}
 It is a \emph{two-qubit gate}  which cannot be written as a tensor product of one-qubit gates.
 
 \begin{equation}
-    \text{CNOT} = \begin{pmatrix}
+    \text{CNOT} = \begin{bmatrix}
     1   &  0 &   &  \\
       0 & 1  &   &  \\
        &   & 0  & 1 \\
        &   & 1  & 0
-    \end{pmatrix}
+   \end{bmatrix}
 \end{equation}
 
 It generates entanglement: let us apply it to the separable state \(\alpha \ket{00} + \beta \ket{10} \): it returns \(\alpha \ket{00} + \beta \ket{11} \), which is entangled.
@@ -85,10 +85,10 @@ It generates entanglement: let us apply it to the separable state \(\alpha \ket{
 It is a \emph{two-qubit gate}:
 
 \begin{equation}
-    \text{CPHASE}(\delta) = \begin{pmatrix}
+    \text{CPHASE}(\delta) = \begin{bmatrix}
     \mathbb 1   & 0 \\
     0   & R_z(\delta)
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 where we used the phase gate \eqref{eq:phase-gate}.
@@ -97,42 +97,42 @@ where we used the phase gate \eqref{eq:phase-gate}.
 It can be written as \(\text{CPHASE} (\delta) = [\mathbb 1 \otimes R_z(\delta/2)] [\text{CNOT}] [\mathbb 1 \otimes R_z(-\delta/2)] [\text{CNOT}] [ R_z(\delta/2) \otimes\mathbb 1 ]\): the steps  (multiplying from right to left, starting from just \([ R_z(\delta/2) \otimes\mathbb 1 ]\)) are as follows:
 
 \begin{multline}
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   &   &   &  \\
        & 1  &   &  \\
        &   & e^{i \delta/2}  &  \\
        &   &   & e^{i \delta /2}
-    \end{pmatrix}
+   \end{bmatrix}
 \rightarrow
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   &   &   &  \\
        & 1  &   &  \\
        &   &  & e^{i \delta/2}  \\
        &   &   e^{i \delta /2} &
-    \end{pmatrix}
+   \end{bmatrix}
 \rightarrow
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   &   &   &  \\
        & e^{-i \delta/2}  &   &  \\
        &   &  & e^{i \delta/2}  \\
        &   &   1 &
-    \end{pmatrix}
+   \end{bmatrix}
 \rightarrow
 \\
 \rightarrow
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   &   &   &  \\
        & e^{-i \delta/2}  &   &  \\
        &   &  1 &  \\
        &   &    & e^{i \delta/2}
-    \end{pmatrix}
+   \end{bmatrix}
 \rightarrow
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   &   &   &  \\
        & 1  &   &  \\
        &   &  1 &  \\
        &   &    & e^{i \delta}
-    \end{pmatrix}
+   \end{bmatrix}
 \end{multline}
 \end{bluebox}
 
@@ -142,19 +142,19 @@ We can get any state \(\ket{\psi }\) written as \eqref{eq:qubit} with Hadamard a
 \begin{subequations}
 \begin{align}
   \ket{\psi }  &= R_z(\pi/2 + \varphi) H R_z(\theta) H\ket{0}  \\
-  &= \frac{1}{2} \begin{pmatrix}
+  &= \frac{1}{2} \begin{bmatrix}
     1 + e^{i \theta} \\
      i  \qty(e^{i \varphi}  - e^{i (\theta + \varphi)})
-  \end{pmatrix}  \\
+  \end{bmatrix}  \\
   &= \label{eq:sub-gate-phase}
-  \frac{1}{2} \begin{pmatrix}
+  \frac{1}{2} \begin{bmatrix}
     e^{i \theta /2} + e^{-i \theta /2} \\
     i^{-1} \qty(e^{i \theta/2} - e^{-i \theta/2}) e^{i \varphi}
-\end{pmatrix}  \\
- &= \begin{pmatrix}
+\end{bmatrix}  \\
+ &= \begin{bmatrix}
  \cos(\theta/2)  \\
  \sin(\theta/2) e^{i \varphi}
- \end{pmatrix}
+\end{bmatrix}
 \end{align}
 \end{subequations}
 
@@ -315,10 +315,10 @@ We call the sides of the BS \(A\) and \(B\), and denote the absence or presence 
 
 \begin{equation}
     U_{BS} = \frac{1}{\sqrt{2} }
-    \begin{pmatrix}
+    \begin{bmatrix}
     1   & i \\
     i   & 1
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 Note that \(U_{BS}^2 = i\sigma_x\) in the BS-side basis: if we build a Mach-Zender interferometer, that is, we chain two beam-splitters, the light from the two paths interferes and we get some only on one side of the BS (the side opposite of the starting one).
@@ -391,26 +391,26 @@ We can calculate the quantities from section \ref{sec:zeno}: \(A = \cos(\Omega t
 Let us introduce the nonunitary part: we change \(H\) to
 
 \begin{equation} \label{eq:interaction-hamiltonian}
-    H _{\text{int}}  = \begin{pmatrix}
+    H _{\text{int}}  = \begin{bmatrix}
     -iV \\
     \Omega  \\
     0    \\
     +iV
-    \end{pmatrix}
+\end{bmatrix}
     \cdot
-    \begin{pmatrix}
+    \begin{bmatrix}
     \mathbb 1 \\
     \sigma_x  \\
     \sigma_y  \\
     \sigma_z
-    \end{pmatrix}
+\end{bmatrix}
     =
     -iV \mathbb 1 + \vec{h} \cdot \vec{\sigma}
     =
-    \begin{pmatrix}
+    \begin{bmatrix}
     0   & \Omega   \\
     \Omega  & -2iV
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 to represent interaction with a second lower-energy system, to which our first one can decay \emph{if it is in the state \(\ket{1}\)}. Can we get a Zeno-like effect with this kind of interaction, and without \emph{measuring} anything?
@@ -502,18 +502,18 @@ The factor \(1/2\) comes from the fact we integrated a \(\delta\) on the \emph{b
 We can combine the results into
 
 \begin{equation}
-    i \dv{}{t} \begin{pmatrix}
+    i \dv{}{t} \begin{bmatrix}
     x \\
     y
-    \end{pmatrix}
-    = \begin{pmatrix}
+\end{bmatrix}
+    = \begin{bmatrix}
     0   & \Omega     \\
      \Omega  & -i \Gamma /2
-    \end{pmatrix}
-    \begin{pmatrix}
+ \end{bmatrix}
+    \begin{bmatrix}
     x \\
     y
-    \end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \section{Implementation of quantum gates}
@@ -597,10 +597,10 @@ The quantity \(\Tr \rho^2\) is called the \emph{purity}, and is surely greater t
 For a single pure qubit:
 
 \begin{equation}
-    \rho = \dyad{\psi} = \begin{pmatrix}
+    \rho = \dyad{\psi} = \begin{bmatrix}
     \cos^2(\theta/2)    & \cos(\theta/2) \sin(\theta/2) e^{-i \varphi}    \\
      \cos(\theta/2) \sin(\theta/2) e^{i \varphi}  & \sin^2(\theta/2)
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 For a generic one-qubit mixed state:
@@ -608,23 +608,23 @@ For a generic one-qubit mixed state:
 \begin{equation} \label{eq:bloch-representation-density-matrix}
     \rho =
     \frac{1}{2} \qty(\id + \vec{r} \cdot \vec{\sigma}  )
-    =\frac{1}{2}\begin{pmatrix}
+    =\frac{1}{2}\begin{bmatrix}
     1 \\
     x  \\
     y    \\
     z
-    \end{pmatrix}
+\end{bmatrix}
     \cdot
-    \begin{pmatrix}
+    \begin{bmatrix}
     \mathbb 1 \\
     \sigma_x  \\
     \sigma_y  \\
     \sigma_z
-    \end{pmatrix}
-    = \frac{1}{2} \begin{pmatrix}
+\end{bmatrix}
+    = \frac{1}{2} \begin{bmatrix}
      1+z  & x-iy \\
      x+iy  & 1-z
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 it can be shown by direct computation that in this case \(\Tr \rho^2 = \frac[i]{1}{2} (1+\abs{r}^2) \),where \(\vec{r} = (x, y, z) \): so the state is pure for \(\abs{\vec{r}}=1 \), and the purity is quadratic in \(\abs{\vec{r}}\).
@@ -902,12 +902,12 @@ We wish to measure a system without disturbing it too much: let us consider a Sy
 \begin{equation}
     U = (R_z (\theta)_S \otimes \id_E ) \qty(\cos(\theta) \id_{SE} - i \sin(\theta)
     \text{C}_S\text{NOT}_E  )
-    = \begin{pmatrix}
+    = \begin{bmatrix}
     1   &   &   &  \\
        & 1  &   &  \\
        &   & e^{i \theta} \cos \theta   & - ie^{i \theta} \sin \theta   \\
        &   &  - ie^{i \theta} \sin \theta  & e^{i \theta} \cos \theta
-    \end{pmatrix}
+   \end{bmatrix}
 \end{equation}
 
 \begin{greenbox}
@@ -948,19 +948,19 @@ It is interesting when \(p_i = 0\) with some \(\psi\), because if we see that de
 If our first system starts in \(\ket{\psi} = \alpha \ket{0} + \beta \ket{1} \), so
 
 \begin{equation}
-    \rho = \begin{pmatrix}
+    \rho = \begin{bmatrix}
     \abs{\alpha}^2   & \alpha  \beta ^*  \\
      \alpha ^* \beta   & \abs{\beta}^2
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 Now, let us consider a second subsystem, so the state becomes \(\alpha \ket{00} + \beta \ket{10}\), then we apply a CNOT gate controlling on our first subsystem: the state becomes \(\alpha \ket{00} + \beta \ket{11}\). If we trace the second subsystem out, the density matrix becomes
 
 \begin{equation}
-    \rho' = \begin{pmatrix}
+    \rho' = \begin{bmatrix}
     \abs{\alpha}^2   & 0  \\
      0   & \abs{\beta}^2
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 \paragraph{Linear transformations in Bloch space}
@@ -1075,15 +1075,15 @@ It mixes states: the fixed point is \(r = 0\).
 Its Kraus matrices are
 
 \begin{equation}
-    E_0 = \begin{pmatrix}
+    E_0 = \begin{bmatrix}
     1   & 0 \\
     0   & \sqrt{1- P}
-    \end{pmatrix}
+\end{bmatrix}
     \qquad
-    E_1 = \begin{pmatrix}
+    E_1 = \begin{bmatrix}
     0   & \sqrt{P}  \\
      0  & 0
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 It moves the population towards \(\dyad{0} \):  it maps \(\dyad{1}  \rightarrow P \dyad{0} + (1-P) \dyad{1}  \).
@@ -1094,20 +1094,20 @@ The fixed point is a pure state, so this channel can increase the purity of a st
   In the Bloch sphere, the amplitude damping channel looks like:
 
   \begin{equation}
-      r \rightarrow \begin{pmatrix}
+      r \rightarrow \begin{bmatrix}
       \sqrt{1-P}    &   &  \\
          &  \sqrt{1-P}  &  \\
          &   & 1-P
-      \end{pmatrix}
-      r + \begin{pmatrix}
+     \end{bmatrix}
+      r + \begin{bmatrix}
       0 \\
       0  \\
       P
-      \end{pmatrix}
+  \end{bmatrix}
   \end{equation}
 
   So, for example,  \(r = - \hat{z} \rightarrow (2P-1) \hat{z} \).
-  This transformation has only \((0,0,1)\) as its fixed point.
+  This transformation has only \((0,0,1)^\top\) as its fixed point.
 \end{bluebox}
 
 \paragraph{Phase damping channel}
@@ -1127,53 +1127,53 @@ then the channel looks like
 Now let us take a generic density matrix:
 
 \begin{equation}
-    \rho = \begin{pmatrix}
+    \rho = \begin{bmatrix}
     P   & \alpha \\
      \alpha^*  & 1-P
- \end{pmatrix}
+ \end{bmatrix}
 \rightarrow
-\int   \dd{\theta}p(\theta) \begin{pmatrix}
+\int   \dd{\theta}p(\theta) \begin{bmatrix}
 P   & \alpha e^{-i \theta} \\
  \alpha^* e^{i \theta}  & 1-P
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 and by putting together \(p(\theta) e^{\pm i \theta}\) we can complete the square to get a Gaussian integral (which equals one since the pdf is already normalized) times \(e^{-\lambda}\). So
 
 \begin{equation}
-    \rho' = \begin{pmatrix}
+    \rho' = \begin{bmatrix}
     P   & \alpha e^{-\lambda} \\
      \alpha ^* e^{-\lambda}  & 1-P
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 \begin{bluebox}
   This can be also be interpreted as repeated application of the channel with the Kraus matrices
 
   \begin{equation}
-      E_0 = \sqrt{1-P} \begin{pmatrix}
+      E_0 = \sqrt{1-P} \begin{bmatrix}
       1   & 0 \\
       0   & 1
-      \end{pmatrix}
+  \end{bmatrix}
       \qquad
-      E_2 = \sqrt{P} \begin{pmatrix}
+      E_2 = \sqrt{P} \begin{bmatrix}
       0   & 0  \\
       0   & 1
-      \end{pmatrix}
+  \end{bmatrix}
       \qquad
-      E_2 = \sqrt{P} \begin{pmatrix}
+      E_2 = \sqrt{P} \begin{bmatrix}
       1   & 0  \\
       0   & 0
-      \end{pmatrix}
+  \end{bmatrix}
   \end{equation}
 
 which send
 
 \begin{equation}
-    \rho \rightarrow \begin{pmatrix}
+    \rho \rightarrow \begin{bmatrix}
     \rho_{00}    & \rho_{01}(1-P) \\
      \rho_{10}(1-P)  & \rho_{11}
-    \end{pmatrix}
+ \end{bmatrix}
 \end{equation}
 
 and if \(P = \lambda \delta t\) for small \(\delta t\) and the interactions are very fast then \(\rho'_{01} \rightarrow (1-\lambda \delta t)^{t/\delta t} \sim e^{-\lambda t}\).
@@ -1188,20 +1188,20 @@ Then, the density matrix becomes:
 
 \begin{equation}
     \frac{1}{2}
-    \begin{pmatrix}
+    \begin{bmatrix}
        &   &   &  \\
        & 1  &  1 &  \\
        &  1 &  1 &  \\
        &   &   &
-    \end{pmatrix}
+   \end{bmatrix}
     \rightarrow
     \frac{1}{2}
-    \begin{pmatrix}
+    \begin{bmatrix}
        &   &   &  \\
        & 1  & \cos(\theta)   &  \\
        &  \cos(\theta)  & 1  &  \\
        &   &   &
-    \end{pmatrix}
+   \end{bmatrix}
 \end{equation}
 
 If we trace out one subsystem, we get \(\rho_i = \frac[i]{1}{2} \id\), before and after the transformation.
@@ -1211,9 +1211,8 @@ If we trace out one subsystem, we get \(\rho_i = \frac[i]{1}{2} \id\), before an
 We want to describe the time evolution of a system with Kraus matrices:
 
 \begin{equation}
-    \rho(t) = \mathcal S (t_0, t) \qty[\rho]
-    \qquad
-    \mathcal S \qty[\rho] = \sum _{k=0}  ^{N-1} E_k \rho E_k ^\dag
+    \rho(t) = \mathcal S (t, t_0) \qty[\rho]
+    = \sum _{k=0}  ^{N-1} E_k \rho E_k ^\dag
 \end{equation}
 
 with \(N \leq \qty(\dim \mathcal H)^2 \). It must have the following properties:

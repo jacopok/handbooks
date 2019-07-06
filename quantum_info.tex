@@ -1334,5 +1334,49 @@ Now, as can be seen by summing the combinations of columns of the matrix in \eqr
 
 \section{Bell Inequalities}
 
+Alice and Bob have some (entangled) state on their hands, and are separated by a space-like interval. Alice makes a measurement \(x\) and gets outcome \(a\), Bob makes a measurement \(y\) and gets outcome \(b\).
+
+They repeat this several times, always with the same starting state. This whole experiment is then characterized by the function \(\P (ab | xy)\). In general we will have correlations, so \(\P (ab | xy) \neq \P(a|x) \P (b|y)\). If our theory is local, however, these cannot be explained by the transmission of information from Alice to Bob. Can we describe them by some local unknown (\emph{hidden}) variable which determines the measurement \emph{a priori}?
+
+\begin{claim}
+The results of a Bell experiment which are predicted by quantum mechanics \emph{cannot} be described by a hidden variable \(\lambda\) distributed according to some function \(q(\lambda)\), with an expression in the form:
+
+\begin{equation}
+    \P(ab | xy) = \int q(\lambda) \P(a|x; \lambda) \P (b|y; \lambda)  \dd{\lambda}
+\end{equation}
+\end{claim}
+
+\begin{proof}
+We prove the statement by contradiction. How do we calculate a correlation under our hypothesis?
+To simplify, we assume \(a, b \in \qty{+1,-1}\) and \(x, y \in \qty{0, 1}\).
+I will use the (improper) notation \(\dd{q} = \dd{\lambda} q(\lambda)\)
+
+\begin{equation}
+    \expval{a b}_{xy} =
+    \sum _{ab} a b \P(ab | xy)
+    = \int \dd{q}
+    \qty(\sum_aa\P(a|x; \lambda) )
+    \qty(\sum_bb\P(b|y; \lambda) )
+\end{equation}
+
+Therefore, \(\expval{a b}_{xy} = \int   \dd{q} \expval{a}_{x, \lambda} \expval{b}_{y,\lambda}  \). Subscripts, here, mean conditioning.
+
+Now, we consider the following quantity:
+
+\begin{equation}
+    S = \expval{ab}_{00} +
+     \expval{ab}_{01} +
+     \expval{ab}_{10} -
+     \expval{ab}_{11}
+\end{equation}
+
+The minus sign is arbitrarily placed, it just matters that there is just one negative and three positive terms. Now, our claim is that \(S \leq 2\): surely, for any \(\lambda\), \(\expval{a}_{x, \lambda} \leq 1 \). So,
+
+\begin{equation}
+    S \leq
+\end{equation}
+
+
+\end{proof}
 
 \end{document}

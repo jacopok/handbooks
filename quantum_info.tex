@@ -1569,13 +1569,124 @@ We want a measurement \(E(\rho)\) which satisfies:
 \begin{enumerate}
     \item If \(\rho\) is separable, then \(E(\rho)=0\);
     \item \(E(\rho) = E(U \rho U ^\dag)\);
-    \item If we have some operators \(A_i \otimes B_i\), to which we associate probabilities \(p_i = \Tr \qty((A_i \otimes B_i) \rho)\), and which can project the state into \(\sigma_i = (A_i \otimes B_i) \rho (A_i \otimes B_i) ^\dag / p_i\), then
+    \item If we have
+    a set of operators \(A_i \otimes B_i\), to which
+    we associate probabilities\linebreak[4]
+     \(p_i = \Tr \qty((A_i \otimes B_i) \rho (A_i \otimes B_i)^\dag)\), and which can project the state into \(\sigma_i = (A_i \otimes B_i) \rho (A_i \otimes B_i) ^\dag / p_i\), then
     \begin{equation}
         E(\rho) \geq \sum _{i}  p_i E(\sigma_i)
     \end{equation}
+    \begin{greenbox}
     This means: the entanglement is invariant under local Kraus evolution: the systems cannot become \emph{more} entangled when evolving on their own.
+
+    NOT CLEAR HOW
+    \end{greenbox}
     \item If \(\rho = \rho_{A}\) is a pure state then \(E(\rho) = S_V(\rho_A)\).
 \end{enumerate}
+
+\paragraph{Entanglement of formation}
+
+We can define
+
+\begin{equation}
+    E_F (\rho) = \min \sum_i p_i S_V(\rho_A^i)
+\end{equation}
+
+where the minimum is to be taken over all the possible decompositions \(\rho = \sum _{j}  p_j \dyad{\psi_j}\) and \(\rho_A = \Tr _B \rho\): so, we pick a decomposition, we trace out the second system and take the entropy.
+
+\paragraph{Concurrence}
+
+This only applies to two-qubit systems.
+
+\begin{equation}
+    C(\rho) = \max(0, \lambda_1 - \lambda_2 - \lambda_3 - \lambda_4)
+\end{equation}
+
+Where the \(\lambda_i\) are eigenvalues of \( \qty(\rho \sigma_y ^{\otimes 2})^2 \), taken in decreasing order.
+
+\section{Quantum algorithms}
+
+\subsection{Oracle interrogation}
+
+We have an oracle function \(f(x): \qty{0,1}^n \rightarrow \qty{0,1}\) which is either \emph{constant} (always gives the same result) or \emph{balanced} (gives 0 for half of its inputs, and 1 for the other half).
+
+With a classical computer, we'd need \(\max(\lfloor n/2 \rfloor,2)\) calls to the oracle in the worst case to be sure that it is one and not the other. With a quantum computer, we can do it in just one call.
+
+Take \(n=1\) for simplicity.
+
+Our unitary representation of an oracle must be invertible, so we take the input along:
+
+\begin{equation}
+    U_f \ket{x} \ket{y} \rightarrow \ket{x} \ket{f(x) \oplus y}
+\end{equation}
+
+where \(\oplus\) is the XOR binary gate. \(y\) is generic, it could be set to zero but we want a general gate. The algorithm is
+
+\begin{enumerate}
+    \item Start with \(\ket{xy} = \ket{01}\);
+    \item apply \(H \otimes H\);
+    \item apply \(U_f\);
+    \item apply \(H \otimes \id\);
+    \item measure the first qubit.
+\end{enumerate}
+
+First of all: \((H \otimes H) \ket{01} = (\ket{0} + \ket{1})(\ket{0} - \ket{1} )/2\). Now:
+
+\begin{equation}
+    U_f \ket{x} \otimes\qty(\frac{\ket{0} - \ket{1}}{\sqrt{2} }) = (-)^{f(x)} \ket{x} \otimes
+    \qty(\frac{\ket{0} - \ket{1}}{\sqrt{2}})
+\end{equation}
+
+So after the application of the oracle gate, the first qubit's state has become
+
+\begin{equation}
+    \frac{1}{\sqrt{2}}\qty((-)^{f(0)} \ket{0} + (-)^{f(1)} \ket{1})
+\end{equation}
+
+and if we apply a Hadamard to it, it becomes
+
+\begin{equation}
+    \frac{1}{2} \qty(
+    \qty((-)^{f(0)} + (-)^{f(1)}) \ket{0}
+    \qty((-)^{f(0)} - (-)^{f(1)}) \ket{1}
+    )
+\end{equation}
+
+therefore the state is \emph{surely} \(\ket{\psi}= [f(0)=f(1)] \ket{0} + [f(0) \neq f(1)]\ket{1} \).
+
+\paragraph{$n$-qubit case}
+
+We do the same thing as before, only with \(n\) qubits: \(\ket{x} = \ket{0}^{\otimes n}  \) at the start, so after the Hadamards we get
+
+\begin{equation}
+    H ^{\otimes (n+1)} \ket{x} \ket{y} = \frac{1}{2^{(n+1)/2}} \sum _{x=0}   ^{2^n-1} \ket{x}_1 \qty(\ket{0}- \ket{1})_2
+\end{equation}
+
+so after applying the oracle and another Hadamard we get
+
+\begin{equation}
+    H \qty(\frac{1}{2^{n/2}} \sum _{x=0}   ^{2^n-1} (-)^{f(x)} \ket{x})
+\end{equation}
+
+on the first qubit. Now, either \(f(x)\) is constant or it is balanced: if it is constant then this is just \(\ket{0} \). If it is not, then it is orthogonal (since at least one of the bits must be different): so we can just check whether the system is in \(\ket{0} \).
+
+\subsection{Grover}
+
+The classical complexity for a search in an unstructured database is \(O(N)\), with Grover's algorithm we get \(O(N^{1/2})\).
+
+The problem looks similar to the oracle: now our \(f(x) = [x=\overline{x}]\) and we seek \(\overline{x} \).
+
+\begin{enumerate}
+    \item Start with \(\ket{xy} = \ket{\vec{0}1}\);
+    \item apply \(H ^{\otimes (n+1)} \);
+    \item apply \(U_f\);
+    \item apply \(D \otimes \id\);
+    \item ???.
+\end{enumerate}
+
+%\section{Photon indivisibility}
+
+%\section{Experimental Bell violation}
 
 
 

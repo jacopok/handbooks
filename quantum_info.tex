@@ -1361,6 +1361,8 @@ I will use the (improper) notation \(\dd{q} = \dd{\lambda} q(\lambda)\)
 
 Therefore, \(\expval{a b}_{xy} = \int   \dd{q} \expval{a}_{x, \lambda} \expval{b}_{y,\lambda}  \). Subscripts, here, mean conditioning.
 
+\subparagraph{Hidden variable inequality (CHSH)}
+
 Now, we consider the following quantity:
 
 \begin{equation}
@@ -1370,13 +1372,83 @@ Now, we consider the following quantity:
      \expval{ab}_{11}
 \end{equation}
 
-The minus sign is arbitrarily placed, it just matters that there is just one negative and three positive terms. Now, our claim is that \(S \leq 2\): surely, for any \(\lambda\), \(\expval{a}_{x, \lambda} \leq 1 \). So,
+The minus sign is arbitrarily placed, it just matters that there is just one negative and three positive terms. We can show  that \(S \leq 2\): surely
 
 \begin{equation}
-    S \leq
+    S \leq \int  \dd{q} \qty[
+    \abs{\expval{b}_{0, \lambda} + \expval{b}_{1, \lambda}} \sup \expval{a}_{0, \lambda} +
+    \abs{\expval{b}_{0, \lambda} - \expval{b}_{1, \lambda}} \sup \expval{a}_{1, \lambda}
+    ]
 \end{equation}
 
+and, since the outcomes are \(\pm 1\),  for any \(\lambda\): \(\expval{a}_{x, \lambda} \leq 1 \) and \(\expval{b}_{y, \lambda} \leq 1 \), so
 
+\begin{equation}
+    S \leq \int  \dd{q} \qty[
+    \abs{\expval{b}_{0, \lambda} + \expval{b}_{1, \lambda}} +
+    \abs{\expval{b}_{0, \lambda} - \expval{b}_{1, \lambda}}
+    ]
+\end{equation}
+
+WLOG we can assume \(\expval{b}_{0, \lambda} \geq \expval{b}_{1, \lambda} \geq 0\). Therefore the integrand is bounded by \(\expval{b}_{0, \lambda} + \expval{b}_{1, \lambda} +
+\expval{b}_{0, \lambda} - \expval{b}_{1, \lambda} = 2 \expval{b}_{0, \lambda} \leq 2\).
+
+The probability density of \(\lambda\) must be normalized: \(\int  \dd{q} = 1  \). So, the integrand is an upper bound for the integral, and we get \(S \leq 2\).
+
+(This can be generalized to \(\abs{S} \leq 2 \)).
+
+\subparagraph{Quantum CHSH violation}
+
+We use as our observables the spin in different directions: if we have a vector \(\vec{a}\), then \(\hat{O}_a = \vec{a} \cdot \vec\sigma\). As our state we take the antisymmetric spin singlet, \(\ket{\psi } = \frac[i]{1}{\sqrt{2} }  \qty( \ket{01}- \ket{10} )\). We want to show that the correlation expectation value \(\expval{O_a \otimes O_b}_\psi \) is equal to \(-a \cdot b\). We only need to compute the central four elements of the 4x4 matrix \(O_a \otimes O_b\), which correspond to the \(01\) and \(10\) basis elements.
+
+\begin{equation} \label{eq:reduced-spin}
+    \qty[O_a \otimes O_b] _{\text{reduced}} = \begin{bmatrix}
+    -a_z b_z   & (a_x + i a_y)(b_x - i b_y) \\
+      (a_x- i a_y)(b_x + i b_y) & - a_z b_z
+    \end{bmatrix}
+\end{equation}
+
+We compute the expectation value of the matrix in \eqref{eq:reduced-spin}:
+
+\begin{subequations}
+\begin{align}
+    \expval{O_a \otimes O_b}_\psi &= \frac{1}{2} \begin{bmatrix}
+    1 & -1
+    \end{bmatrix}
+    \begin{bmatrix}
+    -a_z b_z   & (a_x + i a_y)(b_x - i b_y) \\
+      (a_x- i a_y)(b_x + i b_y) & - a_z b_z
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 \\
+    -1
+\end{bmatrix}  \\
+&= \frac{1}{2}\qty( -a_z b_z   - (a_x + i a_y)(b_x - i b_y)
+  -(a_x- i a_y)(b_x + i b_y) + (- a_z b_z))  \\
+&= - \vec{a} \cdot \vec{b} \label{eq:CHSH-pauli-scalar-product}
+\end{align}
+\end{subequations}
+
+Now: we pick as our measurement with possible outcomes \(0, 1\) two \emph{pairs} of directions, and we call the result 0 if the spin is measured along the first, 1 if it measured along the second.
+
+\begin{enumerate}
+    \item For \(\vec{a} \), we call the result \(0\) if the spin direction is \(\vec{a}_0=  \hat{x} \) and 1 if the spin direction is \(\vec{a}_1=\hat{y} \);
+    \item for \(\vec{b} \), we call the result \(0\) if the spin direction is \(\vec{b}_0=-(\hat{x} +\hat{y} )/\sqrt{2} \) and \(1\) if the spin direction is \(\vec{b}_1= -(\hat{x}+\hat{y})/\sqrt{2} \)
+\end{enumerate}
+
+So, we can compute \(S\) using equation \eqref{eq:CHSH-pauli-scalar-product}:
+
+\begin{equation}
+    S = \expval{ab}_{00} +
+     \expval{ab}_{01} +
+     \expval{ab}_{10} -
+     \expval{ab}_{11}
+     = \frac{4}{\sqrt{2}} = 2 \sqrt{2} > 2
+\end{equation}
 \end{proof}
+
+\subsection{Nonlocal correlations}
+
+
 
 \end{document}

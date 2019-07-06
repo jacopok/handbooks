@@ -780,7 +780,7 @@ With this, we get
     \rho_1 (t) = \sum _{k} E_k \rho_1 E_k ^\dag
 \end{equation}
 
-This defines a \emph{superoperator} \(\mathcal S: \rho \rightarrow \sum _k E_k ^\dag E_k ^\dag \).
+This defines a \emph{superoperator} \(\mathcal S: \rho \rightarrow \sum _k E_k \rho E_k ^\dag \).
 
 Because of how it was defined, \(\mathcal S\) has the following properties:
 
@@ -1007,8 +1007,9 @@ Now, to see that it is a contraction recall that \(\Tr \rho^2 \leq 1\). We will 
 So then:
 
 \begin{equation}
-    \Tr (\rho')^2 = \frac{1}{4} \qty(\id + \vec{r'} \cdot \vec{\sigma})^2
-      = \frac{1}{2} \qty(\frac{1 + \abs{r'}^2 }{2} \id + \vec{r'} \cdot \vec{\sigma})
+    \Tr (\rho')^2 =
+    \Tr \qty( \frac{1}{4} \qty(\id + \vec{r'} \cdot \vec{\sigma})^2)
+    = \Tr\qty( \frac{1}{2} \qty(\frac{1 + \abs{r'}^2 }{2} \id + \vec{r'} \cdot \vec{\sigma}))
 \end{equation}
 
 therefore \(\abs{r'} \leq 1\): the image of the unit sphere is contained in the unit sphere.
@@ -1263,6 +1264,75 @@ The form we show here is the diagonal one. We have the restriction that the \(L_
     \dot{\rho} = \frac{[H, \rho]}{i \hbar}  + \sum _{k} \gamma_k \qty( L_k \rho L_k ^\dag  - \frac{1}{2} \qty{L_k ^\dag L_k, \rho} )
 \end{equation}
 
-\section{Cryptography}
+\section{One-key cryptography}
+
+The simplest paradigm: we have a key \(k\), decryption and encryption algorithms \(D\) and \(E\): if \(P\) is the clear-text message and \(C \) is the encrypted one then \(E_k (P) = C\) and \(D_k (C) = P\).
+
+Even a very simple algorithm is secure if the key is longer than the message, private and only used once: for example, if we have \(n\) letters in our alphabet, we can do \(E_k P_i = (P_i - k_i)\mod n\) and \(E_k C_i = (C_i + k_i)\mod n\).
+
+We can distribute the keys with \emph{Quantum Key Distribution}: there are different algorythms to do it, a modern one we will not treat uses entanglement and is called E91 since Eckert invented it. We will look at Bennet \& Brassard.
+
+\paragraph{Quantum Key Distribution: BB84}
+
+Alice wants to send Bob a secure string of ones and zeroes.
+
+She selects two bases, say \(B_z = \qty{\ket{0}, \ket{1}}\) and \(B_x = \qty{H \ket{0}, H \ket{1}  }\) (where we use the Hadamard gate, see \Nameref{par:hadamard}).
+
+At random, she chooses a basis with which to send each qubit, and keeps a record of the bases she used.
+
+Bob receives the qubits and also measures them in a basis chosen between \(B_z\) and \(B_x\), and keeps a record of the bases he used.
+
+After the communication is finished, they exchange in clear text the list of the bases they used, and discard the bits where they used a different basis.
+
+Now they have a secure shared list of bits: if Eve were to try to measure the qubits in the middle, around half the time she'd collapse the state into the wrong basis. So, Alice and Bob just need to check a portion of the bits they \emph{should} share, and if they don't match then something is wrong: either there is too much noise, or somebody's listening in. Either way, they discard the whole key and try again.
+
+\paragraph{Correction methods}
+
+\begin{enumerate}
+    \item First of all, we check on a part of our message the error rate \(R\): if \(R/N\) is large (\(\sim 1/2\)) then we discard everything.
+    \item Now that we know \(R\),  we can choose some length \(\ell\) such that \(R \ell /N\) is still small: then, we do a parity check on every \(\ell\) long block.
+    \item If we somehow know that Eve knows \(k\) bits of our message, we can still generate a key she will not be able to know: if we split our message into \(n-k-s\) snippets for some \(s\), she will be able to gather only \(O(2^{-s})\) bits of information: after splitting the message, our \emph{new} message is something like the parity of each snippet.
+\end{enumerate}
+
+\paragraph{Attack methods}
+
+Eve cannot intercept the qubits and resend them, that's the point. There are some things she could do,  though:
+
+\begin{enumerate}
+    \item \textbf{translucent attack}: Eve operates unitarily on the passing qubits, entangling them with some qubits she keeps, and which she measures only \emph{after} Alice and Bob have communicated which basis they used. \\
+    Surely she cannot completely \emph{clone} the passing qubit, but she might do some sneaky low-interference stuff.
+    \item \textbf{collective attacks} on several qubits at once.
+\end{enumerate}
+
+\section{Dense coding}
+
+Bob and Alice prepare two qubits together, in  \(\ket{\psi} = \text{CNOT} (H \otimes \id) \ket{00}  = \frac[i]{1}{\sqrt{2} } \qty(\ket{00} + \ket{11} ) \). Now Alice takes a qubit with her, and Bob keeps the other.
+
+Now they are far apart. Alice wants to send two classical bits \(xy\). She chooses based on her two bits an operator between \(U_i = \qty{\id, \sigma_x, \sigma_z, \sigma_y}\) and applies it to her qubit.
+
+The state becomes one of these:
+
+\begin{subequations}
+\begin{align}
+  U_0 \ket\psi &= \frac{1}{\sqrt{2} } \qty(\ket{00} + \ket{11} ) \\
+  U_1 \ket\psi &= \frac{1}{\sqrt{2} } \qty(\ket{10} + \ket{01} ) \\
+  U_2 \ket\psi &= \frac{1}{\sqrt{2} } \qty(\ket{00} - \ket{11} ) \\
+  U_3 \ket\psi &= \frac{1}{\sqrt{2} } \qty(\ket{10} - \ket{01} )
+\end{align}
+\end{subequations}
+
+Now she sends her qubit to Bob, who still has his.
+
+Bob applies \(\qty(\text{CNOT} (H \otimes \id))^{-1}\) to the qubits.
+
+\begin{equation} \label{eq:cnot-hadamard-inverse}
+    \qty(\text{CNOT} (H \otimes \id))^{-1}=
+\left[\begin{matrix}1 & 0 & 0 & 1\\0 & 1 & 1 & 0\\1 & 0 & 0 & -1\\0 & 1 & -1 & 0\end{matrix}\right]
+\end{equation}
+
+Now, as can be seen by summing the combinations of columns of the matrix in \eqref{eq:cnot-hadamard-inverse} corresponding to the states \(U_i \ket{\psi} \), Bob's qubits will be in the state \(\ket{xy} \).
+
+\section{Bell Inequalities}
+
 
 \end{document}

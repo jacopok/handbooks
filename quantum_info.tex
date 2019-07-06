@@ -934,7 +934,7 @@ If, instead, we get 1, the state becomes \(\ket{11}\).
 
 This does not seem very useful, as it can only provide us with some statistical bounds on the size of \(\beta\) if we measure a few times, but we must not do it too often...
 
-\subsection{POVMs}
+\subsection{POVMs} \label{subsec:POVM}
 
 We get some set of positive operators \(F_i\) such that \(\sum _{i}  F_i = \id \), and use these as the possible results of our measurement, which we will get with probabilities \(p_i = \ev{F_i}{\psi}\).
 
@@ -1330,9 +1330,13 @@ Bob applies \(\qty(\text{CNOT} (H \otimes \id))^{-1}\) to the qubits.
 \left[\begin{matrix}1 & 0 & 0 & 1\\0 & 1 & 1 & 0\\1 & 0 & 0 & -1\\0 & 1 & -1 & 0\end{matrix}\right]
 \end{equation}
 
-Now, as can be seen by summing the combinations of columns of the matrix in \eqref{eq:cnot-hadamard-inverse} corresponding to the states \(U_i \ket{\psi} \), Bob's qubits will be in the state \(\ket{xy} \).
+Now, as can be seen by summing the combinations of rows of the matrix in \eqref{eq:cnot-hadamard-inverse} corresponding to the states \(U_i \ket{\psi} \), Bob's qubits will be in the state \(\ket{xy} \).
 
-\section{Bell Inequalities}
+\begin{bluebox}
+  If we tried to do this with a mixed state, \(\id\) and \(\sigma_z\) would give the same result (\(\frac[i]{1}{2} \qty(\dyad{00} +\dyad{11} )\)) as would \(\sigma_x\) and \(\sigma_y\) (\(\frac[i]{1}{2} \qty(\dyad{01} +\dyad{10} )\)). So, since there would be only two distinguishable states, only 1 bit would be transmitted.
+\end{bluebox}
+
+\section{Bell Inequalities} \label{sec:bell-inequalities}
 
 Alice and Bob have some (entangled) state on their hands, and are separated by a space-like interval. Alice makes a measurement \(x\) and gets outcome \(a\), Bob makes a measurement \(y\) and gets outcome \(b\).
 
@@ -1341,7 +1345,7 @@ They repeat this several times, always with the same starting state. This whole 
 \begin{claim}
 The results of a Bell experiment which are predicted by quantum mechanics \emph{cannot} be described by a hidden variable \(\lambda\) distributed according to some function \(q(\lambda)\), with an expression in the form:
 
-\begin{equation}
+\begin{equation} \label{eq:local-hidden-parameter}
     \P(ab | xy) = \int q(\lambda) \P(a|x; \lambda) \P (b|y; \lambda)  \dd{\lambda}
 \end{equation}
 \end{claim}
@@ -1365,7 +1369,7 @@ Therefore, \(\expval{a b}_{xy} = \int   \dd{q} \expval{a}_{x, \lambda} \expval{b
 
 Now, we consider the following quantity:
 
-\begin{equation}
+\begin{equation} \label{eq:CHSH-def}
     S = \expval{ab}_{00} +
      \expval{ab}_{01} +
      \expval{ab}_{10} -
@@ -1447,7 +1451,131 @@ So, we can compute \(S\) using equation \eqref{eq:CHSH-pauli-scalar-product}:
 \end{equation}
 \end{proof}
 
-\subsection{Nonlocal correlations}
+\section{Nonlocal correlations}
+
+We want to define \emph{probability spaces}. We will use the notation of section \nameref{sec:bell-inequalities}. If \(a,b\) can have \(\Delta \in \N\) values, and there are \(m \in \N \) possible measurements (\(x, y\)) we can make. Then, our correlations are a point \(\P(ab | xy)\) in some subset \(\mathcal P\) of \(\R ^{m^2 \Delta^2}\), bounded by:
+
+\begin{enumerate}
+    \item \(\forall x, y, a, b: \P (ab|xy)\geq 0\);
+    \item \(\forall x, y\):
+    \begin{equation}
+        \sum_{a=1}^{\Delta} \sum_{b=1}^{\Delta} \P(ab|xy) = 1
+    \end{equation}
+\end{enumerate}
+
+Now, we define some subsets of this space.
+
+\paragraph{No-Signaling}
+
+The set is called NS.
+We impose a condition which means: \emph{no matter what we do with a measurement, it will not affect the other}:
+\(\forall x, x', y, y', a\)
+
+\begin{equation}
+    \sum_{b=1}^{\Delta} \P(ab|xy) = \sum_{b=1}^{\Delta} \P(ab|xy')
+    \qquad \qquad
+    \sum_{a=1}^{\Delta} \P(ab|xy) = \sum_{a=1}^{\Delta} \P(ab|x'y)
+\end{equation}
+
+this implies \(\P(a|x) = \P(a|xy) = \sum_b\P(ab|xy)\).
+
+\begin{greenbox}
+  In the \(\Delta=2\) case, \(a, b = \pm 1\) the No-Signaling conditions become
+
+  \begin{equation}
+      \P(ab|xy) = \frac{1 + a \expval{A_x} + b \expval{B_y} + ab \expval{A_x B_y}  }{4} \geq 0
+  \end{equation}
+
+  so if \(A\) and \(B\) have zero average, \(1 \pm \expval{A_x B_y} \geq 0 \).
+
+  What?
+\end{greenbox}
+
+\paragraph{Local correlations}
+
+The set is called \(L\).
+It is the set of correlations that can be written as in equation \eqref{eq:local-hidden-parameter}.
+
+\paragraph{Quantum correlations}
+
+The set is called \(Q\).
+
+If we have some operators \(M_{a|x}\) and \(M_{b|y}\) in their respective Hilbert spaces, such that for each conditioning they still form a POVM (see \Nameref{subsec:POVM}), then \(Q\) is the set of the probabilities which can be expressed as
+
+\begin{equation}
+    \P(ab | xy) = \Tr (\rho_{AB} M_{a|x} \otimes M_{b|y})
+\end{equation}
+
+This is in the context of nonprojective measurements, but as we saw in \Nameref{par:purification} states can be purified so that everything we do is unitary. In that context,
+
+\begin{equation}
+    \P (ab|xy) = \ev{A_x \otimes B_y}{\psi}
+\end{equation}
+
+with some self-adjoint families of operators \(A_x\) and \(B_y\).
+
+It can be useful to have \(A_x B_y\), a product of commuting observables \([A_x, B_y]=0\) on the same space, instead of \(A_x \otimes B_y\); these descriptions are surely equivalent in the finite-dimensional case, maybe the latter is more general in the infinite-dimensional one.
+
+\paragraph{Shapes and inclusions}
+
+Every one of these sets is of the same dimension, and it can be shown that \(NS\), \(L\) are polytopes while \(Q\)'s boundary is curved. Also, \(L \subset Q \subset NS \subset \mathcal P\).
+
+They are all bounded, convex, closed. The planes which separate them are in general called Bell Inequalities.
+
+\subparagraph{The $\Delta=2, m=2$ case}
+
+We can have different linearly independent \(S\)s, (\(S\) being the one defined in \eqref{eq:CHSH-def}). In 2D (a projection?) we have: \(L\) is a square (\(\abs{S_x} \leq 2\), \(\abs{S_y} \leq 2\)), \(Q\) is a circle (\(\abs{S}^2 \leq 8 \)), \(NS\) is a square (\(\abs{S'_{x, y}} \leq 4 \), with \(S'_{x, y} = H S_{x, y}\) ($H$ is the Hadamard gate)).
+
+\section{Entropy}
+
+A message is a sequence of characters from an alphabet. If the alphabet is \(\mathcal A = \qty{a_i}_i\) and each of the characters in the alphabet appears with probability \(p_i\), we can define \(\mathcal A\)'s \emph{entropy} as
+
+\begin{equation}
+    H = - \sum _{i} p_i \log(p_i)
+\end{equation}
+
+with the convention \(0 \log 0 = 0\)
+
+\paragraph{Noiseless coding: Shannon's theorem}
+
+Given a \(k\)-long message, asyntotycally as \(k \rightarrow \infty\) there exists an encoding with which we can express each character of the message with \(H\) bits on average, or the whole message with \(kH\) bits.
+
+If we take any encoding, it can only do as good as Shannon encoding, and no better (at least not \emph{in general}).
+
+\paragraph{Von Neumann entropy}
+
+We can define the entropy of a mixed state \(\rho\) as
+
+\begin{equation}
+    S_V = -\Tr \qty(\rho \log\rho )
+\end{equation}
+
+\begin{enumerate}
+    \item For pure states we have \(S_V (\dyad{\psi} ) = 0\);
+    \item \(S_V\) is invariant wrt unitary transformations;
+    \item \(0 \leq S_V \leq \dim \mathcal H\).\footnote{Since \(\prod_{i=1}^{N} p_i^{-p_i} \leq N\).}
+\end{enumerate}
+
+\paragraph{Quantum Noiseless coding: Schumacher's theorem}
+
+If our alphabet is now made of pure states, the probability distribution of a message will be some hyper-density matrix, \(\rho^{\otimes N}\).
+
+Schumacher says: in the limit of infinite message length, we can always compress it with \(S_V\) bits per letter.
+
+\section{Entanglement measurements}
+
+We want a measurement \(E(\rho)\) which satisfies:
+
+\begin{enumerate}
+    \item If \(\rho\) is separable, then \(E(\rho)=0\);
+    \item \(E(\rho) = E(U \rho U ^\dag)\);
+    \item If we have some operators \(A_i \otimes B_i\), to which we associate probabilities \(p_i = \Tr \qty((A_i \otimes B_i) \rho)\), and which can project the state into \(\sigma_i = (A_i \otimes B_i) \rho (A_i \otimes B_i) ^\dag / p_i\), then
+    \begin{equation}
+        E(\rho) \geq \sum _{i}  p_i E(\sigma_i)
+    \end{equation}
+    This means: the entanglement is invariant under local Kraus evolution: the systems cannot become \emph{more} entangled when evolving on their own.
+    \item If \(\rho = \rho_{A}\) is a pure state then \(E(\rho) = S_V(\rho_A)\).
+\end{enumerate}
 
 
 

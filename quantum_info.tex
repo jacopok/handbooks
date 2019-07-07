@@ -1592,7 +1592,7 @@ We can define
     E_F (\rho) = \min \sum_i p_i S_V(\rho_A^i)
 \end{equation}
 
-where the minimum is to be taken over all the possible decompositions \(\rho = \sum _{j}  p_j \dyad{\psi_j}\) and \(\rho_A = \Tr _B \rho\): so, we pick a decomposition, we trace out the second system and take the entropy.
+where the minimum is to be taken over all the possible decompositions \(\rho = \sum _{i}  p_i \dyad{\psi_i}\) and \(\rho_A^i = \Tr _B (\dyad{\psi_j}) \): so, we pick a decomposition, we trace out the second system and take the entropy.
 
 \paragraph{Concurrence}
 
@@ -1674,15 +1674,121 @@ on the first qubit. Now, either \(f(x)\) is constant or it is balanced: if it is
 
 The classical complexity for a search in an unstructured database is \(O(N)\), with Grover's algorithm we get \(O(N^{1/2})\).
 
-The problem looks similar to the oracle: now our \(f(x) = [x=\overline{x}]\) and we seek \(\overline{x} \).
+The problem looks similar to the oracle: now our \(f(x) = [x=\overline{x}]\) and we seek \(\overline{x} \). We explain the procedure with \(n=2\):
 
 \begin{enumerate}
     \item Start with \(\ket{xy} = \ket{\vec{0}1}\);
     \item apply \(H ^{\otimes (n+1)} \);
-    \item apply \(U_f\);
+    \item apply \(U_f\); \label{item:grover-step-oracle}
     \item apply \(D \otimes \id\);
-    \item ???.
+    \item measure the \(\ket{x} \) state.
 \end{enumerate}
+
+as before, after applying step \ref{item:grover-step-oracle} we get
+
+\begin{equation} \label{eq:grover-oracle-state}
+    \ket\psi_1
+    = \frac{1}{2^{n/2}} \sum _{x=0}   ^{2^n-1}
+    (-)^{f(x)}\ket{x}
+    = \frac{1}{2^{n/2}}\qty( \sum _{x=0}   ^{2^n-1}
+    \ket{x}) - 2 \ket{\overline{x} }
+\end{equation}
+
+Now, \(D\) is \(\frac[i]{1}{2} \) of the matrix with -1 on the diagonal, and 1 in every other entry. Its eigenvectors are exactly the possible \(\ket{x} \) after the oracle, so after the application of \(D\) we get exactly \(\ket{\overline{x} } \).
+
+This \(D\) can be made with the usual gates as \(H^{\otimes 2} \sigma_x^{\otimes 2} (\id \otimes H) \text{CNOT} (\id \otimes H) \sigma_x^{\otimes 2} H^{\otimes 2}\). Below is the Python code to verify that it works.
+
+We will also need the matrix \(D'\), which is such that \(D = H^{\otimes 2} D' H^{\otimes 2}\). It turns out that \(D' = \eta_{\mu \nu}\).
+
+\begin{lstlisting}[language=Python]
+    import numpy as np
+    H = 1/np.sqrt(2)* np.array([[1,1], [1,-1]])
+    H2 = np.kron(H, H)
+    sigma_x = np.array([[0,1], [1,0]])
+    sigma_x2 = np.kron(sigma_x, sigma_x)
+    CNOT = np.array([[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]])
+    idH = np.kron(np.identity(2), H)
+    print('D = ', H2 @ sigma_x2 @ idH @ CNOT @ idH @ sigma_x2 @ H2)
+    print('Dprime = ', sigma_x2 @ idH @ CNOT @ idH @ sigma_x2)
+\end{lstlisting}
+
+\paragraph{Arbitrary \(n\)}
+
+This method only works for \(n=2\). In general, we have a state proportional \(\sum _{x=0}^{2^n-1} \ket{x} \ket{y}\), an oracle such that \(U_f \ket{\overline{x} }\ket{y}  = -\ket{\overline{x} }\ket{y} \) while \(U_f \ket{x}\ket{y}= \ket{x} \ket{y}   \) for all the other \(x \neq \overline{x}\).
+
+Now, we can write \(D' = \id - 2 \dyad{0}_1 \): so \(D = \id - 2 \dyad{S}_1 \), with \(S = H^{\otimes 2} \ket{0} = \sum _{x=0}^{2^n-1} \ket{x}\).
+
+Our main gate will be \(G = D U_f\). What does it do? first, it flips the component of the state along \(\ket{\overline{x}} \); then it flips the component along \(\ket{S} \).
+
+We know for sure that \(\ket{S} \) and \(\ket{\overline{x} } \) are not orthogonal: the angle between them will have \(\cos(\varphi) = 2^{-n/2}\), the coefficient of \(\ket{\overline{x} } \) in \(\ket{S} \). We are interested in \(\pi /2 - \varphi\), which we will call \(\delta \theta\).
+
+It can be shown by a simple geometric argument that the application of \(G\) sends a state which has an angle \(\theta\) from  the hyperplane \(\ket{\overline{x} }^\perp \) into a state with an angle \(\theta + 2 \delta \theta\). So, we need \(K\) applications of \(G\) to get \(\theta \rightarrow \pi /2\), with \(K = (\pi/2)/(2 \delta \theta)\): since \(\sin\delta\theta = 2^{-n/2} \) and the rest are constants, \(K = O(\sqrt{2^n})=O(\sqrt{N})\), where \(N\) is the database size.
+
+\subsection{Quantum Fourier Transform}
+
+We have \(n\) qubits, and their states are \(\ket{x} \) with \(x\) ranging from 0 to \(N-1\), with \(N = 2^n\).
+
+\paragraph{Classical FFT}
+
+The definition of the  discrete Fourier transform of a vector \(x_i\), with \(i = 0, \dots, N-1 \), \((N = 2^n)\) is
+
+\begin{equation}
+    X_k = \sum _{j=0}   ^{N-1} x_j \exp(-\frac{2 \pi ijk}{N})
+\end{equation}
+
+To do this in \(O(N \log N)\) instead of \(O(N^2)\), we split the sum into the even and odd parts:
+
+\begin{equation}
+    X_k =
+    \sum _{j=0}   ^{N/2-1} x_{2j} \exp(-\frac{2 \pi i(2j)k}{N}) +
+    \exp(-\frac{2 \pi ik}{N})
+    \sum _{j=0}   ^{N/2-1} x_{2j+1} \exp(-\frac{2 \pi i(2j)k}{N})
+\end{equation}
+
+Or in other words
+
+\begin{equation}
+    \text{FFT}(x)_k = \text{FFT} (\text{even}(x))
+    + \exp(-\frac{2 \pi ik}{N}) \text{FFT} (\text{odd}(x))
+\end{equation}
+
+Then, we can apply the same split for the FFT of the even and odd parts, and so on.
+
+This split will happen \(\log N = n\) times, after which there will just be one term in the sum.
+We have to to this computation once for every bit of the result vector, so in the end the complexity is \(O(N \log N)\).
+
+\paragraph{Quantum version}
+
+We define
+
+\begin{equation}
+    \text{QFT}(\ket{J}) = \frac{1}{\sqrt{N}} \sum _{k=0}   ^{N-1}
+    \exp(\frac{2 \pi i J k}{N}) \ket{k}
+\end{equation}
+
+where as usual \(\ket{k} = \ket{k_0 k_1 \dots k_{n-1}} \). So, we can rewrite this as a sum over all the \(k_\alpha\):
+
+
+\begin{subequations}
+\begin{align}
+    \text{QFT}(\ket{J}) &= \frac{1}{\sqrt{N}} \prod_{\alpha=0}^{n-1} \sum _{k_\alpha=0}   ^{1}
+    \exp(-\frac{2 \pi i J}{N}) \exp(\sum _{\alpha=0}   ^{n} k_\alpha 2^{n-\alpha} )  \ket{k}  \\
+    &=  \frac{1}{\sqrt{N}} \prod_{\alpha=0}^{n-1} \sum _{k_\alpha=0}   ^{1}
+    \exp(-2 \pi i J) \exp(\sum _{\alpha=0}   ^{n} k_\alpha 2^{-\alpha} ) \ket{k} \\
+    &=  \frac{1}{\sqrt{N}} \prod_{\alpha=0}^{n-1} \sum _{k_\alpha=0}   ^{1}
+    \exp(-2 \pi i J k_\alpha 2^{-\alpha} ) \ket{k} \\
+    &=  \frac{1}{\sqrt{N}} \prod_{\alpha=0}^{n-1}
+    \qty(\sum _{k_\alpha=0}   ^{1}
+    \exp(-2 \pi i J k_\alpha 2^{-\alpha} ) \ket{k_\alpha}) \\
+    &=  \frac{1}{\sqrt{N}} \prod_{\alpha=0}^{n-1}
+    \qty(    \ket{0}_\alpha + \exp(-2 \pi i J 2^{-\alpha} ) \ket{1}_\alpha)
+\end{align}
+\end{subequations}
+
+but in the \(\exp(-2 \pi i J 2^\alpha) \) the terms in the binary expansion of \(J\) with a power higher than \(\alpha\) will just make the term rotate by \(2 \pi \), doing nothing.
+
+\subsection{Shor's algorithm}
+
 
 %\section{Photon indivisibility}
 

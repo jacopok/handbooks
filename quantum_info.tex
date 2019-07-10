@@ -251,7 +251,7 @@ We introduce a notion of distance between states:
 \(F\) is also the \(\cos^2(\theta/2) \), where \(\theta\) is the angle between the two vectors in Bloch space.
 
 \begin{bluebox}
-  Let us prove these two statements: first of all notice that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \Re \braket{\psi_1}{\psi_2}}\).
+  Let us prove these statements: first of all notice that \(\norm{\ket{\psi_1} - \ket{\psi _2} }_2 = \sqrt{2 - 2 \Re \braket{\psi_1}{\psi_2}}\).
   Now, the scalar product \(\braket{\psi_1}{\psi_2}\) is in general a complex number but we can rotate the starting functions by an arbitrary phase, making it real and positive. So we get \(\Re \braket{\psi_1}{\psi_2} = \abs{\braket{\psi_1}{\psi_2}}  = \sqrt{F} \). Then, we can see that
 
   \begin{equation} \label{eq:norm-of-difference-fidelity}
@@ -830,7 +830,7 @@ Generalized measurements are equivalent to projective measurements in a larger s
 
 \subparagraph{Unitary characterization of Kraus evolution}
 
-We have some Kraus evolution \(\rho \rightarrow \sum _{k}  E_k \rho E_k ^\dag \), with \(\sum _{k}  E_k ^\dag E_k = \id \).
+We have a Kraus evolution \(\rho \rightarrow \sum _{k}  E_k \rho E_k ^\dag \), with \(\sum _{k}  E_k ^\dag E_k = \id \).
 
 Let us introduce a subsystem 2, with dimension the number of Kraus operators, and its orthonormal basis \(\ket{k} \), and the operator
 
@@ -1323,7 +1323,7 @@ The state becomes one of these:
 
 Now she sends her qubit to Bob, who still has his.
 
-Bob applies \(\qty(\text{CNOT} (H \otimes \id))^{-1}\) to the qubits.
+Bob applies \(\qty(\text{CNOT} (H \otimes \id))^{-1} = (H \otimes \id) \text{CNOT}\) to the qubits.
 
 \begin{equation} \label{eq:cnot-hadamard-inverse}
     \qty(\text{CNOT} (H \otimes \id))^{-1}=
@@ -1332,8 +1332,20 @@ Bob applies \(\qty(\text{CNOT} (H \otimes \id))^{-1}\) to the qubits.
 
 Now, as can be seen by summing the combinations of rows of the matrix in \eqref{eq:cnot-hadamard-inverse} corresponding to the states \(U_i \ket{\psi} \), Bob's qubits will be in the state \(\ket{xy} \).
 
+In the end, the protocol can be written as:
+
+\begin{equation}
+    (H \otimes \id)
+    \text{CNOT}
+    (U_i \otimes \id)
+    \text{CNOT}
+    (H \otimes \id)
+    \ket{00}
+    = \ket{i}
+\end{equation}
+
 \begin{bluebox}
-  If we tried to do this with a mixed state, \(\id\) and \(\sigma_z\) would give the same result (\(\frac[i]{1}{2} \qty(\dyad{00} +\dyad{11} )\)) as would \(\sigma_x\) and \(\sigma_y\) (\(\frac[i]{1}{2} \qty(\dyad{01} +\dyad{10} )\)). So, since there would be only two distinguishable states, only 1 bit would be transmitted.
+  If we tried to do this with a mixed state, the application of \(\id\) and \(\sigma_z\) would give the same result (\(\frac[i]{1}{2} \qty(\dyad{00} +\dyad{11} )\)) as would \(\sigma_x\) and \(\sigma_y\) (\(\frac[i]{1}{2} \qty(\dyad{01} +\dyad{10} )\)). So, since there would be only two distinguishable states, only 1 bit would be transmitted.
 \end{bluebox}
 
 \section{Bell Inequalities} \label{sec:bell-inequalities}
@@ -1570,9 +1582,9 @@ We want a measurement \(E(\rho)\) which satisfies:
     \item If \(\rho\) is separable, then \(E(\rho)=0\);
     \item \(E(\rho) = E(U \rho U ^\dag)\);
     \item If we have
-    a set of operators \(A_i \otimes B_i\), to which
-    we associate probabilities\linebreak[4]
-     \(p_i = \Tr \qty((A_i \otimes B_i) \rho (A_i \otimes B_i)^\dag)\), and which can project the state into \(\sigma_i = (A_i \otimes B_i) \rho (A_i \otimes B_i) ^\dag / p_i\), then
+    a set of operators \(A_i \otimes B_i\), to each of which
+    we associate a probability\linebreak[4]
+     \(p_i = \Tr \qty((A_i \otimes B_i) \rho (A_i \otimes B_i)^\dag)\), and which can project the state into the normalized application of the Kraus operators \(\sigma_i = (A_i \otimes B_i) \rho (A_i \otimes B_i) ^\dag / p_i\), then
     \begin{equation}
         E(\rho) \geq \sum _{i}  p_i E(\sigma_i)
     \end{equation}
@@ -2177,9 +2189,21 @@ We did not clone the state! That would have been \(\qty(\alpha \ket{0}+\beta \ke
 
 We can do the correction by measuring correlations, without doing a projective measurement: \(x_0 = \expval{\sigma_z^1 \sigma_z^2}\), \(x_1 = \expval{\sigma_z^1 \sigma_z^3}\).
 
-\begin{greenbox}
-  Why don't we collapse the state doing this?
-\end{greenbox}
+These can be measured by introducing two ancillary qubits and applying a CNOT to them: for example, to measure \(\sigma_z^1 \sigma_z^2\) we apply two CNOTs to the first ancillary qubit, first controlling on 1, then controlling on 2: in the end, we have four different possibilities for \(\ket{x_0x_1}\): so, we measure these along the computational basis and apply to the main qubits a gate, selected according to table \ref{fig:error-correction-protocol}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \(x_0 x_1\) & operation \\
+        \hline
+        00 & \(\id\) \\
+        01 & \(\sigma_x^3\) \\
+        10 & \(\sigma_x^2\) \\
+        11 & \(\sigma_x^1\) \\
+    \end{tabular}
+    \caption{Error correction protocol}
+    \label{fig:error-correction-protocol}
+\end{figure}
 
 We also get \(x_0 x_1 = 00\) for the case where all the bits are flipped, but it is all right since it is \(O(\varepsilon^3)\).
 
@@ -2203,7 +2227,7 @@ This of course is very resource-heavy.
 
 Experts think we should be able to achieve fault-free computation with \(\varepsilon \sim 10 ^{-3 \divisionsymbol 4} \).
 
-\paragraph{Example}
+\paragraph{Example} \label{par:error-correction-phase}
 
 We have an error like \(\ket{0} \rightarrow \ket{0}\), \(\ket{1} \rightarrow \exp(i \varphi) \ket{1}\).
 
@@ -2261,40 +2285,54 @@ with \(\omega_{nk = (E_n - E_k) / \hbar}\). We can expand the \(b_n(t)\) in \(\l
     b_n(t) = \sum _{i}  b_n ^{(i)} \lambda^i (t)
 \end{equation}
 
-We know that for some \(i\) we must have \(b_n ^{(r)}(t=0) = \delta_{ni} \delta_{r0} \) and so:
+We know that for some \(i\) we must have \(b_n ^{(r)}(t=0) = \delta_{ni} \delta_{r0} \) since we assume the system starts in an eigenstate \(i\) of the unperturbed Hamiltonian.
 
 \begin{align}
     i \hbar \dot{b}_n ^{(0)}(t) &= 0  \\
     i \hbar \dot{b}_n ^{(r)}(t) &= \sum _{k} \exp(i \omega_{nk} t) W_{nk} b_n ^{r-1}(t)
 \end{align}
 
-Then to order \(\lambda^1\):
+Then to order \(\lambda^1\) we only have one term in the sum:
 
 \begin{equation}
-    i \hbar \dot{b}_n (t) = \exp(i \omega_{nk}t) W_{nk}(t)
+    i \hbar \dot{b}_n (t) = \exp(i \omega_{ni}t) W_{ni}(t)
 \end{equation}
 
+or, in integral form:
+
 \begin{equation}
-    b_n^{(1)}(t) = \frac{1}{i \hbar} \int _{0}   ^{t} \dd{\tau} \exp(i \omega_{ni} \tau)W_{ni}(\tau)
+    b_n^{(1)}(t) = \frac{1}{i \hbar} \int ^t \dd{\tau} \exp(i \omega_{ni} \tau)W_{ni}(\tau)
 \end{equation}
 
 So \(\P _{if}(t) = \abs{c_f(t)}^2 = \abs{b_f(t)}^2\)
 
 \begin{equation}
-    \P _{if}(t) = \frac{\lambda^2}{\hbar^2} \abs{\int _{0}   ^{t} \dd{\tau} \exp(i \omega_{fi} \tau)W_{gi}(\tau)  }^2
+    \P _{if}(t) = \frac{\lambda^2}{\hbar^2} \abs{\int   ^{t} \dd{\tau} \exp(i \omega_{fi} \tau)W_{gi}(\tau)  }^2
 \end{equation}
 
 \paragraph{Example}
 
-Let us take a \(W(t) = - W \sin(\omega t)\). Then,
+Let us take a \(W(t) = - W \sin(\omega t) [t \geq 0]\). Then, up to a phase the following sequence of equalities holds:
+\begin{subequations}
+\begin{align}
+    b_n^{(1)}(t) &= - \frac{W_{ni}}{2 i\hbar} \int _{0}   ^{t} \dd{\tau} \qty(\exp(i (\omega_{ni} + \omega) \tau) - \exp(i (\omega_{ni} - \omega) \tau))  \\
+    &= -\frac{W_{ni}}{2i \hbar} \qty[
+        \cancelto{0}{
+        \frac{e^{i (\omega_{if} + \omega) t} - 1}{i (\omega_{if} + \omega)}} -
+        \frac{e^{i (\omega_{if} - \omega) t} - 1}{i (\omega_{if} - \omega)}
+    ]  \\
+    &= +\frac{W_{ni}}{2 i\hbar} \qty[
+        \frac{e^{i (\Delta \omega) t/2} - e^{-i (\Delta \omega) t/2}}{i (\Delta \omega)}
+        ]  \\
+    &= +\frac{W_{ni}}{2\hbar}
+        \frac{\sin(\Delta \omega t/2)}{\Delta \omega /2}
+\end{align}
+\end{subequations}
 
-\begin{equation}
-    b_n^{(1)}(t) = - \frac{W_{ni}}{2 \hbar} \int _{0}   ^{t} \dd{\tau} \qty(\exp(i (\omega_{ni} - \omega) \tau) - \exp(-i (\omega_{ni} - \omega) \tau))
-\end{equation}
 
 So,
 
-\begin{equation}
+\begin{equation} \label{eq:timedep-perturbation-probability-sin}
     \P _{if} (t, \omega) = \frac{\abs{W_{if}}^2 }{4 \hbar^2} F(t, \omega - \omega_{fi})
 \end{equation}
 
@@ -2308,64 +2346,97 @@ This is a sinc squared.
 
 \subsection{Fermi's golden rule}
 
-Is applying what we saw to continuous spectrums. Now we have some \(\braket{\alpha}{\alpha'} = \delta(\alpha - \alpha') \). We want to see what is the probability of the final state being in a neighbourhood of \(\alpha\).
+Is applying what we saw to continuous spectrums. Now we have some
+states described by eigenvalues \(\alpha\), with
+ \(\braket{\alpha}{\alpha'} = \delta(\alpha - \alpha') \). We want to see what is the probability of the final state being in a neighbourhood of \(\alpha\).
 
-We define the state density by \(\dd{\alpha} = \rho(\beta, E ) \dd{\beta} \dd{E} \) where the index \(\beta\) takes account of the degeneracy, which can be continuous.
+We define the state density by \(\dd{\alpha} = \rho(\beta, E ) \dd{\beta} \dd{E} \) where the index \(\beta\) takes account of the degeneracy, which can be continuous, while \(E\) is the energy.
+
+The probability of the final being in a neighbourhood \(D_f\) is given by:
 
 \begin{equation}
-    \delta \P \qty(\alpha_f, t) = \int   \dd{\alpha} \abs{\braket{\alpha}{\psi(t)} }^2
+    \delta \P \qty(\alpha_f, t)
+    = \int   \dd{\alpha} \abs{\braket{\alpha}{\psi(t)} }^2 [\alpha \in D_f]
 \end{equation}
 
-where \(\alpha \in D_f\). So, we can change variable into
+So, we can change variable into
 
 \begin{equation}
     \delta \P \qty(\alpha_f, t) = \int  \abs{\braket{\beta, E}{\psi(t)} }^2 \rho(E, \beta)  \dd{E} \dd{\beta}
 \end{equation}
 
-We can write
+\paragraph{Sinusoidal perturbation}
+
+We can express the transition probability density in the form of \eqref{eq:timedep-perturbation-probability-sin}:
 
 \begin{equation}
     \abs{\braket{\beta, E}{\psi(t)} }^2
-    = \frac{1}{\hbar^2} \abs{\bra{\beta, E} W \ket{\varphi_i}  }^2 F\qty(t, \frac{E-E_i}{\hbar})
+    = \frac{\abs{\bra{\beta, E} W \ket{\varphi_i}  }^2}{\hbar^2}  F\qty(t, \frac{E-E_i}{\hbar})
 \end{equation}
 
-where \(\lim_{t \rightarrow \infty} F\qty(t, \frac{E-E_i}{\hbar}) = 2 \pi i \hbar \delta(E - E_i)\).
-Then
+Let us integrate wrt energy in the \(t \rightarrow \infty\) limit:
+
+\begin{equation}
+    \int \dd{E} F = \int \dd{E} \frac{\sin^2(\Delta \omega t /2)}{(\Delta \omega t /2)^2}t^2
+\end{equation}
+
+we change variable, using \(\dd{E} = \dd{\Delta E} =\hbar \dd{\Delta \omega }\) we will integrate wrt \(x =\Delta \omega t /2 \):
+
+\begin{subequations}
+\begin{align}
+ \int \dd{E} \frac{\sin^2(\Delta \omega t /2)}{(\Delta \omega t /2)^2} t^2
+ &= \int  \dd{x} \frac{\sin^2(x)}{x^2} t^2 \frac{2 \hbar}{t}  \\
+ &= 2 \hbar t \pi
+\end{align}
+\end{subequations}
+
+So, we know the integral of \(F\). Now, since we are going to integrate it anyway, to simplify calculations we will assume it looks like \(\lim_{t \rightarrow \infty} F\qty(t, \Delta \omega) = h t  \delta(\Delta E)\). Note that this \(\Delta E\) is \emph{not} the difference between the initial and final energies, but corresponds to the difference between the excitation energy \(\omega \hbar\) and the difference between the final and initial energies.
+
+We can substitute in:
 
 \begin{equation}
     \delta \P (\varphi_i, \alpha_f, t)
-    = \delta \beta_f \frac{2 \pi i t}{\hbar} \abs{\bra{\beta_f, E_f = E_i} W \ket{\varphi_i}}^2
-    \rho(\beta, E_f)
+    = \delta \beta_f \frac{2 \pi t}{\hbar} \abs{\bra{\beta_f, E_f} W \ket{\varphi_i}}^2
+    \rho(\beta, E_f) \delta(\Delta E)
 \end{equation}
 
-Then
+Then we express this more explicitly, and insert a \(\pm\) to account for the possibility of stimulated \emph{emission} instead of \emph{absorption}. Since \(\P\) depends linearly on \(t\), we compute the \emph{rate} of emission.
 
 \begin{equation}
-    W(\varphi_i, \alpha_f) = \dv{}{t} \fdv{\P}{\beta} = \frac{\pi}{2 \hbar}
-    \abs{\bra{\beta_f, E_f = E_i + \hbar \omega} W \ket{\varphi_i}}^2
-    \rho (\beta_f, E_f = E_i + \hbar \omega)
+    W(\varphi_i, \alpha_f) = \frac{1}{t} \fdv{\P}{\beta} = \frac{2\pi}{\hbar}
+    \abs{\bra{\beta_f, E_f = E_i \pm \hbar \omega} W \ket{\varphi_i}}^2
+    \rho (\beta_f, E_f = E_i\pm \hbar \omega)
 \end{equation}
 
 The more states we have in the final configuration, the greater the probability. We are assuming here that the state density is constant in the degeneracy, and we can split the degeneracy and energy contributions.
 
+\paragraph{Constant perturbation}
+
+The formula we get is similar, but the energies are equal in the initial and final state:
+
+\begin{equation}
+    W(\varphi_i, \alpha_f) = \frac{2\pi}{\hbar}
+    \abs{\bra{\beta_f, E_f = E_i} W \ket{\varphi_i}}^2
+    \rho (\beta_f, E_f = E_i)
+\end{equation}
+
 \section{How to build a quantum computer}
 
-Di Vincenzo criteria (2000): what is needed to have a true quantum computer.
+\paragraph{Di Vincenzo criteria} (2000): what is needed to have a true quantum computer.
 
 \begin{enumerate}
-    \item Scalability, well defined qubit;
+    \item Scalability, well defined and reproducible qubits;
     \item Reset: we must be able to reset the computer surely into a state \(\ket{0} \);
-    \item Long coherence time wrt gate duration;
+    \item Long coherence time wrt gate duration: if our decoherence time is \(\tau_d\) and our gate time is \(\tau_g\), we need \(\tau_d / \tau_g \gtrsim 10^4\) in order to have time to do error correction;
     \item Universal set of gates;
-    \item Efficient readout;
+    \item Efficient (reliable) readout;
 \end{enumerate}
 
-If our decoherence time is \(\tau_d\) and our gate time is \(\tau_g\), we need \(\tau_d / \tau_g \gtrsim 10^4\) in order to have time to do error correction.
 
 Proposals:
 
 \begin{itemize}
-    \item Cauidiy: QED;
+    \item Cavity: QED;
     \item Solid-state electron spins;
     \item Cold atoms;
     \item Trapped ions;
@@ -2374,7 +2445,10 @@ Proposals:
 
 \subsection{Trapped ions}
 
-We can trap them with electric fields: Paul trap. We cannot do the intuitive thing, because of Gausses' law. We can work around it by making them time-dependent. Think of it like this: saddle which spins, an object in the saddle point will be stable if the rotation is fast enough.
+We can trap them with electric fields, in what is called a \emph{Pauli trap}.
+We cannot have a stable equilibrium in 3D with a static electric field, because of Gauss's law: the divergence would be negative there. This generalizes to magnetic fields.
+
+We can work around it by making them time-dependent. Think of it like this: saddle which spins, an object in the saddle point will be stable if the rotation is fast enough.
 
 We get three harmonic oscillators, with \(\omega_{x,y} \gg \omega_z\). The \(z\) direction is the 'quantum' degree of freedom: the state comes from the atom state \(i\) and the oscillator state \(n\).
 
@@ -2387,9 +2461,13 @@ Can we put many qubits in there? Our Hamiltonian will be
 
 They repel each other, we can diagonalize this matrix and get the modes of oscillation.
 
-So we have \(\ket{\alpha_1 \alpha_2 \dots \alpha_N n} \) where the \(n\) is the global oscillation. Our single qubit is \(\ket{\alpha_i n} \). We have the states \(\ket{g, 0} \), \(\ket{g, 1} \), \(\ket{g, 2} \) \dots and \(\ket{e, 0} \), \(\ket{e, 1} \) \dots
+So we have \(\ket{\alpha_1 \alpha_2 \dots \alpha_N, n} \) where the \(n\) is the global oscillation. Our single qubit is \(\ket{\alpha_i, n} \). We have the states \(\ket{g, 0} \), \(\ket{g, 1} \), \(\ket{g, 2} \) \dots and \(\ket{e, 0} \), \(\ket{e, 1} \) \dots
 
-We can use a laser to excite the ground state into a vibrational excited state... we choose the right frequency to go from \(\ket{g, k} \) to \(\ket{e, k-1} \) which spontaneously decays into \(\ket{g, k-1} \). This is \emph{side-band cooling}. This can prepare a state with \(\P > 99.9\%\).
+We can use a laser to excite the ground state into a vibrational excited state... we choose the right frequency to go from \(\ket{g, k} \) to \(\ket{e, k-1} \) which spontaneously decays into \(\ket{g, k-1} \). This is \emph{side-band cooling}: it allows us to prepare \(\ket{0}\) with \(\P > 99.9\%\).
+
+We can have Zeeman-like perturbations of our qubits, but it is an issue we can fix as outlined in \Nameref{par:error-correction-phase}.
+
+\paragraph{Gates}
 
 Cirac-Zoller Gate: allows us to entangle states with stuff like a CPHASE by interacting with the global vibration.
 
@@ -2401,23 +2479,100 @@ Cooper pair currents are the superconductive currents.
 We use Josephson juctions inside regular circuits:
 two superconductors, separated by a thin insulant. Cooper pairs can tunnel through the insulant.
 
-Charge qubit: quantum numbers inside the superconductor are \(n\), \(\varphi\), with \([n, \varphi] = i\).
+Charge qubit: quantum numbers inside the superconductor are \(n\), \(\varphi = i \partial_n\), with \([n, \varphi] = i\).
 
 \begin{equation}
     H = E_C \qty(n-n_g)^2 - E_J \cos \varphi
 \end{equation}
 
-with \(n_g - c_g V /(2e)\), and \(E_C = (2e)^2 / (2(C_J + C_g))\). We can write the eigenstates as \(\ket{n} \), and
+with \(n_g = c_g V /(2e)\), and \(E_C = (2e)^2 / (2(C_J + C_g))\). We can write the eigenstates as \(\ket{n} \), and
 
 \begin{equation}
     H = E_C \sum  (n-n_g) \dyad{n} - \frac{1}{2} E_J \sum \qty(\ketbra{n+1}{n} + \ketbra{n}{n+1}  )
 \end{equation}
 
-%\section{Laboratory experiences}
+So, at the crossing points corresponding to \(n_g \in \N + 1/2\) the perturbation makes it so that the parabolas do not actually cross: there is a gap, which forms the charge qubit.
 
-%\subsection{Photon indivisibility}
+\section{Laboratory experiences}
 
-%\subsection{Experimental Bell violation}
+\subsection{Photon indivisibility}
 
+We wish to prove that the photon is an indivisible particle.
+
+\paragraph{Setup}
+
+Our \emph{main}  experimental setup is an incoming light wave,
+a beamsplitter and two photodetectors on either side, labelled 1 and 2.
+
+We call the number of times the \(i\)-th detector goes off \(N_i\), and the amount of times two detectors go off together \(N_{ij}\).
+
+We wish to get to the single-photon level: therefore, we have the laser impact a birefractive crystal which, around \SI{e-6}{} to \SI{e-8}{} of the times it is hit with a photon, creates a pair of coherently polarized photons.
+
+These are emitted in a state like:
+
+\begin{equation}
+    \int _0^{\pi}  \dd{\varphi} \ket{\theta_C, \varphi, V} \otimes \ket{\theta_C, \pi +  \varphi, V}
+\end{equation}
+
+where the first two quantum numbers are angles denoting the direction of emission (in standard spherical coordinates, with the \(z\) axis along the direction of propagation of the photons which are not deflected), \(\theta_C \sim \SI{4}{\degree} \).
+
+So, they are emitted in pairs which form a cone. The third quantum number denotes the polarization, which is the same for the two photons.
+
+In two antipodal positions on the cone we position the beam splitter and the entrance of a fiber optic cable; the latter should be as long as the distance between the beam splitter and the detectors. At the end of this cable we put a third detector, whose count will be called \(N_3\).
+
+In this way, light will reach any detector in the same time from the crystal.
+
+Now, we want to calculate probabilities like \(N_{12} / (N_1 N_2)\), but in order to have much less noise we condition all of these on the event of the third detector firing. This is since, to give an order of magnitude, one of these detectors will go off \SI{e6}{} times a second, and have a dark count (detecting nonexistent light) of something like \SI{e2}{Hz}.
+
+So, denoting with a | the conditional counts:
+
+\begin{equation}
+    N_{12|3} = \frac{N_{123}}{N_3}
+    \qquad
+    N_{1|3} = \frac{N_{13}}{N_3}
+    \qquad
+    N_{2|3} = \frac{N_{23}}{N_3}
+\end{equation}
+
+\paragraph{Theoretical considerations: wave vs particle}
+
+We wish to put bounds on the quantity experimentally calculated as
+
+\begin{equation}
+    g = \frac{\expval{N_{12|3}} }{\expval{N_{1|3}} \expval{N_{2|3}}}
+    = \frac{\expval{N_{123}} }{\expval{N_{13}} \expval{N_{23}}} \expval{N_3}
+\end{equation}
+
+where the average is temporal. We hereafter drop the ``\(|3\)'' from the detection numbers, but always imply it.
+
+\emph{Indivisible particle theory} predicts that, if the photons come slow enough to be seen as ``one at a time'' by the detectors, \(N_{12} = 0\) since the photon cannot be detected on both sides. So, \(g=0\); realistically it will be higher than 0 because of noise.
+
+\emph{Classical wave theory} predicts that the number of times the detector will go off is proportional to the intensity of the incoming light (\(N_i \propto I_i\)); also the light is split by the beamsplitter into two lower-intensity beams, which are constant in time, therefore the probabilities of the two detectors going off are independent:  \(N_{12} = N_1 N_2 \propto I_1 I_2\).
+
+The intensity is split according to the coefficients \(\mathcal R\), \(\mathcal T\) with \(\mathcal R + \mathcal T =1\):
+
+\begin{equation}
+    I  = \underbrace{\mathcal T I}_{\substack{\text{going to detector 1}}} +
+     \underbrace{\mathcal R I}_{\substack{\text{going to detector 2}}}
+\end{equation}
+
+We can put these into the computation of \(g\); since they are constants they can be taken out of the averages. Also, the constants in the proportionality relations between \(N\) and \(I\) simplify.
+
+\begin{equation}
+    g = \frac{\expval{\mathcal R I \mathcal T I} }{\expval{\mathcal R I}\expval{\mathcal T I}  }
+    =\frac{\expval{I^2} }{\expval{I}\expval{I}} \geq 1
+\end{equation}
+
+because of the Cauchy-Schwarz inequality: \(\int  I^2 \dd{t} \geq\qty( \int  I \dd{t})^2  \).
+
+This allows us to falsify the classical wave hypothesis with results of \(g<1\).
+
+\subsection{Experimental Bell violation}
+
+We wish to violate a CHSH inequality, as theoretically explained in \Nameref{sec:bell-inequalities}.
+
+In order to do it, we need an entangled state: how do we create it using birefractive crystals? We know that we can orient the crystal such that if a photon comes in with \(V\) (vertical) polarization, it can come out in a state like \(\ket{\theta, H}_A \otimes \ket{\pi+\theta, H}_B \). Also, we can orient it such that if a photon comes in with \(H\) (horizontal) polarization, it can come out in a state like \(\ket{\theta, V}_A \otimes \ket{\pi+\theta, V}_B \). In both cases, if the light comes in with the other polarization it just goes straight through.
+
+These are both separable states, but we can create entangled ones by putting two of these crystals one after another, at right angles, and having the light come in at \(\pi/4\) radians with respect to both.
 
 \end{document}

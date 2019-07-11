@@ -2506,7 +2506,11 @@ a beamsplitter and two photodetectors on either side, labelled 1 and 2.
 
 We call the number of times the \(i\)-th detector goes off \(N_i\), and the amount of times two detectors go off together \(N_{ij}\).
 
+\paragraph{Parametric down-conversion}
+
 We wish to get to the single-photon level: therefore, we have the laser impact a birefractive crystal which, around \SI{e-6}{} to \SI{e-8}{} of the times it is hit with a photon, creates a pair of coherently polarized photons.
+
+This is because an incoming photon with energy \(\omega\) can excite a resonance corresponding to the second-order term in the series expansion of the polarization with respect to the electric field strength: this will have energy \(2 \omega\) and will spontaneously down-convert to a pair of photons with energy \(\omega\).
 
 These are emitted in a state like:
 
@@ -2571,8 +2575,43 @@ This allows us to falsify the classical wave hypothesis with results of \(g<1\).
 
 We wish to violate a CHSH inequality, as theoretically explained in \Nameref{sec:bell-inequalities}.
 
-In order to do it, we need an entangled state: how do we create it using birefractive crystals? We know that we can orient the crystal such that if a photon comes in with \(V\) (vertical) polarization, it can come out in a state like \(\ket{\theta, H}_A \otimes \ket{\pi+\theta, H}_B \). Also, we can orient it such that if a photon comes in with \(H\) (horizontal) polarization, it can come out in a state like \(\ket{\theta, V}_A \otimes \ket{\pi+\theta, V}_B \). In both cases, if the light comes in with the other polarization it just goes straight through.
+In order to do it, we need an entangled state: how do we create it using birefractive crystals? We know that we can orient the crystal such that if a photon comes in with \(V\) (vertical) polarization, it can come out in a state like \(\ket{\theta, H}_A \otimes \ket{\pi+\theta, H}_B \). Also, we can orient it such that if a photon comes in with \(H\) (horizontal) polarization, it can come out in a state like \(\ket{\theta, V}_A \otimes \ket{\pi+\theta, V}_B \). In both cases, if the light comes in with the other polarization it just goes straight through. Also, both of these processes are coherent.
 
-These are both separable states, but we can create entangled ones by putting two of these crystals one after another, at right angles, and having the light come in at \(\pi/4\) radians with respect to both.
+These are both separable states, but we can create entangled ones by putting two of these crystals one after another, at right angles to each other, and having the light come in at \(\pi/4\) radians with respect to both. So, the state we get is:
+
+\begin{equation}
+    \frac{1}{\sqrt{2} } \qty(\ket{H} + \ket{V} ) \rightarrow
+    \frac{1}{\sqrt{2} } \qty(\ket{H}_A \ket{H}_B + \ket{V}_A \ket{V}_B )
+\end{equation}
+
+\paragraph{Half-wave plate}
+
+The state of an incoming photon can be represented as \(\ket{\psi } = \alpha \ket{H} + \beta \ket{V} \); then in this basis a Half-Wave Plate at an angle \(\theta\) wrt the \(H\) direction operates\footnote{See \url{http://quantum.info/publications/theses/Robert_Prevedel_Diplomand_thesis.pdf}} as the unitary gate
+
+\begin{equation}
+    \text{HWP} = \begin{bmatrix}
+    \cos(2 \theta )    &  \sin(2 \theta)  \\
+      -\sin(2 \theta)  & \cos(2 \theta)
+    \end{bmatrix}
+\end{equation}
+
+\paragraph{Polarizing beam splitter}
+
+It sends incoming light in two different directions depending on its polarization: it effectively is our projective measuring device.
+
+Putting a HWP at an angle \(\theta/2\) before the polarizing beam splitter we can measure along the basis at an angle \(\theta\) from \(HV\). We have two detectors corresponding to the the two directions along which the BS sends photons.
+
+\paragraph{CHSH violation}
+
+The basis we choose, \(a_{1, 2}\) and \(b_{1, 2}\) correspond to two pairs of angles for the Half-Wave Plates. Since our state is not a singlet, the result in \eqref{eq:CHSH-pauli-scalar-product} has a plus instead of a minus, therefore our two choices for \(a\) will be the same, corresponding to \(2 \theta^a_{1, 2} = 0, \pi/2\) but the choices for \(b\) will correspond to \(2 \theta^b_{1,2} = \pi/4, -\pi/4\) instead.
+This ensures that the only negative scalar product is the one between \(a_1\) and \(b_1\).
+
+The way we measure these correlations is just
+
+\begin{equation}
+    \expval{A \otimes B} = \frac{N_{++} + N_{--} - N_{+-} - N_{-+}}{N_{++} + N_{--} + N_{+-} + N_{-+}}
+\end{equation}
+
+where the \(+\) and \(-\) subscripts indicate the result of the measurement: \(N_{+-}\) is the number of times we obtained a positive result from the measurement of the \(A\) photon and a negattive one from the \(B\) photon.
 
 \end{document}

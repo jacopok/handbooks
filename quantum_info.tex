@@ -936,7 +936,7 @@ This does not seem very useful, as it can only provide us with some statistical 
 
 \subsection{POVMs} \label{subsec:POVM}
 
-We get some set of positive operators \(F_i\) such that \(\sum _{i}  F_i = \id \), and use these as the possible results of our measurement, which we will get with probabilities \(p_i = \ev{F_i}{\psi}\).
+We get some set of positive operators \(F_i\) such that \(\sum _{i}  F_i = \id \), and use these as the possible results of our measurement, which we will get with probabilities \(p_i = \ev{F_i}{\psi}\), or more generally \(p_i = \Tr(\rho F_i)\).
 
 They are useful in describing destructive measurements, like a photodetector.
 It is interesting when \(p_i = 0\) with some \(\psi\), because if we see that detector go off we know the system was \emph{not} in \(\psi\).
@@ -2631,28 +2631,44 @@ where \(A, A'\) are the bases corresponding to \( \theta^a_{1, 2} = 0, \pi/4\), 
 \(B, B'\) are the bases corresponding to \( \theta^b_{1, 2} = \pi/8, -\pi/8\).
 
 \section{Distances in state space}
-Creating convex combinations of states should always be allowed,  and we see this in the fact that the space of states is convex.
 
-States are usually decomposable as probabilistic mixtures, which are convex combinations in "Bloch space" (or its generalizations).
+Creating convex combinations of states should always be allowed,  and we see this in the fact that the space of states is convex: if we can have the state \(\rho_1\) with probability \(\mu\) and \(\rho_2\) with probability \(1-\mu\), and both states are characterized by a Bloch vector \(\vec{\lambda}_{1,2} \) then the total state will be represented by a density matrix like
+
+\begin{equation}
+    \rho = \mu \rho_1 + (1 - \mu) \rho_2
+    = \frac{1}{2} \id + \frac{1}{2} \qty(\mu \vec{\lambda}_1 + (1- \mu)\vec{\lambda}_2) \cdot \vec{\sigma}
+\end{equation}
+
+Where we can see that we get a convex combination of the Bloch vectors.
+
+States are usually decomposable as probabilistic mixtures, which are convex combinations in some generalized "Bloch space".
 
 \subsection{Telling states apart} We are given two states \(\rho _{1, \, 2}\): what is the measurement which maximizes the probability we will be able to tell one from the other?
 
-Probability vectors: \(\vec{p} = (p_i)\), \(\vec{q} = (q_i)\). We can use the "\(\ell_1\)" metric:
+In the classical version of the problem, the two density matrices always ``share an eigenbasis'' --- or, more simply, classical probability theory deals with probabilities of well-defined and common sets of events --- so we can work with the probability vectors: \(\vec{p} = (p_i)\), \(\vec{q} = (q_i)\), which represent probabilities of the \emph{same states}.
+We can use the "\(\ell_1\)" metric:
 
 \begin{equation}
   d(p, q) = \sum_i \abs{p_i - q_i}
 \end{equation}
 
-Claim: this is a distance.
+\begin{claim}
+This is a distance.
+\end{claim}
 
-Can we do the same for quantum states? In general, \([\rho_1,  \rho_2] \neq 0\), we do not have a common eigenbasis. Could we use the Frobenius metric? Eeh, not really.
+\begin{proof}
+Symmetry and positivity are easy to see, and the triangular inequality is satisfied for any element of the sum: \(\abs{p_i - q_i} \leq \abs{p_i - f_i} + \abs{f_i - q_i} \) for any \(i\).
+\end{proof}
 
-We have a map from observables to numbers: \(A \rightarrow \Tr \qty(\rho A) = \langle A \rangle_\rho\).
+In general, however, \([\rho_1,  \rho_2] \neq 0\) and we do not have a common eigenbasis.
+%Could we use the Frobenius metric? Eeh, not really.
 
-We can do \(\sup{\abs{{\langle A \rangle_{\rho_1} - \langle A \rangle_{\rho_2}}}}\) (Over \(\norm{A} = 1\)).
+Any metric defines an \emph{evaluation} map from observables to numbers: \(A \rightarrow \Tr \qty(\rho A) = \langle A \rangle_\rho\).
+
+We can define our distance to be \(\sup_A{\abs{{\langle A \rangle_{\rho_1} - \langle A \rangle_{\rho_2}}}}\). To avoid meaningless divergences we could get by scaling the operators, we restrict ourselves to \(\norm{A} = 1\), where the operator norm is defined by
 
 \begin{equation}
-  \norm{A} = \sup_{\psi \neq 0} \frac{\norm{A\psi}}{{\psi}}
+  \norm{A} = \sup_{\psi \neq 0} \frac{\norm{A\psi}}{\norm{\psi}}
 \end{equation}
 
 So our distance is
@@ -2661,14 +2677,16 @@ So our distance is
   d = \sup_{\norm{A}=1} \abs{\Tr \qty[A(\rho_1 - \rho_2)]}
 \end{equation}
 
-We know that
+We can put bounds on this norm as such:
 
+\begin{subequations}
 \begin{align}
-  \abs{\Tr \qty(AB)} &= \sum_i b_i \ev{A}{i} \\
-  &\leq \sum_i \abs{b_i} \ev{A}{i} \\
-  &\leq \norm{A} \sum_i \abs{b_i} \\
-  &\leq \norm{A} \Tr \abs{B}
+    \abs{\Tr \qty(AB)} &= \sum_i b_i \ev{A}{i} \\
+    &\leq \sum_i \abs{b_i} \ev{A}{i} \\
+    &\leq \norm{A} \sum_i \abs{b_i} \\
+    &\leq \norm{A} \Tr \abs{B}
 \end{align}
+\end{subequations}
 
 Where \(B = \sum_i b_i \ketbra{i}\)),
 and we call \(\norm{B}_1 = \Tr \abs{B}\), where the modulus of the operator can be thought of eigenvalue-wise (diagonalizing the operator, and then flipping the sign of all the negative eigenvalues).
@@ -2679,69 +2697,114 @@ So
   d \leq \norm{A} \norm{\rho_1 - \rho_2}_1 = \norm{\rho_1 - \rho_2}_1
 \end{equation}
 
-Claim: this in an equality (there \emph{always} exists an $A$ to do the job).
+since \(\norm{A}=1\).
 
-Do we get back the classical case if the matrices commute? Claim: yes.
+\begin{claim}
+This in an equality (there \emph{always} exists an $A$ to do the job).
+\end{claim}
 
-We call \(D(\rho_1, \rho_2) = \frac{1}{2} \norm{\rho_1 - \rho_2}_1\). (since the $d$ we used before is upper-bounded by 2, by the triangular inequality).
+\begin{proof}
+Let us call \(B = \rho_1 - \rho_2\). We wish to find an A such that \(\Tr(AB) = \norm{B}_1\).
 
-"the duals of self-adjoint operators are traceles"?
+First we diagonalize \(B = \sum_i b_i \dyad{i} \). We pick:
+
+\begin{equation} \label{eq:optimal-operator-trace-norm}
+    A = \sum _{i}  (-) ^{[b_i < 0]} \dyad{i}
+\end{equation}
+
+Then we will get
+
+\begin{subequations}
+\begin{align}
+    \Tr (AB) &= \sum _j \bra{j}
+    \qty(\sum _{i}  (-) ^{[b_i < 0]} \dyad{i})
+    \qty(B \sum_k b_k \dyad{k})
+    \ket{j} \\
+    &= \sum_k (-) ^{[b_k < 0]} b_k
+    = \sum _{k} \abs{b_k} = \norm{B}_1
+\end{align}
+\end{subequations}
+\end{proof}
+
+\begin{claim}
+We get back the classical case if the matrices commute.
+\end{claim}
+
+\begin{proof}
+In that case we can just write \(\rho_1 - \rho_2\) in the common eigenbasis as \(\sum _i (p_{i,1} - p_{i,2}) \dyad{i}\). The result follows.
+\end{proof}
+
+We define \(D(\rho_1, \rho_2) = \frac{1}{2} \norm{\rho_1 - \rho_2}_1\), since the $d$ we used before is upper-bounded by 2, by the triangular inequality.
+
+%"the duals of self-adjoint operators are traceles"?
 
 \paragraph{Measurements}
-Von Neumann orthogonal measurement we know about.
 
-Generalized measurement: we have an ancillary system, mearure this system and then trace over it. This is not described by an orthogonal projection:
+Take a 2-element POVM:\footnote{See \Nameref{subsec:POVM}} \(E_{1, \, 2} \geq 0\)
+and the states from before: \(\rho_{1, \, 2}\).
 
-\paragraph{Positive Operator-Valued Measurement}
+Say we get the states \(\rho_i\) with \(50\%\) probability each, and we wish to select the POVM which best allows us to distinguish them and figure out which is which: we want \(E_i\) to correspond to \(\rho_i\). Then
 
-We have finitely many \(\qty{E_i}_i\), \(E_i \geq 0\),  \(\sum_i E_i = \mathbb{1}\).
-
-\(\rho \rightarrow p_i = \Tr (\rho E_i)\).
-
-2-element POVM: \(E_{1, \, 2} \geq 0\), we have our states \(\rho_{1, \, 2}\).
-
-Say we get the states with \(50\%\) probability each, and we wish to distinguish them:
-
-\begin{equation}
-  P(\text{success}) = \frac{1}{2} \qty[\Tr(E_1 \rho_1) + \Tr(E_2 \rho_2)]
-\end{equation}
-
-\begin{equation}
-  P(\text{error}) = \frac{1}{2} \qty[\Tr(E_1 \rho_2) + \Tr(E_2 \rho_1)]
-\end{equation}
-
-We want to maximize \(P(\text{success})\). We can rewrite it as:
-
+\begin{subequations}
 \begin{align}
-  P(\text{success}) &= \frac{1}{2} \qty[\Tr(E_1 \rho_1) + \Tr\qty((\mathbb{1} - E_1) \rho_2)] \\
-  &= \frac{1}{2}\qty[1 + \Tr \qty(E_1 (\rho_1 - \rho_2))]
+    \P(\text{success}) &= \frac{1}{2} \qty[\Tr(E_1 \rho_1) + \Tr(E_2 \rho_2)] \\
+    \P(\text{error}) &= \frac{1}{2} \qty[\Tr(E_1 \rho_2) + \Tr(E_2 \rho_1)]
 \end{align}
+\end{subequations}
 
-to maximize over $E_1$. The optimum (Claim) is
+We want to maximize \(\P(\text{success})\). We can rewrite it as:
+
+\begin{subequations}
+\begin{align}
+    \P(\text{success}) &= \frac{1}{2} \qty[\Tr(E_1 \rho_1) + \Tr\qty((\mathbb{1} - E_1) \rho_2)] \\
+    &= \frac{1}{2}\qty[1 + \Tr \qty(E_1 (\rho_1 - \rho_2))]
+\end{align}
+\end{subequations}
+
+to maximize over $E_1$.
+
+\begin{claim}
+The optimum \emph{(Hellstrom optimal measurement)} is
 
 \begin{equation}
-  P(\text{success}) = \frac{1}{2}\qty[1 + \frac{1}{2} \norm{\rho_1 + \rho_2}_1]
+  \P(\mathrm{success}) = \frac{1}{2}\qty[1 + \frac{1}{2} \norm{\rho_1 - \rho_2}_1]
 \end{equation}
-
-Hellstrom optimal measurement?
 This is 1 if they are maximally different, $1/2$ if they are indistinguishable.
+\end{claim}
 
-$E_1$ should be the projection over the positive eigenvalues of the difference between the matrices.
+\begin{proof}
+The difference from the operator we used in \eqref{eq:optimal-operator-trace-norm} is that now we must have \(E_1 \geq 0\), so it cannot have negative eigenvalues:
+so, we pick it to be the projection over the positive eigenvalues of the difference between the matrices.
+
+If \(\delta \rho = \rho_1 - \rho_2 = \sum _{i}  p_i \dyad{i}\), then  \(E_1 = \sum _i [p_i \geq 0] \dyad{i}  \).
+
+So, the trace of \(E_1 \delta \rho\) will be given by the sum of the positive eigenvalues of \(\delta \rho\).
+
+By linearity of the trace we know that \(\Tr(\delta \rho) = 0\). Then, the sum of its positive eigenvalues must be half of the sum of all the eigenvalues' absolute values.
+\end{proof}
 
 \paragraph{Bhattacharyya distance}
 
-We have two probability vectors \(\vec{p} = \qty(p_i)_i\), \(\vec{q} = \qty(q_i)_i\).
-Normalized in the euclidean metric, if we take the square root component by component: \(V_p = \qty(\sqrt{p_i})_i\).
+We have two probability vectors \(\vec{p} = \qty(p_i)\), \(\vec{q} = \qty(q_i)\).
+We want them to be normalized in the euclidean metric, so we take the square root component by component, defining \(V_p = \qty(\sqrt{p_i})\).
+
+We define the distance
 
 \begin{equation}
-  d_B (\vec{p}, \vec{q}) = \cos^{-1} (\vec{V_p}, \vec{V_q})
+  d_B (\vec{p}, \vec{q}) = \cos^{-1} (\vec{V_p} \cdot \vec{V_q})
+  = \cos^{-1} \qty(\sum_i \sqrt{p_i q_i})
 \end{equation}
 
-Claim: this is a distance.
+\begin{claim}
+    This is a distance.
+\end{claim}
 
-\begin{equation}
-  d_B (\vec{p}, \vec{q}) = \cos^{-1} \qty(\sum_i \sqrt{p_i q_i})
-\end{equation}
+\begin{proof}
+    As usual, positivity and symmetry are easy. The triangular inequality amounts to seeing that, if we pick three points on \(S^n\), an angle between two of them must be less than the sum of the other two angles.
+
+    This can be proven WLOG in 3D space, since we can restrict ourselves to the span of the three vectors. Then, it is a boring calculation: you write out the Gramian matrix for the euclidean scalar product, which must have a positive determinant, and the result comes from the fact that \(\cos^{-1}\) is decreasing.\footnote{See \url{https://math.stackexchange.com/questions/1924742/
+    prove-the-triangle-inequality-on-the-sphere-s2-in-mathbbr3/1925049}}
+\end{proof}
 
 \paragraph{Quantize it!}
 

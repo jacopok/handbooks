@@ -20,6 +20,7 @@
 \numberwithin{equation}{section}
 \usepackage[perpage]{footmisc}
 
+
 \usepackage{cprotect}
 
 \usepackage{tikz-cd}
@@ -29,7 +30,9 @@
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
+\usepackage{etoolbox}
+\appto\UrlBreaks{\do\-}
 \usepackage{nameref}
 \usepackage{mhchem}
 \usepackage{siunitx}

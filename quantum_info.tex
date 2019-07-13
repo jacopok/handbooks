@@ -2915,12 +2915,16 @@ We prove a super-famous bound. Differentiate the previous equation wrt \( \theta
 \end{align}
 \end{subequations}
 
-\textbf{Claim}: the notation \( \braket{f}{g}_p = \int  p_\theta f g \dd{x}  \) defines a scalar product.
 
-\begin{greenbox}
-  \textbf{Proof: }
+\begin{claim}
+The notation \( \braket{f}{g}_p = \int  p_\theta f g \dd{x}  \) defines a scalar product.
+\end{claim}
+
+\begin{bluebox}
+\begin{proof}
   The axioms for a real scalar product are symmetry, linearity, and positive definiteness. The first two come from the properties of the regular product \(fg\); the interesting one to prove is the third. It is true since \(p_ \theta \geq 0\), and then \(\forall f: \int  p_ \theta f^2  \dd{x} \geq 0 \), also (modulo equality almost everywhere) \(\braket{f}{f}=0 \iff f=0\).
-\end{greenbox}
+\end{proof}
+\end{bluebox}
 
 We can subtract \( \theta \) from \(\Theta \rightarrow \overline{\Theta} = \Theta - \theta \) leaving the result unchanged, since it holds for any estimator: we restrict ourselves to \emph{zero-mean} ones. This amounts to shifting the \(x\) variable, an operation which leaves the scalar product unchanged.
 We do this because we will get a lower bound on the  of the integral of the square of \(\Theta\), which is larger than the variance in general but equal to it in the zero mean case, so we want the tightest bound.
@@ -2940,55 +2944,79 @@ We do this because we will get a lower bound on the  of the integral of the squa
   &= F \var{\Theta}
 \end{align}
 
-Where \( F \) is just the Fischer metric. %(To check: \( \bar{\Theta} = \Theta - \theta \) )
+Where \( F \) is just the Fischer metric: %(To check: \( \bar{\Theta} = \Theta - \theta \) )
+in this one parameter case it just has one component. There is a factor-of-four difference between this definition and the one from before: let us accept it and move on.
 
-But this means \(\var{\Theta} \geq F ^{-1} \): this is the \emph{Cramer-Rao} inequality.
+\begin{equation}
+    F = \int  p_\theta \frac{(p_\theta ')^2}{p_\theta^2} \dd{x}
+\end{equation}
+
+This means \(\var{\Theta} \geq F ^{-1} \): this is the \emph{Cramer-Rao} inequality.
 
 \subsection{Quantize it!}
 
-Unbiased estimator \( \Tr (\rho_\theta ' \hat{\Theta}) = 1 \).
+We would like to repeat the procedure from before, and to express the derivative of \( \Tr (\rho_\theta \hat{\Theta}) = \theta \) as the trace of \(\rho\) times \emph{something}, but it is difficult:
+we could do \( \Tr (\rho_\theta \rho_\theta ^{-1} \rho_\theta ' \hat{\Theta}) = 1 \),
+but the derivative and the inverse of \(\rho\) do not commute!
 
-We can do \( \Tr (\rho_\theta \rho_\theta ^{-1} \rho_\theta ' \hat{\Theta}) = 1 \)
-
-But this is noncommutative! We can do
+So, we define the \emph{Symmetric Logarithmic Derivative}: there is a single solution \(L\) to the differential equation
 
 \begin{equation} \label{eq:SLD-def}
-  L_\rho (x)  = \frac{1}{2} \qty(\rho X + X \rho) = \rho'
+  \frac{1}{2} \qty(\rho L + L \rho) = \rho'
 \end{equation}
 
-This is the Symmetric Logarithmic Derivative, SLD.
-(recall the logarithmic derivative \( \rho' / \rho = \dv*{\log \rho}{x} \) ).
+and we call \(L\) the SLD operator. It can be easily seen that this \(L\) satisfies \(\Tr(\rho L) = \expval{L} =0 \).
+The name comes from the regular logarithmic derivative \( \rho' / \rho = \dv*{\log \rho}{x} \).
 
-Now
+Now we can sobstitute in the expression for \(\rho'\):
 
 \begin{equation}
-  \frac{1}{2} \Tr \qty[\qty(\rho x + x \rho) \bar{\Theta}] = \Re \Tr (\rho X \Theta)
+  \frac{1}{2} \Tr \qty[\qty(\rho L + L \rho) \bar{\Theta}] = \Re \Tr (\rho L \bar\Theta)
 \end{equation}
 
-and we can take this equation in absolute value. Then,
+Where we separated the two parts by linearity, and to express them both in terms of \(\rho L \bar\Theta\) we took the adjunct of the second and applied the trace cyclic identity.
+Now we can take this equation in absolute value:
 
 \begin{equation}
-  1 \leq \abs{\Tr (\rho X \bar{\Theta})}^{2} = \abs{\braket{X}{\bar{\Theta}}}^{2}_{\rho}
+  1 \leq \abs{\Tr (\rho L \bar{\Theta})}^{2} = \abs{\expval{L \bar\Theta}_{\rho} }^{2}
 \end{equation}
 
-And like before
+And like before we can use the Cauchy-Schwarz inequality wrt the inner product defined by: \(\expval{a, b}_\rho = \Tr (\rho ab) \).
 
 \begin{equation}
-  1 \leq \norm{X}^{2} _{\rho}  \norm{\bar{\Theta}}^{2} _{\rho}
-  = \Tr (\rho X^2 ) Tr(\rho (\Theta - \theta)^2)
+  1 \leq \norm{L}^{2} _{\rho}  \norm{\bar{\Theta}}^{2} _{\rho}
+  = \Tr (\rho L^2 ) Tr(\rho (\bar\Theta - \theta)^2)
 \end{equation}
 
-so then \( \var{\Theta} \geq 1/F_Q \).
+so then \( \var{\bar\Theta} \geq 1/F_Q \) if we define \(F_Q = \Tr (\rho L^2)\).
 
-\textbf{Claim}: take \( \rho = \sum_i \ketbra{i} \), then \( X _{ij} = 2\bra{i}\rho' \ket{j}/\qty(p_i + p_j) \).
+\begin{claim}
+Take \( \rho = \sum_i p_i \ketbra{i} \), then \( L _{ij} = 2\bra{i}\rho' \ket{j}/\qty(p_i + p_j) \).
+\end{claim}
+
+\begin{bluebox}
+  \begin{proof}
+      We take the components of \(\frac[i]{1}{2} (\rho L + L \rho) = \rho' \) in the eigenbasis of \(\rho\):
+
+      \begin{subequations}
+      \begin{align}
+        \frac{1}{2} \bra{i} \qty(\rho L + L \rho) \ket{j}  &= \bra{i} \rho' \ket{j}  \\
+         \bra{i} \rho L \ket{j} + \bra{i} L \rho \ket{j} &= 2  \bra{i} \rho' \ket{j} \\
+         p_i \bra{i} L \ket{j} + p_j \bra{i} L \ket{j} &= 2  \bra{i} \rho' \ket{j}
+      \end{align}
+      \end{subequations}
+
+      from which the result follows.
+  \end{proof}
+\end{bluebox}
 
 So we can compute
 
 \begin{align}
-  F_Q &= \Tr(\rho X^2) = \sum_i p_i \ev{X^2}{i}  \\
-  &= \sum _{ij} p_i \bra{i} X \ketbra{j} X \ket{i}  \\
+  F_Q &= \Tr(\rho L^2) = \sum_i p_i \ev{L^2}{i}  \\
+  &= \sum _{ij} p_i \bra{i} L \ketbra{j} L \ket{i}  \\
   &= \sum _{ij} p_i \frac{2}{p_i + p_j} \bra{i} \rho' \ketbra{j} \rho' \ket{i} \frac{2}{p_i + p_j}  \\
-  &= 2 \sum _{ij} \frac{\abs{\bra{i} \rho' \ket{j}}^2 }{p_i + p_j}
+  &= 2 \sum _{ij} \frac{\abs{\bra{i} \rho' \ket{j}}^2 }{(p_i + p_j)^2}
 \end{align}
 
 This is Quantum Fischer. It really is the result of \emph{classical} optimization.
@@ -3006,12 +3034,16 @@ Take \( \rho_\theta = \ketbra{\psi_\theta} \) gound-eigenstate of a many-body sy
 where \( \psi' = \partial_\theta \psi \). This is a way to solve the Lyapunov equation \( L_\theta (\rho) = \rho' \).
 
 \( \Pi = \ketbra{\psi} \). Then \(\Pi ^2 = \Pi\), we differentiate it.
-So \( \Pi' \Pi + \Pi \Pi' = \Pi' \): in the pure state case, the solution is then just \( \Pi ' = X \).
+So \( \Pi' \Pi + \Pi \Pi' = \Pi' \): in the pure state case, the solution is then just \( \Pi ' = L \).
 
-\textbf{Claim}: we can calculate  \( F_Q =  \Tr \qty(\rho \qty(\rho')^2)\)...
 
-\begin{greenbox}
-  \textbf{Proof}
+\begin{claim}
+We can calculate  \( F_Q =  \Tr \qty(\rho \qty(\rho')^2)\)...
+\end{claim}
+
+\begin{bluebox}
+\begin{proof}
+
   The derivative of \( \rho \) is \( \rho' = \ketbra{\psi}{\psi'} + \ketbra{\psi'}{\psi} \).
   We also know, by differentiating \(1 = \braket{\psi}{\psi} \), that \(\braket{\psi}{\psi'} = - \braket{\psi'}{\psi} \). Therefore \(\braket{\psi}{\psi'} = s\) is purely imaginary, \(s = -s^*\).
 
@@ -3036,6 +3068,7 @@ So \( \Pi' \Pi + \Pi \Pi' = \Pi' \): in the pure state case, the solution is the
 
 since \(s^2 \) must be real and negative.
 
-\end{greenbox}
+\end{proof}
+\end{bluebox}
 
 \end{document}

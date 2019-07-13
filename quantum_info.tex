@@ -2922,7 +2922,9 @@ We prove a super-famous bound. Differentiate the previous equation wrt \( \theta
   The axioms for a real scalar product are symmetry, linearity, and positive definiteness. The first two come from the properties of the regular product \(fg\); the interesting one to prove is the third. It is true since \(p_ \theta \geq 0\), and then \(\forall f: \int  p_ \theta f^2  \dd{x} \geq 0 \), also (modulo equality almost everywhere) \(\braket{f}{f}=0 \iff f=0\).
 \end{greenbox}
 
-We can subtract \( \theta \) from \(\Theta \rightarrow \overline{\Theta} = \Theta - \theta \) leaving the result unchanged, since it holds for any estimator: we restrict ourselves to \emph{unbiased} ones.
+We can subtract \( \theta \) from \(\Theta \rightarrow \overline{\Theta} = \Theta - \theta \) leaving the result unchanged, since it holds for any estimator: we restrict ourselves to \emph{zero-mean} ones. This amounts to shifting the \(x\) variable, an operation which leaves the scalar product unchanged.
+We do this because we will get a lower bound on the  of the integral of the square of \(\Theta\), which is larger than the variance in general but equal to it in the zero mean case, so we want the tightest bound.
+
 
 % When differentiting in  \eqref{eq:classical-crao-start} the additional terms are
 %
@@ -2938,7 +2940,7 @@ We can subtract \( \theta \) from \(\Theta \rightarrow \overline{\Theta} = \Thet
   &= F \var{\Theta}
 \end{align}
 
-Where \( F \) is just the Fischer metric. (To check: \( \bar{\Theta} = \Theta - \theta \) )
+Where \( F \) is just the Fischer metric. %(To check: \( \bar{\Theta} = \Theta - \theta \) )
 
 But this means \(\var{\Theta} \geq F ^{-1} \): this is the \emph{Cramer-Rao} inequality.
 

@@ -2806,48 +2806,46 @@ We define the distance
     prove-the-triangle-inequality-on-the-sphere-s2-in-mathbbr3/1925049}}
 \end{proof}
 
-\paragraph{Quantize it!}
+\subparagraph{Quantize it!}
 
 We have a POVM \(\mathbb{E} = \qty{E_i}\), and two probability distributions  \(\rho\) and \(\sigma\).
-We can define the probability vector
+We can define the probability vectors
 
 \begin{equation}
-  P_{\rho i} \defeq \Tr (E_i \rho)
+  P_{\rho, i} \defeq \Tr (E_i \rho)
+  \qquad
+  P_{\sigma, i} \defeq \Tr (E_i \sigma)
 \end{equation}
 
-and similarly for \(\sigma\).
-
-The Bhattacharyya distance is
+and apply the Bhattacharyya distance to them:
 
 \begin{equation}
-  d_B (\rho, \sigma) = \sup _\mathbb{E} d_B\qty(\vec{P_\rho} \cdot \vec{P_\sigma})
+  d_B (\rho, \sigma) = \sup _\mathbb{E} d_B\qty(\vec{P_\rho}, \vec{P_\sigma})
 \end{equation}
-
 
 \begin{claim}
-    In the pure state case, where \(\rho = \ketbra{\phi}\), \(\sigma = \ketbra{\psi}\).
+    In the pure state case, where \(\rho = \ketbra{\phi}\), \(\sigma = \ketbra{\psi}\):
     \begin{equation}
         d_B (\rho, \sigma) = \cos^{-1} \abs{\braket{\phi}{\psi}}
     \end{equation}
 \end{claim}
 
-This is the Fubini-Study metric over a projective Hilbert space.
-
-We can generalize this to differential geometry.
+This is the \emph{Fubini-Study metric} over a projective Hilbert space.
 
 \begin{proof}
 
-This is useful because it shows us technicques, tools.
-
-We have these \( E _{i}  \) from the POVM.
-
+Proving this is useful because it shows us techniques, tools.
 We wish to prove
 
 \begin{equation}
   \cos ^{-1} \abs{\braket{\phi}{\psi}}
-  = \cos ^{-1} \qty(\sqrt{p_i ^{\mathbb{E}} (\phi)} \sqrt{p_i(\psi)^{\mathbb{E}}})
+  = \sup_{\mathbb E}
+  \cos ^{-1} \qty(\sum_i \sqrt{p_i ^{\mathbb{E}} (\phi)} \sqrt{p_i(\psi)^{\mathbb{E}}})
 \end{equation}
 
+We can derive an inequality for the arguments of the arccosines:
+
+\begin{subequations}
 \begin{align}
   \abs{\braket{\phi}{\psi}} &= \abs{\sum_i \bra{\phi} E_i \ket{\psi}}  \\
   &\leq \sum_i \abs{\bra{\phi} \sqrt{E _{i} } \sqrt{E _{i}} \ket{\psi}}  \\
@@ -2856,8 +2854,9 @@ We wish to prove
   &= \sum_i \sqrt{\ev{E_i}{\phi}} \sqrt{\ev{E_i}{\psi}}  \\
   &= \sum_i \sqrt{p_i ^{\mathbb{E}} (\phi)} \sqrt{p_i(\psi)^{\mathbb{E}}}
 \end{align}
+\end{subequations}
 
-so we just apply the \( \cos ^{-1} \) to both sides.
+so we just apply the \( \cos ^{-1} \) to both sides. We have the inequality, but is it actually reached? We can take
 
 \begin{equation}
   \mathbb{E} = \qty{\ketbra{\phi} | , \qty{\ketbra{\phi_i}} \text{span } \ketbra{\phi}^{\perp}}
@@ -2868,15 +2867,16 @@ so the first term just gives us the upper bound, the other terms in the sum are 
 
 \paragraph{Infinitesimal distance}
 
-What is \( \dd _{B} \qty(\vec{p} , \vec{p} + \dd{\vec{p}}) \)?
+What is the expression of our line element  \(\dd{s} =  \dd _{B} \qty(\vec{p} , \vec{p} + \dd{\vec{p}}) \)? Recall \(\sqrt{1-x} \sim 1 - x/2 -x^2/8\):
 
 \begin{align}
-  \cos ^{-1} \qty{\sum_i \sqrt{p_i(p_i + \dd{p}_i)}}
-  &= \cos ^{-1} \qty{\sum_i p_i \sqrt{1 + \frac{\dd{p}_i }{p_i}}}  \\
-  &\sim \cos ^{-1} \qty(\sum_i p_i \qty(1 + \underbrace{\cancelto{0}{\frac{1}{2} \frac{\dd{p}_i}{p_i}}}_{\substack{\text{The probabilities}\\ \text{are normalized}}}     - \frac{1}{8} \qty(\frac{\dd{p_i}}{p_i})^{2} ))
+  \cos ^{-1} \qty(\sum_i \sqrt{p_i(p_i + \dd{p}_i)})
+  &= \cos ^{-1} \qty(\sum_i p_i \sqrt{1 + \frac{\dd{p}_i }{p_i}})  \\
+  &\sim \cos ^{-1} \qty(\sum_i p_i \qty(1 - \cancelto{0}{\frac{1}{2} \frac{\dd{p}_i}{p_i}}
+  - \frac{1}{8} \qty(\frac{\dd{p_i}}{p_i})^{2} ))
 \end{align}
 
-but the term \( \sum_i \dd{p}_i \) vanishes, so we have
+since the terms proportional to \( \sum_i \dd{p}_i \) must vanish for the normalization to be preserved, so we have
 
 \begin{equation}
   \cos \dd{s} = 1 - \frac{1}{8}\frac{\dd{p}_i ^{2} }{p_i}
@@ -2888,9 +2888,11 @@ but \( \cos \dd{s} \sim 1 - 1/2 \dd{s}^{2} _{B}  \), so
   \dd{s}^{2}_{B}  = \frac{1}{4} \sum_i  \frac{\qty(\dd{p}_i)^{2} }{p_i}
 \end{equation}
 
-This is the \emph{Fisher metric}. More differential-geometry-like: take some \( \lambda \in \mathcal{M} = \qty{\text{manifold of control parameters of dimension N}} \), such that \( p_i = p_i(\lambda) \) and  \( \dd{p}_i = \sum_\mu (\partial_\mu p_i) \dd{\lambda_\mu} \).
+This is the \emph{Fisher metric}.
 
-Then
+Take some \( \lambda \in \mathcal{M} = \qty{\text{manifold of control parameters of dimension N}} \), such that \( p_i = p_i(\lambda) \) and  \( \dd{p}_i = \sum_\mu (\partial_\mu p_i) \dd{\lambda_\mu} \).
+
+Then we can write the expression for the metric directly on the parameter manifold:
 
 \begin{equation}
   g _{\mu \nu} = \frac{1}{4} \sum_i \frac{(\partial_\mu p_i)(\partial_\nu p_i)}{p_i}

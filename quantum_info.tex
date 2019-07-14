@@ -1017,7 +1017,7 @@ therefore \(\abs{r'} \leq 1\): the image of the unit sphere is contained in the 
 \end{proof}
 \end{bluebox}
 
-We can write explicit expressions for \(M\) and \(c\):
+We can write explicit equations for \(M\) and \(c\):
 
 \begin{subequations}
 \begin{align}
@@ -2903,7 +2903,7 @@ Then we can write the expression for the metric directly on the parameter manifo
   \dd{s}_B ^2 = g _{\mu \nu} \dd{\lambda}_\mu \dd{\lambda}_\nu
 \end{equation}
 
-\section{Parameter estimation}
+\subsection{Parameter estimation}
 
 Take a random variable \( x \) distributed according to \(p_\theta (x)\) (a one-parameter distribution, with \(\theta\) as the parameter), and let \(\Theta\) be an estimator for the parameter \(\theta\): then \( \expval{\Theta} = \theta = \int  p_\theta(x) \Theta(x) \dd{x}  \).
 
@@ -2954,7 +2954,7 @@ in this one parameter case it just has one component. There is a factor-of-four 
 
 This means \(\var{\Theta} \geq F ^{-1} \): this is the \emph{Cramer-Rao} inequality.
 
-\subsection{Quantize it!}
+\subparagraph{Quantize it!}
 
 We would like to repeat the procedure from before, and to express the derivative of \( \Tr (\rho_\theta \hat{\Theta}) = \theta \) as the trace of \(\rho\) times \emph{something}, but it is difficult:
 we could do \( \Tr (\rho_\theta \rho_\theta ^{-1} \rho_\theta ' \hat{\Theta}) = 1 \),
@@ -3074,25 +3074,7 @@ since \(s^2 \) must be real and negative.
 
 \subsection{Quantum Fischer metric}
 
-Eravamo arrivati a definire la \textit{quantum Fisher information} \(F^Q\) come:
-
-\begin{align*}
-F^Q \propto \Tr (\rho L^2)
-\end{align*}
-
-dove \(L\) è la derivata logaritmica simmetrica, definita come la soluzione all'equazione di Lyapunov:
-
-\begin{align*}
-\frac{1}{2}\{ L,\rho\} = \rho' = \frac{1}{2}(L\rho + \rho L)
-\end{align*}
-
-Inserendo la rappresentazione spettrale di $\rho$:
-
-\begin{align*}
-\rho = \sum_i p_i \ket{i}\bra{i}
-\end{align*}
-
-Si trova:
+We found:
 
 \begin{align*}
 F^Q \propto \sum_{ij=1}^d \frac{\abs{\bra{i}\rho'\ket{j}}^2}{p_i + p_j} = \sum_{\mathbb{E}} F^{\text{class}}

@@ -2,6 +2,7 @@
 *fdb_latexmk
 *pdf
 !main.pdf
+!figures/*
 *log
 *out
 *aux

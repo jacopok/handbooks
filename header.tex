@@ -1,22 +1,40 @@
+% Permette di scrivere tutti i caratteri unicode senza formule strane
 \usepackage[utf8]{inputenc}
-
 \usepackage{textcomp}
-\usepackage[T1]{fontenc}
 \usepackage{multirow}
 \usepackage{float}
 %\usepackage[caption = false]{subfig}
+
+%Per andare a capo fra pagine con le tabelle
 \usepackage{longtable}
+
+%Per inserire codice
 \usepackage{listings}
+
+%Cose di matematica
 \usepackage{mathtools}
 \usepackage{commath}
+
+%Per fare l'1 bbold della matrice identità
 \usepackage{bbold}
 \usepackage{xcolor}
+
+%Utilissimo per il formalismo della meccanica quantistica, matrici,
+%parentesi che si ridimensionano...
 \usepackage{physics}
+
+%Ridimensiona i margini
 \usepackage[margin=1.8cm]{geometry}
-\usepackage{mdframed}
+
+%Etichette per le sotto-immagini
 \usepackage{caption}
 \usepackage{subcaption}
+
+%Blocchi colorati
+\usepackage{mdframed}
 \allowdisplaybreaks
+
+%
 \numberwithin{equation}{section}
 \usepackage[perpage]{footmisc}
 
@@ -29,7 +47,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{graphicx}
-\usepackage[colorinlistoftodos]{todonotes}
+%\usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
 \usepackage{etoolbox}
 \appto\UrlBreaks{\do\-}
@@ -39,6 +57,16 @@
 \sisetup{separate-uncertainty=true}
 \usepackage{cancel}
 
+%%
+%Comandi per le frazioni semi-inline
+%%
+
+\usepackage{nicefrac}
+\usepackage{ifthen}
+\let\oldfrac\frac
+\renewcommand{\frac}[3][d]{\ifthenelse{\equal{#1}{d}}{\oldfrac{#2}{#3}}{\nicefrac{#2}{#3}}}
+
+%Font bello per la matematica
 \usepackage[sc]{mathpazo}
 \linespread{1.05}         % Palladio needs more leading (space between lines)
 \usepackage[T1]{fontenc}
@@ -76,10 +104,10 @@
 \newcommand{\hlc}[2]{%
   \colorbox{#1!50}{$\displaystyle#2$}}
 
-\usepackage{nicefrac}
-\usepackage{ifthen}
-\let\oldfrac\frac
-\renewcommand{\frac}[3][d]{\ifthenelse{\equal{#1}{d}}{\oldfrac{#2}{#3}}{\nicefrac{#2}{#3}}}
+
+%%
+% Definizione dello stile per l'inclusione di codice
+%%
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}

@@ -3126,16 +3126,16 @@ We can get the Fisher information in the pure state case from the Fubini-Study m
 
 We call the scalar product \(\mathcal{F}=\abs{\braket{\psi}{\phi}}\) which appears as the argument of the arccosine \emph{Fidelity}.
 
-Let us consider two infinitesimally close states, \(\phi = \psi + \Delta\psi\), consider their Fubini-Study distance by \eqref{eq:fubini-study-metric} and invert the arccosine:
+Let us consider two infinitesimally close states, \(\phi = \psi + \Delta\psi(\lambda)\) depending on some near-zero parameter \(\lambda\), consider their Fubini-Study distance by \eqref{eq:fubini-study-metric} and invert the arccosine:
 
 \begin{equation}
 \cos \dd_{FS} = \abs{\braket{\psi}{\psi+\Delta\psi}}
 \end{equation}
 
-We can expand this to second order around \(\dd{s} \sim 0\):
+We can expand this to second order around \(\dd{s} \sim 0\), denoting differentiation wrt  \(\lambda\) with primes:
 
 \begin{equation}
-1-\frac{1}{2} ds^2 = \abs{\braket{\psi}{\psi + \psi'd\lambda + \frac{1}{2}\psi'' d\lambda^2}}
+1-\frac{1}{2} \dd{s}^2 = \abs{\braket{\psi}{\psi + \psi'd\lambda + \frac{1}{2}\psi'' d\lambda^2}}
 \end{equation}
 
 And expand the scalar product by linearity:

@@ -226,9 +226,7 @@ and in general \(\braket{\psi}{\varphi} \neq 0,\pm 1\), so we found a contradict
   Alternative proof: apply \(U (\ket{x} + \ket{y}) \otimes \ket{0} = (\ket{x} + \ket{y}) ^{\otimes 2} \) (a separable state), but \(U\) must be linear, so \(U (\ket{x} + \ket{y}) \otimes \ket{0} = \ket{x} \ket{x} + \ket{y} \ket{y} \), generally an entangled state.
 \end{bluebox}
 
-\section{Miscellaneous concepts}
-
-\subsection{Algorithmic complexity}
+\section{Algorithmic complexity}
 
 We can distinguish algorithms by how many resources (computation time, RAM, ...) they require:
 
@@ -243,7 +241,7 @@ We can distinguish algorithms by how many resources (computation time, RAM, ...)
 
 Surely \(P \subseteq BPP \subseteq BQP\). We are not sure whether \(BQP \subseteq BPP\).
 
-\subsection{Fidelity}
+\section{Fidelity}
 
 We introduce a notion of distance between states:
 
@@ -522,6 +520,8 @@ We can combine the results into
 
 \section{Implementation of quantum gates}
 
+\subsection{NOT gate}
+
 We want to implement a NOT gate (\(\sigma_x\)): we use a spin-$1/2$ particle, and two magnetic fields described by  a Hamiltonian
 
 \begin{equation}
@@ -530,9 +530,272 @@ We want to implement a NOT gate (\(\sigma_x\)): we use a spin-$1/2$ particle, an
 
 So the zeroth field is fixed on \(z\), while the other rotates around the \(z\) axis staying on the \(xy\) plane.
 
-\begin{greenbox}
-  TODO
-\end{greenbox}
+Let us write the time-dependent Schrödinger equation for a state \(\ket\psi = \alpha \ket{0} + \beta \ket{1}\), applying the Euler identity to the sines and cosines:
+
+\begin{equation}
+    i \hbar \pdv{}{t} \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}
+    = - \mu
+    \begin{bmatrix}
+    B_0   & B_1 e^{-i \omega t} \\
+    B_1 e^{i \omega t}   & -B_0
+    \end{bmatrix}
+    \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}
+\end{equation}
+
+we can rewrite this introducing the characteristic angular velocities of the two magnetic fields:
+
+\begin{equation}
+    \omega_0 = -\frac{2 \mu B_0}{\hbar}
+    \qquad
+    \text{and}
+    \qquad
+    \omega_1 = -\frac{2 \mu B_1}{\hbar}
+\end{equation}
+
+where we arbitrarily introduced a factor of 2 to make calculations simpler later.
+
+\begin{equation}
+    i \pdv{}{t} \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    \frac{\omega_0}{2} \alpha   + \frac{\omega_1}{2} e^{-i \omega t} \beta \\
+    \frac{\omega_1}{2} e^{i \omega t} \alpha   -\frac{\omega_0}{2} \beta
+    \end{bmatrix}
+\end{equation}
+
+Now, we want to simplify the \(\omega\) exponentials: so, we use the rotation matrix \(R_z(\omega t)\) (expressed with a global phase to simplify calculations) to change variables into
+
+\begin{equation}
+    \begin{bmatrix}
+    a \\
+    b
+    \end{bmatrix}=
+    \begin{bmatrix}
+    e^{i \omega t/2}   & 0 \\
+     0  & e^{-i \omega t/2}
+    \end{bmatrix}
+    \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}
+\end{equation}
+
+This is a spin rotation matrix: we go from the eigenstates of \(\sigma_z\) to those of a spin operator aligned with the vector \((B_1 \cos(\omega t), B_1 \sin(\omega t),  B_0)\).
+We also need to express the derivatives of \(\alpha\) and \(\beta\), since this is a time-dependent change of variables it will be non-trivial.
+
+\begin{equation}
+    \pdv{}{t}
+    \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}=
+    \begin{bmatrix}
+    e^{-i \omega t/2}   & 0 \\
+     0  & e^{i \omega t/2}
+    \end{bmatrix}
+    \pdv{}{t}
+    \begin{bmatrix}
+    a \\
+    b
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+    \qty(-i \omega /2)e^{-i \omega t/2}   & 0 \\
+     0  & \qty(+i \omega /2) e^{i \omega t/2}
+    \end{bmatrix}
+    \begin{bmatrix}
+    a \\
+    b
+    \end{bmatrix}
+\end{equation}
+
+If we substitute this in, bringing all the terms without time derivatives on the right hand side, we get:
+
+\begin{equation}
+    i \begin{bmatrix}
+    e^{-i \omega t/2} \dot{a} \\
+    e^{i \omega t/2} \dot{b}
+    \end{bmatrix}
+    =
+    -i
+    \begin{bmatrix}
+    \qty(-i \omega /2) e^{-i \omega t / 2} a \\
+    \qty(+i \omega /2) e^{+i \omega t / 2} b
+    \end{bmatrix}
+    + \frac{1}{2}
+    \begin{bmatrix}
+    \omega_0 e^{-i \omega t / 2} a + \omega_1 e^{-i \omega t /2} b \\
+    \omega_1 e^{i \omega t /2 } b - \omega_0 e^{i \omega t/2} b
+    \end{bmatrix}
+\end{equation}
+
+Notice that both equations are multiplied by an exponential, which we can simplify.
+
+\begin{equation}
+    i \begin{bmatrix}
+    \dot{a} \\
+    \dot{b}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    \qty(- \omega /2)  a \\
+    \qty(+ \omega /2)  b
+    \end{bmatrix}
+    + \frac{1}{2}
+    \begin{bmatrix}
+    \omega_0  a + \omega_1  b \\
+    \omega_1  b - \omega_0  b
+    \end{bmatrix}
+    = \frac{1}{2}
+    \begin{bmatrix}
+      \omega_0 - \omega & \omega_1 \\
+      \omega_1 & -( \omega_0 - \omega)
+    \end{bmatrix}
+    \begin{bmatrix}
+    a \\
+    b
+    \end{bmatrix}
+\end{equation}
+
+We can express this as a Schrödinger equation with a Hamiltonian
+
+\begin{equation}
+    \widetilde{H} = \frac{\hbar}{2}  \begin{bmatrix}
+      \omega_0 - \omega & \omega_1 \\
+      \omega_1 & -( \omega_0 - \omega)
+    \end{bmatrix}
+    = R_z (\omega t) H R_z(-\omega t)
+\end{equation}
+
+So to study the time evolution of the starting system we just need to diagonalize \(\widetilde{H} \). Its eigenvalues are \(E_{1, 2} = \pm \hbar/2 \sqrt{(\omega_0 - \omega)^2 + \omega_1^2} \defeq \hbar \omega_i/2\) (the notation conflict in the definitions of \(\omega_1\) may be confusing but I only use this notation once). The eigenvectors are the generators of \(\ker (\widetilde{H} - E_i \id)\): the ratios of their components are
+
+\begin{equation}
+    \frac{b}{a} = \frac{\omega_i - (\omega_0 - \omega)}{\omega_1}
+    = \frac{\pm  \sqrt{(\omega_0 - \omega)^2 + \omega_1^2} - (\omega_0 - \omega)}{\omega_1}
+\end{equation}
+
+We call \(\omega_1 / (\omega_0 - \omega) = \tan(\theta) \). Then:
+
+\begin{subequations}
+\begin{align}
+    \frac{b}{a} &= \pm \sqrt{1 + \frac{1}{\tan^2(\theta)}} - \frac{1}{\tan(\theta)} \\
+    \frac{b}{a} \tan(\theta)  &= \pm \sqrt{1 + \tan^2(\theta)} - 1
+    = \pm \frac{1}{\cos(\theta)} - 1 \\
+    \frac{b}{a} \sin(\theta)  &= \pm 1 - \cos(\theta)  \\
+    \frac{b}{a} &= \tan(\theta/2) \qquad \text{or} \qquad
+    \frac{b}{a} = - \frac{1}{\tan(\theta/2) }
+    \label{eq:step-notgate-halfangles}
+\end{align}
+\end{subequations}
+
+To get step \eqref{eq:step-notgate-halfangles} we used the identities \(\sin^2(\theta/2) = \qty(1- \cos(\theta) )/2 \), \(\cos^2(\theta/2) = \qty(1 + \cos(\theta) )/2 \) and \(\sin(\theta) = 2 \sin(\theta/2) \cos(\theta/2) \).
+
+Now, what we want to look at is the probability of a transition \(\bra{1} U(t) \ket{0}\) (and vice versa, but there is symmetry and we just need to calculate this one).
+
+Making the relation in \eqref{eq:step-notgate-halfangles} explicit, our eigenfunctions are
+
+\begin{equation}
+    \ket{E_1} = \begin{bmatrix}
+    \cos(\theta/2) \\
+    \sin(\theta/2)
+    \end{bmatrix}
+    \qquad
+    \text{and}
+    \qquad
+    \ket{E_2} = \begin{bmatrix}
+    -\sin(\theta/2)  \\
+    \cos(\theta/2)
+\end{bmatrix}
+\end{equation}
+
+We express \(\ket{0} \) and \(\ket{1} \) in this basis: \(\ket{0} = \cos(\theta/2) \ket{E_1} - \sin(\theta/2) \ket{E_2} \), \(\ket{1} = \sin(\theta/2) \ket{E_1} + \cos(\theta/2) \ket{E_2} \). Then we can readily apply the evolution operator \(U(t) = \sum_i \exp(E_i t / (i \hbar)) \dyad{E_i}  \):
+
+\begin{equation}
+    U(t) \ket{0} =  \cos(\theta/2) \exp(\frac{E_1 t}{i \hbar})  \ket{E_1}
+    - \sin(\theta/2) \exp(\frac{E_2 t}{i \hbar}) \ket{E_2}
+\end{equation}
+
+and the desired transition probability is \(\bra{1} U(t) \ket{0}\):
+
+\begin{subequations}
+\begin{align}
+    &\qty(\sin(\theta/2) \bra{E_1} + \cos(\theta/2) \bra{E_2})
+    \qty(\cos(\theta/2) \exp(\frac{E_1 t}{i \hbar})  \ket{E_1}
+    - \sin(\theta/2) \exp(\frac{E_2 t}{i \hbar}) \ket{E_2}) \\
+    &= \sin(\theta/2) \cos(\theta/2)   \qty(
+    \exp(\frac{E_1 t}{i \hbar}) - \exp(\frac{E_2 t}{i \hbar})
+    )
+\end{align}
+\end{subequations}
+
+Then, we can compute the transition probability as \(\P = \abs{\bra{1} U(t) \ket{0} }^2 \). Recall \(\sin(\arctan \theta) = x / \sqrt{1 + x^2}  \): for the first part we have
+
+\begin{equation}
+    \abs{\sin(\theta/2) \cos(\theta/2)  }^2  =
+    \frac{1}{4} \abs{\sin(\arctan(\frac{\omega_1}{\omega_0 - \omega}))}^2  =
+    \frac{1}{4} \frac{\omega_1^2}{(\omega_0 - \omega)^2 + \omega_1^2}
+\end{equation}
+
+for the exponentials, let us call \(E_i = \pm x \hbar/2 \) with \(x = \sqrt{(\omega_0 - \omega)^2 + \omega_1^2} \).
+
+\begin{equation}
+    \abs{\exp(\frac{x t}{2i}) - \exp(\frac{-xt}{2i})}^2
+    = 4 \abs{\sin(\frac{xt}{2}) }^2
+\end{equation}
+
+So, in the end we get
+
+\begin{equation}
+    \P =
+    \frac{4}{4}
+    \frac{\omega_1^2}{(\omega_0 - \omega)^2 + \omega_1^2}
+    \sin^2\qty(\frac{t}{2} \sqrt{(\omega_0 - \omega)^2 + \omega_1^2})
+\end{equation}
+
+Now, recall that the magnetic fields are under our control: we can change \(\omega_{0,1}\)
+as we wish. So, if we set \(\omega_0=\omega\) we get
+
+\begin{equation}
+    \P = \sin^2\qty(\frac{t}{2} \sqrt{(\omega_0 - \omega)^2 + \omega_1^2})
+\end{equation}
+
+therefore our NOT gate is: turn on the magnetic fields and wait for a time such that
+
+\begin{equation}
+    \frac{t}{2} \sqrt{(\omega_0 - \omega)^2 + \omega_1^2} = \frac{\pi}{2}
+\end{equation}
+
+\subsection{CNOT gate}
+
+We start with a two-system Hamiltonian like
+
+\begin{equation}
+    H = -B_0\qty(\mu_1 \sigma_1^z \otimes \id_2 + \mu_2 \id_1 \otimes \sigma_2^z) + J \sigma_1^z \otimes \sigma_2^z
+\end{equation}
+
+this is already diagonal, and looks like:
+
+\begin{equation}
+    H = \begin{bmatrix}
+    -B_0(\mu_1+\mu_2) + J   &   &   &  \\
+       & -B_0(\mu_1-\mu_2) - J &   &  \\
+       &   &  -B_0(-\mu_1+\mu_2) - J &  \\
+       &   &   & -B_0(-\mu_1-\mu_2) + J
+    \end{bmatrix}
+\end{equation}
+
+Now: we can add a sinusoidal perturbation Hamiltonian (say, sending LASER photons with energy \(E = \hbar \omega\)). We want to excite the transitions \(\ket{10} \leftrightarrow \ket{11}  \) but not \(\ket{00} \leftrightarrow \ket{01}  \): the energy needed for the former is \(E_1 = 2(B_0 \mu_2 + J)\), for the latter it is \(E_0 = 2(B_0 \mu_2 - J)\).
+
+So, if we set the laser to \(E = E_1\) and keep it on for the right amount of time we can invert the second qubit \emph{only} if the first is in state \(\ket{1}\).
 
 \section{Density matrices}
 
@@ -904,32 +1167,32 @@ We take the measurement \(P = \id_1 \otimes \dyad{i} _2\).
 We wish to measure a system without disturbing it too much: let us consider a System-Environment couple of qubits, in the initial state \(\ket\psi = \qty(\alpha \ket{0} + \beta \ket{1} )_S \otimes \ket{0} _E = \alpha \ket{00} + \beta \ket{10} \). We apply the gate
 
 \begin{equation}
-    U = (R_z (\theta)_S \otimes \id_E ) \qty(\cos(\theta) \id_{SE} - i \sin(\theta)
+    U = (R_z (-\theta)_S \otimes \id_E ) \qty(\cos(\theta) \id_{SE} - i \sin(\theta)
     \text{C}_S\text{NOT}_E  )
     = \begin{bmatrix}
-    1   &   &   &  \\
-       & 1  &   &  \\
-       &   & e^{i \theta} \cos \theta   & - ie^{i \theta} \sin \theta   \\
-       &   &  - ie^{i \theta} \sin \theta  & e^{i \theta} \cos \theta
+    e^{-i \theta}   &   &   &  \\
+       & e^{-i \theta}  &   &  \\
+       &   & e^{-i \theta} \cos \theta   & - ie^{-i \theta} \sin \theta   \\
+       &   &  - ie^{-i \theta} \sin \theta  & e^{-i \theta} \cos \theta
    \end{bmatrix}
 \end{equation}
 
-\begin{greenbox}
-    (Why is the phase included?)
-\end{greenbox}
+The global phase can be removed. The phases on the bottom square of the matrix come from the rotation, while the ones on the top come from Euler's identity applied to the CNOT.
 
 (\(\theta\) is small).
 The result of the application of this gate to \(\ket{\psi} \) is
 
 \begin{equation}
     U \ket{\psi}
-    = \alpha \ket{00} + \beta e^{i \theta} \qty( \cos(\theta) \ket{10} -i \sin(\theta) \ket{11}  )
+    = \alpha \ket{00} + \beta %e^{i \theta}
+    \qty( \cos(\theta) \ket{10} -i \sin(\theta) \ket{11}  )
 \end{equation}
 
 Now, we measure the environment: we will most likely (with probability \(\sim 1- \abs{\beta}^2 \theta^2 \)) get \(0\): in this case the system is reduced to
 
 \begin{equation}
-    \frac{\alpha \ket{00} + \beta e^{i \theta} \cos(\theta) \ket{10}}
+    \frac{\alpha \ket{00} + \beta % e^{i \theta}
+    \cos(\theta) \ket{10}}
     {\sqrt{\abs{\alpha}^2 + \abs{\beta \cos(\theta) }^2  } }
 \end{equation}
 

@@ -35,6 +35,16 @@
 \usepackage{mdframed}
 \allowdisplaybreaks
 
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
 %
 \numberwithin{equation}{section}
 \usepackage[perpage]{footmisc}
@@ -105,7 +115,7 @@
 \newenvironment{bluebox}{\begin{mdframed}[hidealllines=true,backgroundcolor=blue!10,innerleftmargin=3pt,innerrightmargin=3pt]}{\end{mdframed}}
 
 \newcommand{\hlc}[2]{%
-  \colorbox{#1!50}{$\displaystyle#2$}}
+  \colorbox{#1!40}{$\displaystyle#2$}}
 
 
 %%

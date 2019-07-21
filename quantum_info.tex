@@ -4,6 +4,7 @@
 \chapter{Quantum Information}
 
 \renewcommand{\contentsname}{\Large Contents}
+\setcounter{tocdepth}{4}
 \tableofcontents
 
 \section{The basics}
@@ -2940,8 +2941,11 @@ We can define our distance to be \(\sup_A{\abs{{\langle A \rangle_{\rho_1} - \la
 
 So our distance is
 
+
 \begin{equation}
+\hlc{teal}{
   d = \sup_{\norm{A}=1} \abs{\Tr \qty[A(\rho_1 - \rho_2)]}
+  }
 \end{equation}
 
 We can put bounds on this norm as such:
@@ -3001,7 +3005,7 @@ We get back the classical case if the matrices commute.
 In that case we can just write \(\rho_1 - \rho_2\) in the common eigenbasis as \(\sum _i (p_{i,1} - p_{i,2}) \dyad{i}\). The result follows.
 \end{proof}
 
-We define \(D(\rho_1, \rho_2) = \frac{1}{2} \norm{\rho_1 - \rho_2}_1\), since the $d$ we used before is upper-bounded by 2, by the triangular inequality.
+We define \(\hlc{teal}{D(\rho_1, \rho_2) = \frac{1}{2} \norm{\rho_1 - \rho_2}_1}\), since the $d$ we used before is upper-bounded by 2, by the triangular inequality.
 
 %"the duals of self-adjoint operators are traceles"?
 
@@ -3058,8 +3062,8 @@ We want them to be normalized in the euclidean metric, so we take the square roo
 We define the distance
 
 \begin{equation}
-  d_B (\vec{p}, \vec{q}) = \cos^{-1} (\vec{V_p} \cdot \vec{V_q})
-  = \cos^{-1} \qty(\sum_i \sqrt{p_i q_i})
+  \hlc{teal}{ d_B (\vec{p}, \vec{q})} = \cos^{-1} (\vec{V_p} \cdot \vec{V_q})
+  \hlc{teal}{ = \cos^{-1} \qty(\sum_i \sqrt{p_i q_i})}
 \end{equation}
 
 \begin{claim}
@@ -3087,13 +3091,17 @@ We can define the probability vectors
 and apply the Bhattacharyya distance to them:
 
 \begin{equation}
+  \hlc{teal}{
   d_B (\rho, \sigma) = \sup _\mathbb{E} d_B\qty(\vec{P_\rho}, \vec{P_\sigma})
+  }
 \end{equation}
 
 \begin{claim}
     In the pure state case, where \(\rho = \ketbra{\phi}\), \(\sigma = \ketbra{\psi}\):
     \begin{equation} \label{eq:fubini-study-metric}
+        \hlc{teal}{
         d_B (\rho, \sigma) = \cos^{-1} \abs{\braket{\phi}{\psi}}
+        }
     \end{equation}
 \end{claim}
 
@@ -3152,7 +3160,9 @@ since the terms proportional to \( \sum_i \dd{p}_i \) must vanish for the normal
 but \( \cos \dd{s} \sim 1 - 1/2 \dd{s}^{2} _{B}  \), so
 
 \begin{equation} \label{eq:fisher-metric}
+  \hlc{teal}{
   \dd{s}^{2}_{B}  = \frac{1}{4} \sum_i  \frac{\qty(\dd{p}_i)^{2} }{p_i}
+  }
 \end{equation}
 
 This is the \emph{Fisher metric}.
@@ -3162,7 +3172,9 @@ Take some \( \lambda \in \mathcal{M} = \qty{\text{manifold of control parameters
 Then we can write the expression for the metric directly on the parameter manifold:
 
 \begin{equation}
+  \hlc{teal}{
   g _{\mu \nu} = \frac{1}{4} \sum_i \frac{(\partial_\mu p_i)(\partial_\nu p_i)}{p_i}
+  }
 \end{equation}
 
 \begin{equation}
@@ -3218,7 +3230,7 @@ in this one parameter case it just has one component. There is a factor-of-four 
     F = \int  p_\theta \frac{(p_\theta ')^2}{p_\theta^2} \dd{x}
 \end{equation}
 
-This means \(\var{\Theta} \geq F ^{-1} \): this is the \emph{Cramer-Rao} inequality.
+This means \(\hlc{teal}{ \var{\Theta} \geq F ^{-1} }\): this is the \emph{Cramer-Rao} inequality.
 
 \subparagraph{Quantize it!}
 
@@ -3251,8 +3263,10 @@ Now we can take this equation in absolute value:
 And like before we can use the Cauchy-Schwarz inequality wrt the inner product defined by: \(\expval{a, b}_\rho = \Tr (\rho ab) \).
 
 \begin{equation}
+  \hlc{teal}{
   1 \leq \norm{L}^{2} _{\rho}  \norm{\bar{\Theta}}^{2} _{\rho}
   = \Tr (\rho L^2 ) Tr(\rho (\bar\Theta - \theta)^2)
+  }
 \end{equation}
 
 so then \( \var{\bar\Theta} \geq 1/F_Q \) if we define \(F_Q = \Tr (\rho L^2)\).
@@ -3685,6 +3699,13 @@ can this get arbitrarily small?
 We can do a contour plot, over the plane \(h, \gamma\). We have three critical lines at \(h = \pm 1\) and \(\gamma = 0\) (as long as \(N \rightarrow \infty\)).
 
 If \(\abs{h} <1\), we have a ferromagnet aligned with the \(x\) or \(y\); if \(\abs{h}>1\) instead we have a paramagnet.
+
+\begin{figure}[H]
+    \centering
+    \incfig{XYmodel}
+    \caption{XY model.}
+    \label{fig:xy-model}
+\end{figure}
 
 There is a coupling between \(k\) and \(-k\).
 

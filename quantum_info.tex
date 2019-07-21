@@ -3292,10 +3292,16 @@ where we define \( \chi_F \),  the fidelity susceptibility.
 \begin{subequations}
 \begin{align}
     F &= \abs{\braket{\psi_0 (\lambda)}{\psi_0(\lambda + \dd{\lambda} )}} \\
-    &\sim 1 - \dd{\lambda^2} \chi_F + \dots \\
-    &\sim \exp(- \dd{\lambda^2} \chi_F (\lambda) + \dots )
+    &\sim 1 - \frac{1}{2}\dd{\lambda^2} \chi_F + \dots \\
+    &\sim \exp(- \frac{1}{2}\dd{\lambda^2} \chi_F (\lambda) + \dots )
 \end{align}
 \end{subequations}
+
+So, \(\chi_F\) can be calculated as
+
+\begin{equation} \label{eq:fidelity-chi-logF}
+    \chi_F = \lim_{\Delta \lambda \rightarrow 0} \frac{-2 \log F}{\Delta \lambda^2}
+\end{equation}
 
 We found \(\chi_F \leq c \xi^d N / \Delta^2\) where \(\xi\) is the correlation length, \(d\) is the number of dimensions and \(\Delta = \min_{n>0} E_n - E_0\), for a gapped and local Hamiltonian (short-range).
 
@@ -3319,7 +3325,10 @@ If we look at \(F\) against \(\lambda\) we see something which is roughly equal 
 \(i\) labels our spin \(1/2\) particles,  \(\mathcal{H}_N \simeq \qty(\C^2)^{\otimes N} \)
 
 \begin{equation} \label{eq:xy-hamiltonian}
-  H_{xy} = -\frac{1}{2} \qty(\sum _{i=1}   ^{N} \frac{1 + \gamma}{2} \sigma_i ^x \sigma_{i+1}^x \frac{1-\gamma}{2} \sigma^y_i \sigma_{i+1}^y - h \sigma_i^{z} )
+  H_{xy} = -\frac{1}{2} \qty(\sum _{i=1}   ^{N}
+  \frac{1 + \gamma}{2} \sigma_i ^x \sigma_{i+1}^x
+  +\frac{1-\gamma}{2} \sigma^y_i \sigma_{i+1}^y
+  - h \sigma_i^{z} )
 \end{equation}
 
 So our parameter is \(\vec{\lambda} = (\gamma, h) \). \(\gamma\) is the anisotropy parameter, differentiating the \(x\) and \(y \) directions, while \(h\) is the magnetic field along the \(z\) direction.
@@ -3380,7 +3389,7 @@ So, the sequence is: spin dof \(\rightarrow\) (JW) Fermi dof \(\rightarrow\) (FT
     H _{xy} = \sum _{k}  \Lambda_k \Omega_k ^\dag \Omega_k + \vec{E_0}
 \end{equation}
 
-Where the \(\Omega\) is the new set of fermionic modes, \(n_k = \Omega_k ^\dag \Omega_k\), \([n_ k, n_{k'}]\). The spectrum then is
+Where the \(\Omega\) is the new set of fermionic modes, \(n_k = \Omega_k ^\dag \Omega_k\), \([n_ k, n_{k'}]=0\) . The spectrum then is
 
 \begin{equation} \label{eq:xy-spectrum}
     \sigma(H _{xy} ) = \qty{\sum _{k}  \Lambda_k n_k + E_0 :  n_k = 0, 1 }
@@ -3419,28 +3428,37 @@ There is a coupling between \(k\) and \(-k\).
 The ground state will be
 
 \begin{equation}
-    \bigotimes _{k>0}\qty( \cos \theta_k \ket{00}_{k, -k} + i \sin \theta_k \ket{11}_{k, -k} )
+    \bigotimes _{k>0}\qty( \cos \frac{\theta_k}{2} \ket{00}_{k, -k} - i \sin \frac{\theta_k}{2} \ket{11}_{k, -k} )
 \end{equation}
 
 where
 
 \begin{equation}
-    \theta_k = \frac{1}{2}\tan ^{-1} \qty(\frac{\gamma \sin (2 \pi k /N)}{h - \cos (2 \pi k /N)})
+    \theta_k = \tan ^{-1} \qty(\frac{\gamma \sin (2 \pi k /N)}{h - \cos (2 \pi k /N)})
 \end{equation}
 
 Now, we move in the parameter space and see how the fidelity looks like.
 
 \begin{equation}
-    F = \abs{\braket{\psi_0 (\lambda)}{\psi_0 (\lambda')} } = \prod _k \abs{\cos(\theta_k - \theta_k ')}
+    F = \abs{\braket{\psi_0 (\lambda)}{\psi_0 (\lambda')} } = \prod _k \abs{\cos(\frac{\theta_k - \theta_k '}{2})}
 \end{equation}
 
-If \(\Delta_k \sim 0\) this becomes
+If \(\Delta_k \theta \sim 0\) this becomes
 
 \begin{equation}
-    F \sim \prod_k \qty(1 - \frac{1}{2} \qty(\Delta \theta_k)^2) = \dots
+    F \sim \prod_k \qty(1 - \frac{1}{2} \qty(\frac{\Delta \theta_k}{2})^2) = \dots
 \end{equation}
 
-We look at the scaling of the metric element \(g _{hh} \), that is, we look at the distance between the eigenstates of Hamiltonians between which we change \(h\) while leaving \(\gamma\) constant. Let us use the shorthands \(S = \sin(2 \pi k /N)\) and \(C = \cos(2 \pi k /N)\)
+We look at the scaling of the metric element \(g _{hh} \), that is, we look at the distance between the eigenstates of Hamiltonians between which we change \(h\) while leaving \(\gamma\) constant. Let us use the shorthands \(S = \sin(2 \pi k /N)\) and \(C = \cos(2 \pi k /N)\).
+
+We will calculate it using equation \eqref{eq:fidelity-chi-logF}:
+
+\begin{equation}
+    -2 \log F \sim -2 \sum_k \log \qty(1 - \frac{1}{2}\qty(\frac{\Delta \theta_k}{2})^2)
+    \sim \sum_k \qty(\frac{\Delta \theta_k}{2})^2
+\end{equation}
+
+So we get for our matrix element, modulo some factors of 2:
 
 \begin{subequations}
 \begin{align}
@@ -3455,7 +3473,7 @@ We can replace the sums with integrals as \(N \rightarrow \infty\). We now call 
 
 \begin{equation}
     \chi_F  \rightarrow \frac{N \gamma }{2 \pi} \int _{0}   ^{\pi} \dd{\widetilde{k}}
-    \qty[\frac{\sin(\widetilde{k} ) }{\qty(1 - \cos(\widetilde{k} ) )^2 + \gamma^2 \sin^2(\widetilde{k} ) }]^2
+    \qty[\frac{\sin(\widetilde{k} ) }{\qty(h - \cos(\widetilde{k} ) )^2 + \gamma^2 \sin^2(\widetilde{k} ) }]^2
 \end{equation}
 
 If there are no singularities, then this is of order \(N\). Let us consider the case \(h = 1\),
@@ -3465,13 +3483,12 @@ as \(\widetilde{k} \rightarrow 0\) we get something of the order
     \frac{N}{\gamma^2 2 \pi } \int   _{k _{\text{min}}} ^{\pi }  \frac{\dd{\widetilde{k} }}{\widetilde{k}^2 }
 \end{equation}
 
-this diverges for \(k _{\text{min}} \rightarrow 0 \), but we can fix it to \(2 \pi / N\), then the leading term becomes
+this diverges for \(k _{\text{min}} \rightarrow 0 \), but \(k_{\text{min}}\) cannot be smaller than \(2 \pi / N\) (this was an implicit condition on our sums from before): then the leading term becomes
 
 \begin{equation}
     \chi_F (h = 1) \sim \frac{N^2}{(2 \pi \gamma)^2}
 \end{equation}
 
-The many-body wavefunction is much more organized, and closed states are very distinguishable.
-
+The many-body wavefunction is much more organized (there is a lot of entanglement), and close states are very distinguishable.
 
 \end{document}

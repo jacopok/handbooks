@@ -278,7 +278,8 @@ We introduce a notion of distance between states:
 It is possible to clone a generic quantum state \(\ket{\psi } = \alpha \ket{0} + \beta \ket{1}  \) assuming we start with two entangled qubits, one in the starting location and one at the destination: so, if these two qubits are called \(A\) and \(B\) and the state we want to transmit is in subsystem \(C\), we start with
 
 \begin{equation}
-    \qty(\frac{\ket{00} + \ket{11} }{\sqrt{2} })_{AB} \otimes \ket{\psi}_C
+    \hlc{teal}{
+    \qty(\frac{\ket{00} + \ket{11} }{\sqrt{2} })_{AB} \otimes \qty(\alpha \ket{0} + \beta \ket{1})_C}
 \end{equation}
 
 The protocol is this:
@@ -304,9 +305,9 @@ The protocol is this:
     \label{tab:teleportation-gate}
 \end{table}
 
-\begin{greenbox}
-  Possibly, when Montangero wrote \(AC=01\) he meant \(A=1\) and \(C=0\).
-\end{greenbox}
+% \begin{greenbox}
+%   Possibly, when Montangero wrote \(AC=01\) he meant \(A=1\) and \(C=0\).
+% \end{greenbox}
 
 We can realize all of this with the gates \(\text{CNOT}\), Hadamard and \(\sigma_z\) (we can recover \(\sigma_x\) as \(\sigma_x = H \sigma_z H\).
 
@@ -376,7 +377,8 @@ So, if in a long time \(t\) we measured \(N\) times, the probability of the syst
 if we fix the inverse of the measurement rate \(\frac[i]{N}{t} = R\) this becomes \(\P \geq x^t = \exp(t \log x) \), with \(x = \qty(1 - \frac[i]{1}{R^2\tau^2})^R\), so \(\log x =  R \log(1- \frac[i]{1}{R^2 \tau^2} ) < 0\). So, we call \(-\log x = \gamma_{\text{eff}}>0 \): then
 
 \begin{equation}
-    \P \geq e^{-\gamma _{\text{eff}} t }
+    \hlc{teal}{
+    \P \geq e^{-\gamma _{\text{eff}} t }}
 \end{equation}
 
 Note that as \(R \rightarrow \infty\), \(\gamma _{\text{eff}} \sim R^{-1}\tau^{-2}\).
@@ -423,7 +425,7 @@ The evolution of this new Hamiltonian will look like
     \exp(-itH) = e^{-tV} \exp(-it \vec{h} \cdot \vec{\sigma} ) = e^{-tV} \qty(\cosh(h t)\mathbb 1 -i \frac{\vec{\sigma} \cdot \vec{h} }{h} \sinh(ht) )
 \end{equation}
 
-where \(h = \sqrt{ V^2 - \Omega^2} \in \R\), since we assume the coupling is strong (\(V \gg \Omega\)).
+where \(h =-i \norm{\vec{h}}= \sqrt{ V^2 - \Omega^2} \in \R\), since we assume the coupling is strong (\(V \gg \Omega\)).
 
 This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \vec{\sigma})^n = \mathbb 1  )\) if \(N\) is odd, \(\vec{n} \cdot \vec{\sigma} \) otherwise: thus we can show that
 
@@ -431,7 +433,7 @@ This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \
     \exp(i \theta (\hat{n} \cdot \sigma )) = \cos(\theta) \id + i (\hat{n} \cdot \sigma) \sin(\theta )
 \end{equation}
 
-So, we can compute \(A = \expval{U} _0\):
+So, we can compute \(A = \expval{U} _0\), using the fact that \(\sigma_z\) is the only ony one of the Pauli matrices with a nonzero expectation value on \(\ket{0}\):
 
 \begin{equation}
     A = \frac{1}{2} \qty(1 + \frac{V}{h})e^{-(V-h)t}+
@@ -466,7 +468,8 @@ We will have \(A \sim 1 -V \delta t + O(\delta t^2)\), so \(\P  \sim 1 - 2V \del
 We consider a system and its environment together:
 
 \begin{equation}
-    H = \underbrace{\Omega \sigma_x}_{\substack{\text{system}}}  + \underbrace{\int   \dd{\omega} \dyad{\omega}}_{\substack{\text{environment}}} + \underbrace{\sqrt{\frac{\Gamma}{2 \pi}} \int   \dd{\omega} g(\omega) \qty(\ketbra{-}{\omega} + \ketbra{\omega}{-}  )  }_{\substack{\text{interaction}}}
+    H = \underbrace{\Omega \sigma_x}_{\substack{\text{system}}}  + \underbrace{\int   \dd{\omega} \dyad{\omega}}_{\substack{\text{environment}}} + \underbrace{\sqrt{\frac{\Gamma}{2 \pi}} \int   \dd{\omega} %g(\omega)
+    \qty(\ketbra{+}{\omega} + \ketbra{\omega}{+}  )  }_{\substack{\text{interaction}}}
 \end{equation}
 
 Where \(\sigma_x\) is meant to be in the \(\ket{-}, \ket{+}  \) basis. Now, let us take a generic state \(\ket{\psi } = x(t) \ket{-} + y(t) \ket{+} + \int \dd{\omega} z(\omega, t) \ket{\omega} \).
@@ -483,7 +486,7 @@ The system so solve can be separated into
 \end{align}
 \end{subequations}
 
-In can be readiliy verified that, with starting conditions \(x=1\), \(y=z=0\), we have
+In can be readily verified that, with starting conditions \(x=1\), \(y=z=0\), we have
 
 \begin{equation}
     z(\omega, t) = -i \sqrt{\frac{\Gamma}{2 \pi}} \int _{0}   ^{t} \dd{\tau} y(\tau) e^{-i \omega (t-\tau)}
@@ -1142,7 +1145,7 @@ The evolution of \(\rho\) is \( \sum _{k, m}  E_k \ket{\psi}_1 \ket{k} _2
 \end{proof}
 
 \begin{claim}
-Evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement is equivalent to a generalized measurement on subsystem 1.
+Evolving \(\ket{\psi} \ket{0} \) according to \(U\) and then taking a projective measurement of subsystem 2 is equivalent to a generalized measurement on subsystem 1.
 \end{claim}
 
 \begin{proof}
@@ -1269,7 +1272,7 @@ This can be readily seen by noticing that:
 Now, to see that it is a contraction recall that \(\Tr \rho^2 \leq 1\). We will apply the formula:
 
 \begin{equation}
-(\vec{a} \cdot \vec{\sigma}) (\vec{b} \cdot \vec{\sigma}) = (\vec{a} \cdot \vec{b}) \id  + i (\vec{a} \wedge \vec{b}) \cdot \vec{\sigma})
+(\vec{a} \cdot \vec{\sigma}) (\vec{b} \cdot \vec{\sigma}) = (\vec{a} \cdot \vec{b}) \id  + i (\vec{a} \wedge \vec{b}) \cdot \vec{\sigma}
 \end{equation}
 
 So then:
@@ -1833,7 +1836,8 @@ We can define the entropy of a mixed state \(\rho\) as
 \begin{enumerate}
     \item For pure states we have \(S_V (\dyad{\psi} ) = 0\);
     \item \(S_V\) is invariant wrt unitary transformations;
-    \item \(0 \leq S_V \leq \dim \mathcal H\).\footnote{Since \(\prod_{i=1}^{N} p_i^{-p_i} \leq N\).}
+    \item \(0 \leq S_V \leq \dim \mathcal H\);\footnote{Since \(\prod_{i=1}^{N} p_i^{-p_i} \leq N\).}
+    \item \(S_V \leq H\): the Von Neumann entropy is always less than or equal to the classical one.
 \end{enumerate}
 
 \paragraph{Quantum Noiseless coding: Schumacher's theorem}
@@ -1872,7 +1876,7 @@ We can define
     E_F (\rho) = \min \sum_i p_i S_V(\rho_A^i)
 \end{equation}
 
-where the minimum is to be taken over all the possible decompositions \(\rho = \sum _{i}  p_i \dyad{\psi_i}\) and \(\rho_A^i = \Tr _B (\dyad{\psi_j}) \): so, we pick a decomposition, we trace out the second system and take the entropy.
+where the minimum is to be taken over all the possible decompositions \(\rho = \sum _{i}  p_i \dyad{\psi_i}\) and \(\rho_A^i = \Tr_B (\dyad{\psi_i}) \): so, we pick a decomposition, we trace out the second system and take the entropy.
 
 \paragraph{Concurrence}
 
@@ -1886,7 +1890,7 @@ Where the \(\lambda_i\) are eigenvalues of \( \qty(\rho \sigma_y ^{\otimes 2})^2
 
 \section{Quantum algorithms}
 
-\subsection{Oracle interrogation}
+\subsection{Oracle interrogation: Deutsch–Jozsa algorithm}
 
 We have an oracle function \(f(x): \qty{0,1}^n \rightarrow \qty{0,1}\) which is either \emph{constant} (always gives the same result) or \emph{balanced} (gives 0 for half of its inputs, and 1 for the other half).
 

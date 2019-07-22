@@ -433,7 +433,7 @@ This comes from the fact that for a unit vector \(\vec{n} \): \((\vec{n} \cdot \
     \exp(i \theta (\hat{n} \cdot \sigma )) = \cos(\theta) \id + i (\hat{n} \cdot \sigma) \sin(\theta )
 \end{equation}
 
-So, we can compute \(A = \expval{U} _0\), using the fact that \(\sigma_z\) is the only ony one of the Pauli matrices with a nonzero expectation value on \(\ket{0}\):
+So, we can compute \(A = \expval{U} _0\), using the fact that \(\sigma_z\) is the only  one of the Pauli matrices with a nonzero expectation value on \(\ket{0}\):
 
 \begin{equation}
     A = \frac{1}{2} \qty(1 + \frac{V}{h})e^{-(V-h)t}+
@@ -829,7 +829,7 @@ So, we have defined
     \item \(\Tr \rho^2 \leq 1\)
 \end{enumerate}
 
-These can be deduced from writing the matrix elements \(\rho _{ij} = \bra{i} \rho \bra{j} \) in an ON basis, or by noticing that \(\rho \) is a positively-weighted sum of projectors, each of which is self-adjoint.
+These can be deduced from writing the matrix elements \(\rho _{ij} = \bra{i} \rho \ket{j} \) in an ON basis, or by noticing that \(\rho \) is a positively-weighted sum of projectors, each of which is self-adjoint.
 
 The first one needs the components approach, I think: \(\rho_{ii} = \sum _{ik}  \abs{\braket{\psi_k}{i} }^2 =1 \) since they are the components in a basis of a normalized ket.
 
@@ -1946,13 +1946,13 @@ We do the same thing as before, only with \(n\) qubits: \(\ket{x} = \ket{0}^{\ot
     H ^{\otimes (n+1)} \ket{x} \ket{y} = \frac{1}{2^{(n+1)/2}} \sum _{x=0}   ^{2^n-1} \ket{x}_1 \qty(\ket{0}- \ket{1})_2
 \end{equation}
 
-so after applying the oracle and another Hadamard we get
+so after applying the oracle and another Hadamard set we get
 
 \begin{equation}
-    H \qty(\frac{1}{2^{n/2}} \sum _{x=0}   ^{2^n-1} (-)^{f(x)} \ket{x})
+    H ^{\otimes n} \qty(\frac{1}{2^{n/2}} \sum _{x=0}   ^{2^n-1} (-)^{f(x)} \ket{x})
 \end{equation}
 
-on the first qubit. Now, either \(f(x)\) is constant or it is balanced: if it is constant then this is just \(\ket{0} \). If it is not, then it is orthogonal (since at least one of the bits must be different): so we can just check whether the system is in \(\ket{0} \).
+on the first qubit registry. Now, either \(f(x)\) is constant or it is balanced: if it is constant then this is just \(\ket{0} \). If it is not, then it is orthogonal (since at least one of the bits must be different): so we can just check whether the system is in \(\ket{0} \).
 
 \subsection{Grover}
 
@@ -2551,7 +2551,7 @@ Putting this inside the equation we get
     i \hbar \dot{b}_n(t) = \lambda \sum _k \exp(i \omega_{nk} t) W_{nk} b_k (t)
 \end{equation}
 
-with \(\omega_{nk = (E_n - E_k) / \hbar}\). We can expand the \(b_n(t)\) in \(\lambda\):
+with \(\omega_{nk} = (E_n - E_k) / \hbar\). We can expand the \(b_n(t)\) in \(\lambda\):
 
 \begin{equation}
     b_n(t) = \sum _{i}  b_n ^{(i)} \lambda^i (t)

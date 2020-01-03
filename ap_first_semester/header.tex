@@ -1,203 +1,77 @@
-% Permette di scrivere tutti i caratteri unicode senza formule strane
 \usepackage[utf8]{inputenc}
 
-\usepackage[
-backend=biber,
-style=authoryear,
-sorting=ynt
-]{biblatex}
-
-\makeatletter
-
-\newrobustcmd*{\parentexttrack}[1]{%
-  \begingroup
-  \blx@blxinit
-  \blx@setsfcodes
-  \blx@bibopenparen#1\blx@bibcloseparen
-  \endgroup}
-
-\AtEveryCite{%
-  \let\parentext=\parentexttrack%
-  \let\bibopenparen=\bibopenbracket%
-  \let\bibcloseparen=\bibclosebracket}
-
-  \DeclareCiteCommand{\cite}
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-     \printtext[bibhyperref]{\usebibmacro{cite}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand*{\cite}
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-     \printtext[bibhyperref]{\usebibmacro{citeyear}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand{\parencite}[\mkbibparens]
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-      \printtext[bibhyperref]{\usebibmacro{cite}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand*{\parencite}[\mkbibparens]
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-      \printtext[bibhyperref]{\usebibmacro{citeyear}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand{\footcite}[\mkbibfootnote]
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-    \printtext[bibhyperref]{ \usebibmacro{cite}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand{\footcitetext}[\mkbibfootnotetext]
-    {\usebibmacro{prenote}}
-    {\usebibmacro{citeindex}%
-     \printtext[bibhyperref]{\usebibmacro{cite}}}
-    {\multicitedelim}
-    {\usebibmacro{postnote}}
-
-  \DeclareCiteCommand{\textcite}
-    {\boolfalse{cbx:parens}}
-    {\usebibmacro{citeindex}%
-     \printtext[bibhyperref]{\usebibmacro{textcite}}}
-    {\ifbool{cbx:parens}
-       {\bibcloseparen\global\boolfalse{cbx:parens}}
-       {}%
-     \multicitedelim}
-    {\usebibmacro{textcite:postnote}}
-
-\makeatother
-
-%\addbibresource{bibliography.bib}
-
 \usepackage{textcomp}
+\usepackage[T1]{fontenc}
 \usepackage{multirow}
 \usepackage{float}
-%\usepackage[caption = false]{subfig}
-
-%Per andare a capo fra pagine con le tabelle
+\usepackage[caption = false]{subfig}
 \usepackage{longtable}
-
-%Per inserire codice
 \usepackage{listings}
-
-%Cose di matematica
 \usepackage{mathtools}
+\DeclareMathOperator{\tr}{Tr}
 \usepackage{commath}
-
-%Per fare l'1 bbold della matrice identità
 \usepackage{bbold}
 \usepackage{xcolor}
-
-%Utilissimo per il formalismo della meccanica quantistica, matrici,
-%parentesi che si ridimensionano...
 \usepackage{physics}
-
-
-%Ridimensiona i margini
-\usepackage[margin=1.8cm]{geometry}
-
-%Etichette per le sotto-immagini
-\usepackage{caption}
-\usepackage{subcaption}
-
-%Blocchi colorati
+\usepackage[right=4cm,left=2cm,top=3cm,bottom=3.0cm, marginparwidth=2.7cm, marginparsep=3mm]{geometry}
 \usepackage{mdframed}
-\allowdisplaybreaks
+\usepackage[version=4]{mhchem}
 
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./figures/}{#1.pdf_tex}
-}
-
-%
-\numberwithin{equation}{section}
-\usepackage[perpage]{footmisc}
-
-
-\usepackage{cprotect}
-
-\usepackage{tikz-cd}
+%\usepackage{tikz-cd}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{graphicx}
-%\usepackage[colorinlistoftodos]{todonotes}
-\usepackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
-\usepackage{etoolbox}
-\appto\UrlBreaks{\do\-}
-\usepackage{nameref}
-\usepackage[version=4]{mhchem}
+\usepackage[colorinlistoftodos]{todonotes}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{siunitx}
 \sisetup{separate-uncertainty=true}
+\DeclareSIUnit\erg{erg}
+\DeclareSIUnit\parsec{pc}
 \usepackage{cancel}
+\usepackage{mathrsfs}
+\usepackage{tensor}
+\usepackage{marginnote}
+\renewcommand*{\marginnotevadjust}{-0.3cm}
+\renewcommand*{\marginfont}{\scriptsize}
+% \usepackage{fancybox}
 
-%%
-%Comandi per le frazioni semi-inline
-%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05}         % Palladio needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+
+\newcommand{\diag}[1]{\text{diag}\qty(#1)}
+\newcommand{\const}{\text{const}}
+\newcommand{\sign}{\text{sign}}
+\renewcommand{\H}{\mathcal{H}}
+\renewcommand{\dim}{\text{dim}}
+\newcommand{\supp}[1]{\text{supp} \qty(#1)}
 
 \usepackage{nicefrac}
 \usepackage{ifthen}
 \let\oldfrac\frac
 \renewcommand{\frac}[3][d]{\ifthenelse{\equal{#1}{d}}{\oldfrac{#2}{#3}}{\nicefrac{#2}{#3}}}
 
-%Font bello per la matematica
-\usepackage[sc]{mathpazo}
-\linespread{1.05}         % Palladio needs more leading (space between lines)
-\usepackage[T1]{fontenc}
-
-\usepackage{tocloft}
-
-%\usepackage{minitoc}
-
-
-\newcommand{\diag}[1]{\text{diag}\qty(#1)}
-\newcommand{\const}{\text{const}}
-\newcommand{\sign}[1]{\text{sign}\qty(#1)}
-\renewcommand{\H}{\mathcal{H}}
-\renewcommand{\dim}{\text{dim}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\id}{\mathbb{1}}
-\newcommand{\Z}{\mathbb{Z}}
-\renewcommand{\P}{\mathbb{P}}
-\let\Tr\undefined
-\DeclareMathOperator*{\Tr}{Tr}
-\DeclareMathOperator{\supp}{supp}
-
-\renewcommand{\var}{\text{var}}
+\renewcommand{\var}[1]{\text{var} \qty(#1)}
 \newcommand{\defeq}{\ensuremath{\stackrel{\text{def}}{=}}}
 
 \newcommand\mybox[1]{%
   \fbox{\begin{minipage}{0.9\textwidth}#1\end{minipage}}}
 
-\newtheorem{claim}{Claim}[section]
-
+%Spiegazioni/verifiche
 \newenvironment{greenbox}{\begin{mdframed}[hidealllines=true,backgroundcolor=green!20,innerleftmargin=3pt,innerrightmargin=3pt]}{\end{mdframed}}
 
+%Approfondimenti
 \newenvironment{bluebox}{\begin{mdframed}[hidealllines=true,backgroundcolor=blue!10,innerleftmargin=3pt,innerrightmargin=3pt]}{\end{mdframed}}
 
+\newtheorem{claim}{Claim}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+
 \newcommand{\hlc}[2]{%
-  \colorbox{#1!40}{$\displaystyle#2$}}
-
-
-%%
-% Definizione dello stile per l'inclusione di codice
-%%
+  \colorbox{#1!50}{$\displaystyle#2$}}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -205,30 +79,40 @@ sorting=ynt
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
 }
 
 \lstset{style=mystyle}
+\usepackage{svg}
 
-%% SELECTIVE COMPILING
-% \usepackage{xstring}
-% \newcommand{\thisuser}{DM}
-%
-% \newcommand{\selective}[2]{
-% \IfSubStr{#1}{\thisuser}{#2}{}%
-% }
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+% \pagestyle{empty}
+\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,factor=1100,stretch=10,shrink=10]{microtype}
+
+\newcommand{\boxalign}[2][0.986\textwidth]{
+  \par\noindent\tikzstyle{mybox} = [draw=black,inner sep=6pt]
+  \begin{center}\begin{tikzpicture}
+   \node [mybox] (box){%
+    \begin{minipage}{#1}{\vspace{-5mm}#2}\end{minipage}
+   };
+\end{tikzpicture}\end{center}}
+
+\author{Jacopo Tissino}

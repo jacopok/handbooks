@@ -1,6 +1,145 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
+\paragraph{Length contraction and time dilation}
+
+\begin{align}
+\dd{\tau } = \frac{ \dd{t}}{\gamma } 
+\qquad \text{and} \qquad
+\dd{s} = \gamma \dd{x}
+\,.
+\end{align}
+
+
+
+\paragraph{Energy momentum tensor}
+
+\begin{align}
+\Delta p^{\alpha } = T^{\alpha \beta } n_{\beta } \Delta V
+\,,
+\end{align}
+%
+for non interacting dust 
+%
+\begin{align}
+T^{\alpha \beta } = n_{*} m u^{\alpha } u^{\beta }
+\,.
+\end{align}
+
+
+\paragraph{Variational principle}
+
+The proper time is:
+\(\dd{\tau }^2 = - \dd{s^2} = -\eta_{\mu \nu } \dd{x^{\mu}} \dd{x^{\nu }} \), so the variational principle is 
+%
+\begin{align}
+\delta \qty(\int_{A}^{B} \dd{\tau }) = 0 
+\iff 
+\dv{ u^{\mu}}{\tau} = 0
+\,.
+\end{align}
+
+In general 
+%
+\begin{align}
+u^{\mu } \nabla_{\mu } u^{\nu } = \dv[2]{x^{\nu }}{\tau } 
++ \Gamma^{\mu }_{\alpha \beta } u^{\alpha} u^{\beta }
+\iff 
+\delta \qty(\int_{A}^{B} \dd{\tau }) = 0
+\,,
+\end{align}
+%
+where \(\dd{\tau } = - g_{\mu \nu } \dd{x^{\mu }} \dd{x^{\nu }}\).
+
+Lagrangian view: 
+%
+\begin{align}
+\mathscr{L} = \dv{\tau }{\sigma }= \sqrt{- g_{\mu \nu } \dv{x^{\mu }}{\sigma } \dv{x^{\nu }}{\sigma }}
+\,.
+\end{align}
+
+\paragraph{Light}
+
+The 4-velocity is \emph{defined} as 
+%
+\begin{align}
+k^{\mu } = (\omega , \vec{k})
+\,,
+\end{align}
+%
+with \(\abs{\vec{k}} = \omega \). 
+Doppler effect: the observed frequency is \(-u^{\mu } k_{\mu }\), so observers moving with different velocities see different wavevectors.
+
+\paragraph{Observers}
+
+The measured energy of a particle with \(p^{\mu }\) by an obs with velocity \(u^{\mu }\) is \(E = - u^{\mu } p_{\mu }\). 
+
+\paragraph{Gravitational time dilation}
+
+\begin{align}
+\frac{\Delta \tau _A}{ 1 + \Phi_{A}}
+=\frac{\Delta \tau _B}{ 1 + \Phi_{B}}
+\,,
+\end{align}
+%
+and in the inertial frame \(\Delta t = \Delta \tau \) for both.
+
+\paragraph{Christoffel}
+
+\begin{align}
+\Gamma^{\mu }_{\nu \rho } = \frac{1}{2} g^{\mu \alpha }
+\qty(g_{\alpha \nu , \rho } + g_{\alpha \rho , \nu } - g_{\nu \rho , \alpha })
+\,.
+\end{align}
+
+Defined by assuming \(\nabla_{\mu } A_{\nu }\) is a tensor, and the tensor differentiation law: 
+%
+\begin{align}
+\nabla_{\mu } A_{\nu } = 
+\partial_{\mu } A_{\nu } 
+- \Gamma^{\rho }_{\mu \nu } A_{\rho }
+\qquad \text{and} \qquad
+\nabla_{\mu } A^{\nu } =
+\partial_{\mu } A^{ \nu } 
++ \Gamma^{\nu }_{\mu \rho } A^{\rho }
+\,.
+\end{align}
+
+\paragraph{Einstein Field Equations}
+
+%
+\begin{align}
+R_{\mu \nu } - \frac{1}{2} g_{\mu \nu } R = \frac{T_{\mu \nu } }{M_P^2}
+\,,
+\end{align}
+%
+where 
+%
+\begin{align}
+R_{\nu \rho \sigma }^{\mu } = -2 \qty(\Gamma^{\mu }_{\nu [\rho , \sigma ]}  + \Gamma^{\beta }_{\nu [\rho } \Gamma^{\mu }_{\sigma ] \beta })
+\,,
+\end{align}
+%
+\(M_P = 1 / \sqrt{8 \pi G}\) is the reduced Planck mass.
+
+
+
+%
+\begin{align}
+V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2}{2 r^2} \qty(1 - \frac{2GM}{r})
+\,,
+\end{align}
+%
+
+%
+\begin{align}
+V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2- a^2 (e^2-1)}{2 r^2} 
++ \frac{GM (l - ae)^2}{r^3} 
+\,,
+\end{align}
+%
+
+
 
 
 \end{document}

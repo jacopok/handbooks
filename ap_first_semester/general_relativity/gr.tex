@@ -105,11 +105,12 @@ Defined by assuming \(\nabla_{\mu } A_{\nu }\) is a tensor, and the tensor diffe
 \,.
 \end{align}
 
-\paragraph{Einstein Field Equations}
+\paragraph{Riemann tensor}
+
 
 %
 \begin{align}
-R_{\mu \nu } - \frac{1}{2} g_{\mu \nu } R = \frac{T_{\mu \nu } }{M_P^2}
+[\nabla_{\mu }, \nabla_{\nu } ] V^{\alpha } = R_{\beta \mu \nu }^{\alpha } V^{\beta }
 \,,
 \end{align}
 %
@@ -119,27 +120,184 @@ where
 R_{\nu \rho \sigma }^{\mu } = -2 \qty(\Gamma^{\mu }_{\nu [\rho , \sigma ]}  + \Gamma^{\beta }_{\nu [\rho } \Gamma^{\mu }_{\sigma ] \beta })
 \,,
 \end{align}
+
+\paragraph{Parallel transport}
+
+\begin{align}
+u^{\mu } \nabla_{\mu } V^{\nu } =0
+\,,
+\end{align}
+
+\paragraph{Einstein Field Equations}
+
 %
+\begin{align}
+R_{\mu \nu } - \frac{1}{2} g_{\mu \nu } R = \frac{T_{\mu \nu } }{M_P^2}
+\,,
+\end{align}
+%
+where 
 \(M_P = 1 / \sqrt{8 \pi G}\) is the reduced Planck mass.
 
+\paragraph{Schwarzschild}
+
+\(R_{00} =0\) and \(R_{11} =0 \) imply 
+%
+\begin{align}
+(AB)' = 0
+\,,
+\end{align}
+%
+while \(R_{22} =0\) implies 
+%
+\begin{align}
+1 = B + r \frac{B'}{B}
+\,.
+\end{align}
+
+\(R_{33} =0\) is not linearly independent.  
+
+Limits to use: 
+\begin{enumerate}
+  \item \(g_{00} \rightarrow -1\) and \(g_{11} \rightarrow 1\) as \(r \rightarrow \infty \);
+  \item \(g_{00} \sim -(1 + 2 \Phi )\) as \(M \rightarrow 0\).
+\end{enumerate}
 
 
+\begin{align}
+\dd{s^2} = - \dd{t^2} \qty(1 - \frac{2GM}{r})
++ \frac{ \dd{r^2}}{1 - \frac{2GM}{r}} + r^2 \dd{\Omega^2}
+\,.
+\end{align}
+%
+
+\paragraph{Classical orbits}
+
+Pose \(L = r v_{\varphi }\), which is conserved. 
+
+\begin{align}
+\Omega = \sqrt{\frac{GM}{r^3}}
+\,
+\end{align}
+%
+follows from equating the forces.
+The effective potential is the Schwarzchild one without the \(r^{-3}\) term.
+
+\paragraph{Schwarzschild orbits}
+
+\(u^{\mu } u_{\mu } = -1\) plus the two Killing vectors: 
+%
+\begin{align}
+\frac{1}{2}\dot{r}^2 + V _{\text{eff}} (r) = \frac{e^2-1}{2}
+\,,
+\end{align}
+%
+with
 %
 \begin{align}
 V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2}{2 r^2} \qty(1 - \frac{2GM}{r})
 \,,
 \end{align}
 %
-
+then: change variable to \(u = 1/r\), and
 %
 \begin{align}
-V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2- a^2 (e^2-1)}{2 r^2} 
-+ \frac{GM (l - ae)^2}{r^3} 
+\dv{}{\tau } = \frac{l}{r^2} \dv{}{\varphi }
+\,.
+\end{align}
+%
+\begin{align}
+\dv[2]{u}{\varphi } + u = \frac{GM}{l^2} + 3GMu^2
+\,,
+\end{align}
+%
+where \(u = 1/r\). Upon perturbation, we get 
+%
+\begin{align}
+\delta \varphi = 6 \pi \qty(\frac{GM}{l})^2
 \,,
 \end{align}
 %
 
+\paragraph{Radial infall}
 
+\(e = 1\), \(l =0 \). The horizon is regular. 
+%
 
+\paragraph{Impact parameter}
+
+\(u^2= 0\) (light), impact parameter \(b = l/e\): to prove it draw, recall \(l = \dv*{\varphi }{\lambda }\) and \(e =
+\dv*{t}{\lambda }\). 
+The light equation is 
+%
+\begin{align}
+\frac{1}{l^2} \dot{r}^2  + W _{\text{eff}} (r)
+= \frac{1}{b^2}
+\,,
+\end{align}
+%
+where 
+%
+\begin{align}
+W _{\text{eff}} = \frac{1}{r^2} \qty(1 - \frac{2GM}{r})
+\,.
+\end{align}
+
+%
+\begin{align}
+\dv[2]{u}{\varphi } + u = 3GM u^2
+\,,
+\end{align}
+%
+perturb \(u_0 = b^{-1} \sin(\varphi )\) with \(w/b\). 
+Ansatz \(w = A + B \sin^2\varphi \). Find \(u(\varphi )\), 
+pose \(u=0\), discard \(\sin^2\) and linearize \(\sin\). 
+
+\paragraph{Geodetic precession}
+
+\(s \cdot u =0\), \(u^2 = -1 \) and \(u\) is equatorial circular orbit
+%
+\begin{align}
+u^{\nu } \nabla_{\nu } s^{\mu } = 0
+\,,
+\end{align}
+%
+gives 
+%
+\begin{align}
+\overline{\Omega} = \Omega \sqrt{1 - \frac{3GM}{r}}
+\,,
+\end{align}
+%
+so, compute \(\cos(\Delta \varphi )\) as ratio of radial components and pose \(\Delta \varphi = - \overline{\Omega} t \). 
+
+\paragraph{Slowly rotating metric}
+
+Work in orders of negative powers of \(c\), so no \(M\) and Minkowski plus \(g_{03} \) terms, \(g_{03} = -2 GJ \sin^2\theta /r\).
+
+Turn \(\dd{\varphi }\) into \(\dd{x}\) and \(\dd{y}\), the sine of \(\theta \) cancels.
+
+Show that \(s^{t}\) and \(s^{z }\) are constant. For \(s^{z}\): \(\vec{J} \cdot \vec{s} = 0\) is constant. For \(s^{t}\) compute.
+
+Write \(u^{\nu } \nabla_{\nu } s^{\mu }\). 
+In the end 
+%
+\begin{align}
+\Omega = \frac{2GJ}{z^3}
+\,.
+\end{align}
+
+\paragraph{Kerr} 
+
+Horizon \(g_{rr}\) diverges, ergoregion \(g_{00} >0\). 
+Hozizon is a null surface, null vector is \((1, 0,0,\Omega_{H})\), where \(\Omega_{H} = a / 2GMr\). 
+
+The effective potential is:
+\begin{align}
+V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2- a^2 (e^2-1)}{2 r^2} 
++ \frac{GM (l - ae)^2}{r^3}
+\,,
+\end{align}
+%
 
 \end{document}

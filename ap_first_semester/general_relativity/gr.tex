@@ -1,6 +1,8 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 
+\section{Theory}
+
 \paragraph{Length contraction and time dilation}
 
 \begin{align}
@@ -222,7 +224,14 @@ where \(u = 1/r\). Upon perturbation, we get
 \paragraph{Radial infall}
 
 \(e = 1\), \(l =0 \). The horizon is regular. 
+We recover the escape velocity: An observer sees 
 %
+\begin{align}
+E = - u^{\mu } _{\text{obs}} p_{\mu } = \frac{m}{\sqrt{1 - \frac{2GM}{r}}} \overset{!}{=} m \gamma 
+\,,
+\end{align}
+%
+which means \(v = \sqrt{2GM/r}\).
 
 \paragraph{Impact parameter}
 
@@ -271,7 +280,7 @@ gives
 %
 so, compute \(\cos(\Delta \varphi )\) as ratio of radial components and pose \(\Delta \varphi = - \overline{\Omega} t \). 
 
-\paragraph{Slowly rotating metric}
+\paragraph{Slowly rotating metric --- Lense-Thirring precession}
 
 Work in orders of negative powers of \(c\), so no \(M\) and Minkowski plus \(g_{03} \) terms, \(g_{03} = -2 GJ \sin^2\theta /r\).
 
@@ -296,8 +305,101 @@ The effective potential is:
 \begin{align}
 V _{\text{eff}} = - \frac{GM}{r} + \frac{l^2- a^2 (e^2-1)}{2 r^2} 
 + \frac{GM (l - ae)^2}{r^3}
+\,.
+\end{align}
+
+The ISCO goes from \(9GM\) for extreme counterrotating to \(GM\) for extreme corotating; it is found by setting
+%
+\begin{align}
+V _{\text{eff}} = \frac{e^2-1}{2}
+\qquad \text{and} \qquad
+\dv{V _{\text{eff}}}{r} = 0
+\qquad \text{and} \qquad
+\dv[2]{V _{\text{eff}}}{r} = 0
+\,.
+\end{align}
+
+\paragraph{Penrose process}
+
+Project \(p^{\mu } _{\text{in}} = p^{\mu } _{\text{out}} + p^{\mu } _{\text{BH}} \) onto \(-\xi^{\mu } = (-1, \vec{0})\): \(e_{BH} <0\). Also, \(l _{\text{BH}} <0\) (project onto rotating obs \(u^{\mu }\)) so angular momentum is removed from the BH.
+
+\paragraph{Cosmology}
+
+EFE applied to \(-\dd{t^2} + a^2 \dd{\vec{x}^2}\) with \(T^{\mu \nu }= \rho u^{\mu } u^{\nu } + p h^{\mu \nu }\) give 
+%
+\begin{align}
+\Gamma^{0}_{ij} = \delta_{ij} a \dot{a}
+\qquad \text{and} \qquad
+\Gamma^{i}_{0j} = \delta_{ij} \frac{\dot{a}}{a}
+\,.
+\end{align}
+
+\(R_{0i} =0\), which means \(T^{0i} = 0\). The 00 and \(ij\) equations are 
+%
+\begin{align}
+3 H^2 = \frac{\rho}{M_P^2}
+\qquad \text{and} \qquad
+-2 \frac{\ddot{a}}{a}- H^2 = \frac{P}{M_P^2} 
 \,,
 \end{align}
 %
+where \(H = \dot{a} / a \),
+and the conservation of the SEMT (0th component, the others vanish) is 
+%
+\begin{align}
+\frac{\dot{\rho}}{\rho } + 3 (1+w) \frac{\dot{a}}{a} =0
+\,.
+\end{align}
+%
+Assume \(P = w \rho \) and solve EFE \(00 \) with the conservation of the SEMT. We get either \(a \sim t^{2/(3+3w)}\) or \(a \sim \exp(t)\) when \(w=-1\).
+That is vacuum energy, add \(\Lambda g_{\mu \nu }\), evaluate the 00 and \(ij\) components and move it to the RHS into the \(T_{\mu \nu }\).
+
+\paragraph{Cosmological redshift}
+
+Start from 
+%
+\begin{align}
+\int_A^{B} \dd{r} = \int_{t_A}^{t_B} \frac{ \dd{t}}{a}
+= \int_{t_A}^{t_B} \frac{ \dd{t}}{a}
+\,,
+\end{align}
+get 
+%
+\begin{align}
+a_A f_A = a_B f_B
+\,.
+\end{align}
+%
+
+
+\paragraph{Hubble law}
+
+Start from \(d_{L} = a(t) \int \dd{r} = t_0 - t_E\), then expand \(a\) to first order to find 
+%
+\begin{align}
+d_L = \frac{z}{H_0 }
+\,.
+\end{align}
+
+\paragraph{Gravitational waves}
+
+Linearized EFE for \(g = \eta + h\) give \(\square h_{\mu 
+\nu } = 0\) under the gauge choice \(g^{\mu \nu } \Gamma^
+{\rho }_{\mu \nu } =0\).
+
+The gauge transformations are derived from shifts of the position vector, the transformation is 
+%
+\begin{align}
+h_{\mu \nu } \rightarrow h_{\mu \nu } + \partial_{(\mu } \epsilon_{\nu )}
+\,,
+\end{align}
+%
+\(\epsilon_{\mu } \) being the infinitesimal generator of the transformation. We can fix the residual gauge with vectors such that \(\square \epsilon_{\mu } =0\). 
+
+Moving to plane wave solutions, this is the TT gauge: transverse (\(\partial_{i} h_{ij} = 0\)) and traceless (\(h^{\mu }_{\mu } = 0\)). 
+
+\paragraph{Transformations of the basis tensors}
+
+Slightly improper, but transform the metric, therefore the perturbation, therefore the basis tensors. 
 
 \end{document}

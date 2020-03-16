@@ -2,6 +2,7 @@
 *fdb_latexmk
 *pdf
 !main.pdf
+!undergrad/*.pdf
 !figures/*
 *log
 *out

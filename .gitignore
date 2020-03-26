@@ -2,7 +2,9 @@
 *fdb_latexmk
 *pdf
 !main.pdf
-!undergrad/*.pdf
+!undergrad/quantum_info/*.pdf
+!undergrad/quantum_physics/*.pdf
+!undergrad/nuclear_physics/*.pdf
 !figures/*
 *log
 *out

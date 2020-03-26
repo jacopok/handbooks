@@ -1,7 +1,12 @@
-\documentclass[main.tex]{subfiles}
+\documentclass{article}
+
+\input{../header.tex}
+\author{Jacopo Tissino}
+\title{Nuclear Physics}
+\date{June 2019}
 
 \begin{document}
-\chapter{Nuclear physics}
+\maketitle
 
 \section{Introduction}
 
@@ -234,11 +239,11 @@ If we work at fixed \(A\), the \eqref{eq:SEMF} looks like a parabola wrt \(Z\). 
 \begin{figure}[H]
   \centering
   \begin{subfigure}{0.5\textwidth}
-      \includegraphics[width=\textwidth]{figures/parabolic_fits.eps}
+      \includegraphics[width=\textwidth]{../figures/parabolic_fits.eps}
       \caption{Fit and raw data}
   \end{subfigure}%
   \begin{subfigure}{0.5\textwidth}
-      \includegraphics[width=\textwidth]{figures/residuals.eps}
+      \includegraphics[width=\textwidth]{../figures/residuals.eps}
       \caption{Residuals of the fit}
   \end{subfigure}
   \caption{Mass parabola fit}
@@ -272,11 +277,11 @@ The fit works, giving us \(a_C = \SI{631(5)}{keV}\) in this parametrization.
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.5\textwidth}
-        \includegraphics[width=\textwidth]{figures/odd_A_fit.eps}
+        \includegraphics[width=\textwidth]{../figures/odd_A_fit.eps}
         \caption{Fit}
     \end{subfigure}%
     \begin{subfigure}{0.5\textwidth}
-        \includegraphics[width=\textwidth]{figures/odd_A_residuals.eps}
+        \includegraphics[width=\textwidth]{../figures/odd_A_residuals.eps}
         \caption{Residuals}
     \end{subfigure}%
     \caption{Fit of the difference in \(B\) between symmetric nuclei. The chi square is \(\SI{0.136}{MeV^2} \) for the \(Z^2\) model, and \(\SI{0.062}{MeV^2}\) for the \(Z(Z-1)\) model.}
@@ -475,7 +480,7 @@ The capture of a neutron can make an atom unstable wrt deformation, and then it 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/barium_decay_chain.png}
+    \includegraphics[width=0.7\textwidth]{../figures/barium_decay_chain.png}
     \caption{Barium decay chain}
     \label{fig:barium-decay}
 \end{figure}
@@ -508,7 +513,7 @@ where \(R\) is the sum of the radii of the nuclei, a distance at which we assume
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/sun_nuclear_fusion.png}
+    \includegraphics[width=0.7\textwidth]{../figures/sun_nuclear_fusion.png}
     \caption{Nuclear decay chain in the Sun.}
     \label{fig:nuclear-fusion-sun}
 \end{figure}
@@ -644,7 +649,7 @@ Look at figure \ref{fig:shell-orbits} and start filling the neutron and proton s
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/nuclear_shells.png}
+    \includegraphics[width=0.7\textwidth]{../figures/nuclear_shells.png}
     \caption{One-particle orbits}
     \label{fig:shell-orbits}
 \end{figure}
